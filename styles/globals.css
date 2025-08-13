@@ -113,6 +113,16 @@
   background:linear-gradient(135deg,#03345a,#055a86);
   transform:translateY(-2px) scale(1.05); box-shadow:0 6px 14px rgba(0,0,0,.25);
 }
+.formulario-contacto textarea {
+  padding: .75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: 'Raleway', sans-serif;
+  height: 150px; /* altura fija más grande */
+  resize: none;  /* desactiva el redimensionado */
+}
+
 
 /* Tarjeta info contacto (derecha) */
 .info-contacto{
