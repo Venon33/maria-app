@@ -114,7 +114,7 @@ useEffect(() => {
               <i className="fas fa-envelope"></i> Contacto
             </button>
             {showContactoDropdown && (
-              <div className="dropdown-menu contacto-dropdown">
+              <div className="dropdown-menu contacto-dropdown" style={{ paddingLeft: '40px', textAlign: 'center' }}>
                 <a
                   href="https://wa.me/34747444017"
                   target="_blank"
