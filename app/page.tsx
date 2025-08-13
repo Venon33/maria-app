@@ -14,10 +14,14 @@ export default function Home() {
   const contactoDropdownRef = useRef<HTMLDivElement>(null);
   const contactoTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [now, setNow] = useState(new Date());
-  useEffect(() => {
-   const id = setInterval(() => setNow(new Date()), 1000);
-   return () => clearInterval(id);
+  const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+  const id = setInterval(() => setNow(new Date()), 1000);
+  return () => clearInterval(id);
 }, []);
+
 
 
   const handleMouseLeave = () => {
@@ -110,7 +114,7 @@ export default function Home() {
               <i className="fas fa-envelope"></i> Contacto
             </button>
             {showContactoDropdown && (
-              <div className="dropdown-menu contacto-dropdown" style={{ paddingLeft: '40px', textAlign: 'center' }}>
+              <div className="dropdown-menu contacto-dropdown">
                 <a
                   href="https://wa.me/34747444017"
                   target="_blank"
@@ -203,7 +207,7 @@ export default function Home() {
           {now.toLocaleDateString('es-ES', {
             weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'
           }).replace(/^\w/, c => c.toUpperCase())}
-          {" · "}
+          {"  "}
           {now.toLocaleTimeString('es-ES', { hour12: false })}
         </div>
 

@@ -46,68 +46,41 @@
 }
 .cabecera-fondo>*{ position:relative; z-index:1; }
 
-/* ------------------ NAVEGACIÓN (MENÚ PRINCIPAL) ------------------ */
-.navegacion {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 1rem auto;
-  padding: 0.8rem 1rem;
-  background: rgba(0, 0, 0, 0);
-  border-radius: 0.5rem;
-  max-width: 90%;
+/* ================== Navegación (menú) ================== */
+.navegacion{
+  display:flex; justify-content:center; align-items:center; flex-wrap:wrap;
+  margin:1rem auto; padding:.8rem 1rem; background:transparent; border-radius:.5rem; max-width:90%;
 }
-
-.navegacion a,
-.navegacion button,
-.dropdown-toggle {
-  font-size: 1.9rem;
-  font-weight: 600;
-  color: #000000;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  margin: 0 2rem;
-  padding: 0.5rem;
-  transition: color 0.3s, transform 0.3s;
-  font-family: 'Raleway', sans-serif; /* unifica tipografía */
+.navegacion a, .navegacion button, .dropdown-toggle{
+  font-size:1.9rem; font-weight:600; color:#000; background:none; border:none; cursor:pointer;
+  text-decoration:none; margin:0 2rem; padding:.5rem; transition:color .3s, transform .3s;
+  font-family:'Raleway',sans-serif;
 }
-
-.navegacion a:hover,
-.navegacion button:hover,
-.dropdown-toggle:hover {
-  color: #092fd6;
-  transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-  .navegacion a,
-  .navegacion button,
-  .dropdown-toggle {
-    font-size: 1.2rem;
-    margin: 0 1rem;
-  }
+.navegacion a:hover, .navegacion button:hover, .dropdown-toggle:hover{
+  color:#092fd6; transform:scale(1.05);
 }
 
 /* Dropdown genérico */
 .dropdown{ position:relative; display:inline-block; }
-.dropdown-toggle{
-  background:none; border:none; color:var(--color-principal);
-  font-size:1.4rem; font-weight:600; cursor:pointer; padding:.5rem; margin:0 2rem;
-  display:flex; align-items:center; gap:.5rem; transition:color .3s, transform .3s;
-}
-.dropdown-toggle:hover{ color:#000; transform:scale(1.05); }
 .dropdown-menu{
-  display:flex; flex-direction:column; background:transparent; padding:0;
-  border-radius:0; box-shadow:none; margin-top:.5rem; position:absolute; top:100%; left:0; z-index:1000;
+  display:flex; flex-direction:column; background:transparent; padding:0; border-radius:0;
+  box-shadow:none; margin-top:.5rem; position:absolute; top:100%; left:0; z-index:1000;
 }
 .dropdown-menu a{
-  color:#000; font-size:1.2rem; text-decoration:none; padding:.1rem 0;
-  transition:color .3s; font-family:'Raleway',sans-serif;
+  color:#000; font-size:1.2rem; text-decoration:none; padding:.1rem 0; transition:color .3s;
+  font-family:'Raleway',sans-serif;
 }
 .dropdown-menu a:hover{ color:#5d3b8c; }
+
+/* Dropdown de Contacto centrado */
+.contacto-dropdown{
+  left:50%; transform:translateX(-50%); right:auto; min-width:220px;
+  background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:.6rem .9rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.08); text-align:center;
+}
+.contacto-dropdown .contacto-item{
+  display:block; padding:.4rem 0; font-size:1.05rem; font-weight:700; text-decoration:none;
+}
 
 /* ================== Formulario de contacto (2 columnas) ================== */
 .formulario-contacto{
@@ -125,17 +98,19 @@
 .formulario-contenedor{
   display:flex; justify-content:space-between; align-items:flex-start; gap:3rem;
 }
-.formulario-contacto form{ flex:0 0 60%; display:flex; flex-direction:column; gap:1rem; }
+.formulario-contacto form{
+  flex:0 0 60%; display:flex; flex-direction:column; gap:1rem;
+}
 .formulario-contacto input, .formulario-contacto textarea{
   padding:.75rem 1rem; border:1px solid #ccc; border-radius:6px; font-size:1rem; font-family:'Raleway',sans-serif;
 }
 .formulario-contacto button{
-  background:linear-gradient(135deg, #044472, #0666a3); color:#fff; border:none;
+  background:linear-gradient(135deg,#044472,#0666a3); color:#fff; border:none;
   padding:.9rem 2.5rem; border-radius:50px; cursor:pointer; font-weight:bold; font-size:1.3rem;
   transition:all .3s ease; align-self:flex-start; box-shadow:0 4px 10px rgba(0,0,0,.2);
 }
 .formulario-contacto button:hover{
-  background:linear-gradient(135deg, #03345a, #055a86);
+  background:linear-gradient(135deg,#03345a,#055a86);
   transform:translateY(-2px) scale(1.05); box-shadow:0 6px 14px rgba(0,0,0,.25);
 }
 
@@ -152,87 +127,25 @@
 .contact-link{ color:#2a176b; font-weight:700; text-decoration:none; letter-spacing:.2px; }
 .contact-link:hover{ text-decoration:underline; filter:brightness(.95); }
 
-/* Horarios */
-.horario{ display:flex; flex-direction:column; gap:.35rem; }
-.horario-item{ display:flex; align-items:baseline; justify-content:space-between; gap:1rem; }
+/* ===== Horario (limpio, solo recuadro en reloj) ===== */
+.horario-card{
+  width:100%; text-align:center; background:none; border:none; padding:.5rem 1rem; margin-top:-10px; box-shadow:none;
+}
+.horario-header{
+  display:inline-flex; align-items:center; gap:.5rem; font-weight:700; color:var(--color-azul);
+  margin-bottom:.35rem; font-size:1.05rem;
+}
+.horario-header i{ font-size:1.1rem; }
+.clock{
+  font-family:"Courier New", ui-monospace, monospace; font-weight:700; letter-spacing:.5px;
+  margin:.25rem 0 .75rem; color:#111827; background:#fff; border:1px dashed #d1d5db;
+  border-radius:8px; padding:.45rem .6rem; display:inline-block;
+}
+.horario-list{ display:flex; flex-direction:column; gap:.5rem; }
+.horario-item{ display:flex; flex-direction:column; align-items:center; gap:.1rem; }
 .h-label{ font-weight:600; color:#222; }
-.h-time{ white-space:nowrap; }
+.h-time{ white-space:nowrap; color:#111; }
 .h-cerrado{ color:#b02a37; font-weight:700; }
-.info-contacto hr{ border:none; border-top:1px solid #ddd; margin:.8rem 0 1rem; }
-
-
-/* ===== Horario dentro de la tarjeta de contacto ===== */
-.horario-card {
-  width: 100%;
-  text-align: center;
-  background: none; /* Quitamos fondo general */
-  border: none; /* Quitamos borde general */
-  padding: 0.5rem 1rem;
-  margin-top: -10px; /* Subimos un poco hacia arriba */
-  box-shadow: none;
-}
-
-.horario-header {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 700;
-  color: #044472;
-  margin-bottom: 0.35rem;
-  font-size: 1.05rem;
-}
-
-.horario-header i {
-  font-size: 1.1rem;
-}
-
-/* Caja solo para la fecha y hora */
-.clock {
-  font-family: "Courier New", ui-monospace, monospace;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin: 0.25rem 0 0.75rem;
-  color: #111827;
-  background: #ffffff;
-  border: 1px dashed #d1d5db;
-  border-radius: 8px;
-  padding: 0.45rem 0.6rem;
-  display: inline-block;
-}
-
-.horario-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.horario-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
-}
-
-.h-label {
-  font-weight: 600;
-  color: #222;
-}
-
-.h-time {
-  white-space: nowrap;
-  color: #111;
-}
-
-.h-cerrado {
-  color: #b02a37;
-  font-weight: 700;
-}
-
-/* Responsive: un poco más compacto en móvil */
-@media (max-width: 640px){
-  .clock{ font-size: .95rem; }
-}
-
 
 /* ================== Servicios (listado con tarjetas) ================== */
 .servicios-wrap{
@@ -245,7 +158,7 @@
 }
 .servicios-sub{ color:#555; margin-top:.4rem; }
 .servicios-grid{
-  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:3.5rem; justify-items:center;
 }
 .serv-card{
@@ -278,7 +191,7 @@
 }
 .novedades-sub{ color:#555; margin-top:.4rem; }
 .novedades-grid{
-  display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:1.25rem;
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.25rem;
 }
 @media (max-width:980px){ .novedades-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:640px){ .novedades-grid{ grid-template-columns:1fr; } }
@@ -293,7 +206,7 @@
 .novedad-card p{ margin:0 0 .6rem; color:#444; line-height:1.55; }
 .novedad-card time{ font-size:.9rem; color:#777; }
 
-/* Colores y badges novedades */
+/* Colores y badges novedades (comparten nombres con servicios) */
 .card-azul{ border-left:6px solid #044472; }
 .card-verde{ border-left:6px solid #1f8b4c; }
 .card-rojo{ border-left:6px solid #b02a37; }
@@ -371,6 +284,7 @@
     position:static; height:auto; margin:0 0 1rem 0; font-size:2rem;
   }
   .dropdown-menu{ position:static; background:transparent; box-shadow:none; padding:.25rem 0; }
+  .contacto-dropdown{ left:50%; transform:translateX(-50%); min-width:75%; }
   .logo-foto{ width:100%; max-width:420px; height:auto; }
   .servicios-grid, .novedades-grid{ gap:1.25rem; }
   .formulario-contacto{ padding:0 1rem; }
@@ -379,3 +293,4 @@
 /* Extra: foto + colegiación bajo la imagen */
 .foto-con-colegiacion{ display:flex; flex-direction:column; align-items:center; }
 .colegiacion-pequena{ font-size:.8rem; color:#333; margin-top:.3rem; text-align:center; }
+
