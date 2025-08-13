@@ -1,7 +1,7 @@
 // app/layout.tsx
 import '../styles/globals.css'
-import { ReactNode } from 'react'
-import { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
@@ -13,25 +13,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="es">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body>
         {children}
 
         {/* Footer global */}
         <footer className="site-footer">
           <p>© {year} Despacho de Abogados María Lara Molina. Todos los derechos reservados.</p>
-          <nav className="legal-links">
-            <a href="/aviso-legal"></a>
-            <span aria-hidden="true">·</span>
-            <a href="/privacidad"></a>
-            <span aria-hidden="true">·</span>
-            <a href="/terminos"></a>
-          </nav>
+        
         </footer>
 
         {/* Logo fijo abajo a la derecha */}
-        <img src="/IMG-20241215-WA0009.png" alt="Logo del despacho" className="logo-fijo" />
+        <img
+          src="/IMG-20241215-WA0009.png"
+          alt="Logo del despacho"
+          className="logo-fijo"
+        />
       </body>
     </html>
   )
 }
+
 
