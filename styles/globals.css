@@ -1,0 +1,803 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Raleway:wght@400;600;700&display=swap');
+
+/* ------------------ VARIABLES (colores fáciles de cambiar) ------------------ */
+:root {
+  --color-principal: #301934;
+  --color-secundario: #000000;
+  --color-fondo-suave: #f5f5f5d2;
+}
+
+/* ------------------ HEADER ------------------ */
+.header {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 1rem;
+}
+
+.logo-foto {
+  width: 420px;
+  height: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.titulo-despacho {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  max-width: 90%;
+  word-break: break-word;
+  position: relative;
+  top: -90px;
+  left: 90px;
+  margin-left: 20px;
+}
+
+.nombre-firma {
+  font-weight: 900;
+}
+
+/* ------------------ SECCIÓN QUIÉNES SOMOS ------------------ */
+.quienes-somos {
+  max-width: 550px;
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-top: -140px;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0.5rem !important;
+}
+
+.quienes-somos .titulo-quienes {
+  font-size: 1.8rem;
+  color: #000 !important;
+  margin-bottom: 0.5rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.quienes-somos .texto-quienes {
+  font-size: 1rem;
+  color: #03020e !important;
+  line-height: 1.6;
+}
+
+/* ------------------ NAVEGACIÓN (MENÚ PRINCIPAL) ------------------ */
+.navegacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1rem auto;
+  padding: 0.8rem 1rem;
+  background: rgba(0, 0, 0, 0); /* agrega fondo a los menus*/
+  border-radius: 0.5rem;
+  max-width: 90%;
+}
+/* configuracion barra de los menus */
+.navegacion a,
+.navegacion button {
+      font-size: 1.9rem;
+    font-weight: 600; /* ✅ fuerza negrita en todos los menús */
+    color: #000000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0 2rem;
+    padding: 0.5rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.navegacion a:hover, /* anaimacion al pasar el raton por los menus*/
+.navegacion button:hover {
+    color: #092fd6; /* Color hover igual al resto */
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+  .navegacion a {
+    font-size: 1.2rem; /* más pequeño en móvil */
+  }
+}
+
+
+/* ------------------ SUBMENÚ SERVICIOS ------------------ */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: var(--color-principal);
+  font-size: 1.4rem;        /* Igual que el menú principal */
+  font-weight: 600;         /* Puedes mantener este peso si quieres */
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: 0 2rem;           /* Igual que el menú principal */
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Y también agregar el hover para que coincida */
+.dropdown-toggle:hover {
+  color: #000000;
+  transform: scale(1.05);
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;            /* ❌ en columna */
+  background: transparent;           /* ❌ sin fondo */
+  padding: 0;                        /* ❌ sin relleno */
+  border-radius: 0;                  /* ❌ sin esquinas */
+  box-shadow: none;                  /* ❌ sin sombra */
+  margin-top: 0.5rem;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+
+.dropdown-menu a {
+  color: #000000;                   /* color coherente */
+  font-size: 1.2rem;                /* tamaño consistente */
+  text-decoration: none;
+  padding: 0.1rem 0;                /* menos relleno horizontal */
+  transition: color 0.3s;
+  font-family: 'Raleway', sans-serif; /* misma tipografía */
+}
+
+.dropdown-menu a:hover {
+  color: #5d3b8c;                   /* color de hover */
+}
+
+
+/* ------------------ FORMULARIO DE CONTACTO ------------------ */
+
+/* Contenedor formulario */
+.formulario-contacto {
+  max-width: 600px;
+  margin: 0 auto 4rem auto;
+  padding: 0 1rem;
+}
+
+/* Título del formulario con icono */
+.formulario-contacto h2 {
+  font-family: 'Playfair Display', serif;
+  color: #044472; /* 💡 Cambia color aquí */
+  font-size: 2.1rem; /* 💡 Cambia tamaño aquí */
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: left;
+}
+
+.formulario-contacto h2::before {
+  content: "\f0e0"; /* 📧 Icono de sobre (Font Awesome) */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.6rem;
+  color: inherit; /* Usa el mismo color del título */
+}
+
+/* Campos del formulario */
+.formulario-contacto form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Inputs y textarea */
+.formulario-contacto input,
+.formulario-contacto textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Botón enviar degradado y efecto 3D */
+.formulario-contacto button {
+  background: linear-gradient(135deg, #044472, #0666a3); /* 💡 Degradado azul */
+  color: white;
+  border: none;
+  padding: 0.9rem 2.5rem;
+  border-radius: 50px; /* Botón redondo */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.3rem; /* 💡 Cambia tamaño aquí */
+  transition: all 0.3s ease;
+  align-self: flex-start; /* Alineado con el título */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Efecto 3D */
+}
+
+.formulario-contacto button:hover {
+  background: linear-gradient(135deg, #03345a, #055a86); /* Degradado más oscuro */
+  transform: translateY(-2px) scale(1.05); /* Eleva y agranda */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25); /* Sombra más fuerte */
+}
+
+
+
+
+/* ------------------ LOGO FIJO ABAJO DERECHA ------------------ */
+.logo-fijo {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 100px;
+  height: auto;
+  opacity: 0.9;
+  z-index: 50;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  filter: drop-shadow(0 0 5px white);
+}
+
+.logo-fijo:hover {
+  transform: scale(1.1) rotate(3deg);
+  opacity: 0.6;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 0.7; }
+  70% { opacity: 0.8; }
+}
+
+/* ------------------ BLOQUE PRESENTACIÓN (OPCIONAL) ------------------ */
+.bloque-presentacion {
+  background: linear-gradient(135deg, var(--color-fondo-suave), #e0e0e0);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin: 2rem auto;
+  max-width: 900px;
+}
+
+/* ------------------ CABECERA CON FONDO ------------------ */
+.cabecera-fondo {
+  position: relative;
+  background: url('/fondo de cabecera.jpeg') center center / cover no-repeat;
+  padding: 20px;
+}
+
+.cabecera-fondo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 0;
+}
+
+.cabecera-fondo > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------ RESPONSIVE ------------------ */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .logo-foto {
+    width: 10rem;
+    margin-bottom: 1rem;
+  }
+  .titulo-despacho {
+    font-size: 1.8rem;
+    height: auto;
+    margin: 20px 0;
+    top: 0;
+    left: 0;
+  }
+  .quienes-somos {
+    text-align: center;
+    margin: 1rem auto 3rem auto;
+    padding: 1rem 1.5rem;
+  }
+  .navegacion {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .titulo-quienes {
+    font-size: 1.5rem;
+  }
+  .texto-quienes {
+    text-align: center;
+  }
+}
+/* configuracion dentro de servicios*/
+.horizontal-dropdown {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+}
+
+.horizontal-dropdown a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.horizontal-dropdown a:hover {
+  text-decoration: underline;
+}
+
+.desplazado-izquierda {
+  transform: translateX(-80px); /* Ajusta el valor según cuánto desees desplazar */
+}
+/* Mantener estilo uniforme con Servicios al desplegarse (sin fondo, sin borde) */
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: none;
+  border: none;
+  padding: 0;
+  z-index: 1000;
+  top: 100%;
+  right: 0;
+}
+
+/* Enlaces estilo limpio */
+.dropdown-menu a {
+  text-decoration: none;
+  padding: 0.6rem 0;
+  font-size: 1rem;
+  color: #333;
+  transition: color 0.3s, font-weight 0.3s;
+  background: none;
+}
+
+
+/* Hover uniforme */
+.dropdown-menu a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .logo-fijo {
+    width: 60px;
+    bottom: 5px;
+    right: 5px;
+  }
+}
+
+/* estructura de la carpeta de servicios derecho-laboral-y-seguridad-social*/
+
+.servicio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+}
+
+.cabecera-horizontal {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1000px;
+  width: 100%;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.foto-abogada {
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  width: 350px;  /* <-- tamaño foto */
+  height: 450px;  /* <-- tamaño foto */
+}
+
+.texto-lateral {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.texto-lateral h1 {
+  font-size: 2.1rem; /*tamaño despacho de abogados*/
+  color: #000000;
+  margin: 0;
+}
+
+.texto-lateral h2 {
+  font-size: 1.9rem; /* tamaño de Derecho Laboral y Seguridad Social*/
+  color: #0408db;
+  margin: 0.8rem 0 0 0;
+  text-decoration: underline; /* <-- línea añadida */
+}
+
+.texto-lateral h3 {
+  font-size: 1.1rem;
+  color: #000000;
+  margin: 0.8rem 0 0 0;
+}
+
+.texto-lateral p {
+  font-size: 1.2rem; /* tamaño texto descripcion*/
+  line-height: 1.6;
+  margin-top: 0.5rem;
+}
+
+.boton-volver {
+  margin-top: 2rem; /* altura*/
+  padding: 0.6rem 2.2rem; /* juegas con anchura y largo del fondo del boton*/
+  background-color: #044472;
+  color: white;
+  border: none;
+  border-radius: 10px; /* borde */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.1rem; /* tamaño letra boton */
+}
+
+.boton-volver:hover {
+  background-color: #03345a;
+}
+
+/* Responsive para móvil */
+@media (max-width: 768px) {
+  .cabecera-horizontal {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .texto-lateral h1 {
+    font-size: 1.5rem;
+  }
+
+  .texto-lateral h2 {
+    font-size: 1.2rem;
+  }
+}
+/* modificacion numero de colegiala*/
+.foto-con-colegiacion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.colegiacion-pequena {
+  font-size: 0.8rem;
+  color: #333;
+  margin-top: 0.3rem;
+  text-align: center;
+}
+
+/* —— Novedades Jurídicas —— */
+.novedades-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+  background-color: #f5f5f5; /* gris suave */
+  padding: 2rem 9.25rem 3rem;
+  border-radius: 12px;
+}
+
+.novedades-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.novedades-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: bold; /* negrita */
+  margin: 0;
+  color: #044472; /* mismo color que Servicios */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem; /* espacio entre icono y texto */
+}
+.novedades-sub {
+  color: #555;
+  margin-top: .4rem;
+}
+
+.novedades-grid {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 1.25rem;
+}
+@media (max-width: 980px) {
+  .novedades-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 640px) {
+  .novedades-grid { grid-template-columns: 1fr; }
+}
+
+/* Tarjeta base */
+.novedad-card {
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(2px);
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 1rem 1.1rem 1.1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.novedad-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.10);
+  border-color: #e6e6e6;
+}
+.novedad-card h3 {
+  margin: .4rem 0 .35rem;
+  font-size: 1.1rem;
+  color: #111;
+}
+.novedad-card p {
+  margin: 0 0 .6rem;
+  color: #444;
+  line-height: 1.55;
+}
+.novedad-card time {
+  font-size: .9rem;
+  color: #777;
+}
+
+/* —— Colores por categoría —— */
+.card-azul { border-left: 6px solid #044472; }
+.card-verde { border-left: 6px solid #1f8b4c; }
+.card-rojo { border-left: 6px solid #b02a37; }
+.card-amarillo { border-left: 6px solid #d6a419; }
+
+/* —— Badges —— */
+.badge {
+  display: inline-block;
+  font-size: .75rem;
+  line-height: 1;
+  padding: .45rem .55rem;
+  border-radius: 999px;
+  background: #301934;
+  color: #fff;
+  letter-spacing: .2px;
+}
+.badge-azul { background: #044472; }
+.badge-verde { background: #1f8b4c; }
+.badge-rojo { background: #b02a37; }
+.badge-amarillo { background: #d6a419; }
+
+/* —— Botón de volver —— */
+.novedades-foot {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.btn-volver {
+  background: #044472;
+  color: #fff;
+  text-decoration: none;
+  padding: .65rem 1.1rem;
+  border-radius: 10px;
+  transition: background .25s ease, transform .2s ease;
+}
+.btn-volver:hover {
+  background: #03345a;
+  transform: translateY(-1px);
+}
+
+/* Servicios (listado con tarjetas) */
+
+.servicios-wrap{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 3rem;}
+.servicios-header{text-align:center;margin-bottom:1.5rem;}
+.servicios-header h1{font-family:'Playfair Display',serif;font-size:2.2rem;margin:0;color:#000;font-weight:700;}
+.servicios-sub{color:#555;margin-top:.4rem;}
+
+.servicios-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3.5rem; /* distancia entre tarjetas */
+  justify-items: center;   /* centra cada tarjeta */
+}
+
+.serv-card{
+  display:block;
+  text-decoration:none;
+  background:#ffffff; /* fondo tarjetas */
+  border:1px solid #000000; /* borde tarjetas */
+  border-radius:14px;
+  padding:1.1rem;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  color:#111;
+  max-width: 300px;        /* limita ancho y ayuda a centrar */
+}
+
+/* Fondo gris solo para la sección de tarjetas de servicios */
+.servicios-wrap {
+  background-color: #faefef98; /* gris suave */
+  padding: 2rem 9.25rem 3rem;
+  border-radius: 12px;
+}
+
+
+
+/* Colores de borde por área (mismo esquema que Novedades) */
+.card-verde{border-left:6px solid #1f8b4c;}
+.card-azul{border-left:6px solid #044472;}
+.card-rojo{border-left:6px solid #b02a37;}
+.card-amarillo{border-left:6px solid #d6a419;}
+.card-morado{border-left:6px solid #301934;}
+.card-gris{border-left:6px solid #6b7280;}
+
+
+/* Aumentamos ancho para dos columnas */
+.formulario-contacto {
+  max-width: 1000px;  /* antes: 600px */ /*ancho de rellenar el formulario*/
+  margin: 0 auto 4rem auto;
+  padding: 0 1rem;
+}
+
+/* Layout dos columnas: formulario + info */
+.formulario-contenedor {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+/* El formulario ocupa ~60% */
+.formulario-contacto form {
+  flex: 0 0 60%;
+}
+
+/* Tarjeta de info a la derecha (~35%) */
+.info-contacto {
+  flex: 0 0 35%;
+  padding: 2rem; /* corregir desplazamiento texto de la derecha */
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.0rem; /*tamaño letra de texto a la derecha*/
+  color: #333;
+  line-height: 1.1; /*ancho de texto a la derecha*/
+}
+
+.info-contacto p {
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.info-contacto hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 0.8rem 0 1rem;
+}
+
+.info-contacto i {
+  color: #044472;
+  font-size: 1.3rem;
+  margin-right: 0.6rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formulario-contenedor { flex-direction: column; }
+  .formulario-contacto form, .info-contacto { flex: 1 1 auto; }
+  .info-contacto { text-align: center; }
+  .info-contacto p { justify-content: center; }
+}
+
+/* Estilo para el enlace "+ info" en tarjetas de servicios */
+.mas-info {
+  display: block;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #044472;
+  font-weight: bold;
+  margin-top: 0.6rem;
+}
+
+.mas-info:hover {
+  text-decoration: underline;
+}
+
+/*estilo de horario de atencion*/
+
+.horario { display: flex; flex-direction: column; gap: .35rem; }
+
+.horario-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;   /* etiqueta a la izq., hora a la dcha. */
+  gap: 1rem;
+}
+
+.h-label { font-weight: 600; color: #222; }
+.h-time  { white-space: nowrap; }   /* evita partir “10:00 – 21:00” */
+
+.h-cerrado { color: #b02a37; font-weight: 700; }
+
+
+/* Espaciado entre filas de contacto */
+.contact-row + .contact-row { margin-top: 1rem; }
+
+/* Separación entre el título (strong) y el enlace */
+.contact-row strong { display: inline-block; margin-bottom: .35rem; }
+
+/* Estilo del enlace clicable (tel/mail) */
+.contact-link{
+  color: #2a176b;            /* azul corporativo */
+  font-weight: 700;          /* un poco más contundente */
+  text-decoration: none;
+  letter-spacing: .2px;
+}
+.contact-link:hover{
+  text-decoration: underline;
+  filter: brightness(0.95);
+}
+
+/* Opcional: iconos un pelín más separados */
+.contact-row i { margin-right: .6rem; }
+
+
+/* ===== Footer ===== */
+.site-footer{
+  margin-top: 2.5rem;
+  padding: 1rem 1.25rem;
+  background: #f6f6f8;
+  border-top: 1px solid #e7e7ea;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+  font-size: .95rem;
+}
+
+.site-footer .legal-links{
+  display: flex;
+  gap: .6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  font-weight: 600;
+}
+
+.site-footer .legal-links a{
+  color: #044472;              /* mismo tono azul corporativo */
+  text-decoration: none;
+}
+
+.site-footer .legal-links a:hover{
+  text-decoration: underline;
+}
+
+@media (max-width: 640px){
+  .site-footer{
+    flex-direction: column;
+    text-align: center;
+  }
+}

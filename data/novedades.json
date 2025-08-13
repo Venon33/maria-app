@@ -1,0 +1,26 @@
+[
+  {
+    "titulo": "Reforma del Código Civil (2025)",
+    "resumen": "Entró en vigor la nueva regulación sobre contratos digitales...",
+    "fecha": "2025-07-10",
+    "slug": "reforma-codigo-civil"
+  },
+  {
+    "titulo": "Cambios en la Ley de Extranjería",
+    "resumen": "Se amplían los plazos para la tramitación de residencia temporal...",
+    "fecha": "2025-06-28",
+    "slug": "cambios-ley-extranjeria"
+  },
+  {
+    "titulo": "Nueva normativa de arrendamientos urbanos",
+    "resumen": "La nueva ley introduce límites a la subida anual de alquileres...",
+    "fecha": "2025-08-05",
+    "slug": "nueva-ley-arrendamientos"
+  },
+  {
+    "titulo": "Reforma procesal penal",
+    "resumen": "Se agilizan los plazos y se introducen juicios telemáticos...",
+    "fecha": "2025-08-11",
+    "slug": "reforma-procesal-penal"
+  }
+]
