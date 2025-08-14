@@ -112,6 +112,7 @@ export default function Home() {
               onClick={() => setShowContactoDropdown(!showContactoDropdown)}
               aria-haspopup="true"
               aria-expanded={showContactoDropdown}
+              type="button"
             >
               <i className="fas fa-envelope"></i> Contacto
             </button>
@@ -119,7 +120,7 @@ export default function Home() {
             {showContactoDropdown && (
               <div
                 className="dropdown-menu contacto-dropdown"
-                style={{ textAlign: 'center', left: '50%', transform: 'translateX(-50%)' }}
+                
               >
                 <a
                   href="https://wa.me/34747444017"

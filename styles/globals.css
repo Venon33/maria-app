@@ -163,7 +163,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 
 /* ================== Servicios (tarjetas) ================== */
 .servicios-wrap{
-  max-width:1100px; margin:0 auto; background-color:var(--gris-fondo);
+  max-width:1500px; margin:0 auto; background-color:var(--gris-fondo);
   padding:2rem 4rem 3rem; border-radius:12px;
 }
 .servicios-header{ text-align:center; margin-bottom:1.5rem; }
@@ -171,18 +171,32 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   font-family:'Playfair Display',serif; font-size:2.2rem; margin:0; color:#000; font-weight:700;
 }
 .servicios-sub{ color:#555; margin-top:.4rem; }
+
+/* mismo layout; en desktop las tarjetas se estiran a la misma altura */
 .servicios-grid{
   display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:3.5rem; justify-items:center;
+  gap:3.5rem; justify-items:center; align-items:stretch;
 }
+
+/* tarjetas con alto uniforme */
 .serv-card{
-  display:block; text-decoration:none; background:#fff; border:1px solid #000;
+  display:flex; flex-direction:column; /* para poder empujar +info al final */
+  text-decoration:none; background:#fff; border:1px solid #000;
   border-radius:14px; padding:1.1rem; box-shadow:0 6px 18px rgba(0,0,0,.06);
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   color:#111; max-width:300px; width:100%;
+  min-height: 190px;   /* 🔹 alto mínimo uniforme (ajusta si quieres) */
 }
+.serv-card h3{ margin:.2rem 0 .4rem; font-weight:700; font-size:1.15rem; }
+.serv-card p{ margin:0; line-height:1.55; flex:1 1 auto; }  /* 🔹 ocupa el espacio medio */
 .serv-card:hover{ transform:translateY(-3px); box-shadow:0 10px 22px rgba(0,0,0,.10); border-color:#e6e6e6; }
-.mas-info{ display:block; text-align:right; font-size:.9rem; color:var(--color-azul); font-weight:bold; margin-top:.6rem; }
+
+/* +info siempre abajo a la derecha y homogéneo */
+.mas-info{
+  margin-top:auto;         /* 🔹 empuja hacia el fondo */
+  align-self:flex-end;     /* 🔹 a la derecha */
+  font-size:.9rem; color:var(--color-azul); font-weight:bold; text-decoration:none;
+}
 .mas-info:hover{ text-decoration:underline; }
 
 /* Colores borde tarjetas servicios */
@@ -195,7 +209,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 
 /* ================== Novedades (tarjetas) ================== */
 .novedades-wrap{
-  max-width:1100px; margin:0 auto; background-color:var(--gris-fondo);
+  max-width:1500px; margin:0 auto; background-color:var(--gris-fondo);
   padding:2rem 4rem 3rem; border-radius:12px;
 }
 .novedades-header{ text-align:center; margin-bottom:1.5rem; }
@@ -356,3 +370,5 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 @supports (overflow-wrap: anywhere){
   .contact-link{ overflow-wrap: anywhere; }
 }
+
+
