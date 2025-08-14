@@ -136,7 +136,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 
 /* Tarjeta info a la derecha */
 .info-contacto{
-  flex:0 0 35%; padding:2rem; background:rgba(255,255,255,.95); border-radius:10px;
+  flex:0 0 35%; padding:1.5rem; background:rgba(255,255,255,.95); border-radius:10px;
   box-shadow:0 4px 12px rgba(0,0,0,.08);
   font-size:1rem; color:#333; line-height:1.4;
 }
@@ -290,4 +290,69 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   .contacto-dropdown{ min-width:75%; }
   .servicios-grid, .novedades-grid{ gap:1.25rem; }
   .formulario-contacto{ padding:0 1rem; }
+}
+
+
+/* ===== Desktop: más aire entre items del menú ===== */
+@media (min-width: 1025px){
+  .navegacion{
+    gap: 2.25rem;        /* antes estaba muy junto */
+  }
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    padding: .6rem 1rem; /* área clicable cómoda */
+  }
+}
+
+/* ===== Tablet/Móvil: evitar solapes en la cabecera ===== */
+@media (max-width: 900px){
+  .header{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+  }
+  .titulo-despacho{
+    position: static;   /* quita offsets */
+    left: auto; top: auto;
+    height: auto;
+    margin: 0 0 .75rem 0;
+  }
+  .quienes-somos{
+    margin-top: 0;      /* sin margen negativo */
+    max-width: 100%;
+    padding: 0 .5rem;
+    text-align: center;
+  }
+}
+
+/* ===== Dropdown Contacto: centrado bajo el botón en desktop, fluido en móvil ===== */
+.dropdown{ position: relative; }
+.dropdown-menu{
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+@media (max-width: 768px){
+  .dropdown-menu{
+    position: static !important;
+    transform: none !important;
+    left: auto !important; top: auto !important;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    text-align: center;
+    padding: .25rem 0;
+    margin-top: .25rem;
+  }
+}
+
+/* ===== Evitar que el teléfono/email se partan en dos líneas ===== */
+.nowrap{ white-space: nowrap; }
+
+/* Por si el número sigue rompiendo en móviles muy estrechos */
+@supports (overflow-wrap: anywhere){
+  .contact-link{ overflow-wrap: anywhere; }
 }

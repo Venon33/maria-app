@@ -206,22 +206,16 @@ export default function Home() {
           {/* Información de contacto */}
           <div className="info-contacto">
             <div className="horario-card">
-              <div
-                className="horario-header"
-                style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
-              >
-                <i className="fas fa-clock" aria-hidden="true"></i>
-                <span>Horario de atención</span>
-
-                <span
-                  style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-                >
-                  <i className="fas fa-phone-alt" style={{ color: '#044472' }}></i>
-                  <a className="contact-link" href="tel:+34747444017">
-                    (+34) 747 44 40 17
-                  </a>
-                </span>
-              </div>
+              <div className="horario-header" style={{ flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <i className="fas fa-clock" aria-hidden="true"></i>
+    <span>Horario de atención</span>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <i className="fas fa-phone-alt" style={{ color: '#044472' }}></i>
+    <a className="contact-link nowrap" href="tel:+34747444017">(+34) 747 44 40 17</a>
+  </div>
+</div>
 
               {/* Reloj: solo se muestra cuando hay fecha para evitar hidratación */}
               {now ? (
