@@ -8,34 +8,26 @@
   --gris-fondo:#f5f5f5;
 }
 
-/* ================== Header / Cabecera ================== */
-.header{
-  display:flex; align-items:flex-start; flex-wrap:wrap; gap:20px; padding:1rem;
-}
-.logo-foto{
-  width:420px; height:auto; box-shadow:0 0 15px rgba(0,0,0,.2);
-}
-.titulo-despacho{
-  font-size:4rem; font-weight:bold; color:#000; text-align:center;
-  display:flex; align-items:center; justify-content:center;
-  height:350px; max-width:90%; word-break:break-word;
-  position:relative; top:-90px; left:90px; margin-left:20px;
-}
-.nombre-firma{ font-weight:900; }
+/* ================== Base / Reset útil ================== */
+*{ box-sizing:border-box; }
+html{ font-size:100%; }
+@media (max-width:640px){ html{ font-size:95%; } }
+@media (max-width:420px){ html{ font-size:92%; } }
 
-/* ¿Quiénes somos? */
-.quienes-somos{
-  max-width:550px; text-align:left; font-size:1rem; line-height:1.5;
-  margin-top:-140px; background:none!important; border:none!important;
-  box-shadow:none!important; border-radius:0!important; padding:.5rem!important;
+body{
+  margin:0;
+  -webkit-text-size-adjust:100%;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+  font-family:'Raleway',sans-serif;
 }
-.quienes-somos .titulo-quienes{
-  font-size:1.8rem; color:#000!important; margin-bottom:.5rem;
-  font-family:'Playfair Display',serif; font-weight:600;
-}
-.quienes-somos .texto-quienes{ font-size:1rem; color:#03020e!important; line-height:1.6; }
+img, video, canvas, svg{ max-width:100%; height:auto; }
 
-/* Cabecera con imagen de fondo */
+/* Contenedor fluido opcional */
+.container{ width:min(100% - 2rem,1100px); margin-inline:auto; }
+
+/* ================== Cabecera ================== */
 .cabecera-fondo{
   position:relative;
   background:url('/fondo de cabecera.jpeg') center/cover no-repeat;
@@ -46,63 +38,91 @@
 }
 .cabecera-fondo>*{ position:relative; z-index:1; }
 
-/* ================== Navegación (menú) ================== */
+.header{
+  display:flex; align-items:flex-start; flex-wrap:wrap; gap:20px; padding:1rem;
+}
+.logo-foto{ width:420px; height:auto; box-shadow:0 0 15px rgba(0,0,0,.2); }
+.foto-con-colegiacion{ display:flex; flex-direction:column; align-items:center; }
+.colegiacion-pequena{ font-size:.8rem; color:#333; margin-top:.3rem; text-align:center; }
+
+.titulo-despacho{
+  color:#000; font-weight:bold;
+  display:flex; align-items:center; justify-content:center;
+  height:350px; max-width:90%; word-break:break-word;
+  position:relative; top:-90px; left:90px; margin-left:20px;
+  font-size: clamp(1.8rem, 3vw + 1rem, 4rem);
+}
+.nombre-firma{ font-weight:900; }
+
+/* ¿Quiénes somos? */
+.quienes-somos{
+  max-width:550px; text-align:left; font-size:1rem; line-height:1.5;
+  margin-top:-140px; background:none!important; border:none!important; box-shadow:none!important;
+  border-radius:0!important; padding:.5rem!important;
+}
+.quienes-somos .titulo-quienes{
+  font-size:1.8rem; color:#000!important; margin-bottom:.5rem;
+  font-family:'Playfair Display',serif; font-weight:600;
+}
+.quienes-somos .texto-quienes{ font-size:1rem; color:#03020e!important; line-height:1.6; }
+
+/* ================== Navegación ================== */
 .navegacion{
-  display:flex; justify-content:center; align-items:center; flex-wrap:wrap;
-  margin:1rem auto; padding:.8rem 1rem; background:transparent; border-radius:.5rem; max-width:90%;
+  display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
+  gap:.75rem; margin:1rem auto; padding:.8rem 1rem; background:transparent; border-radius:.5rem; max-width:90%;
 }
-.navegacion a, .navegacion button, .dropdown-toggle{
-  font-size:1.9rem; font-weight:600; color:#000; background:none; border:none; cursor:pointer;
-  text-decoration:none; margin:0 2rem; padding:.5rem; transition:color .3s, transform .3s;
-  font-family:'Raleway',sans-serif;
+.navegacion a,
+.navegacion button,
+.navegacion .dropdown-toggle{
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size: clamp(1.1rem, 1.6vw + .4rem, 1.9rem);
+  font-weight:600; color:#000; background:none; border:none; cursor:pointer;
+  text-decoration:none; padding:.6rem .8rem; transition:color .3s, transform .3s;
+  text-align:center; line-height:1; white-space:nowrap;
 }
-.navegacion a:hover, .navegacion button:hover, .dropdown-toggle:hover{
+.navegacion a:hover,
+.navegacion button:hover,
+.navegacion .dropdown-toggle:hover{
   color:#092fd6; transform:scale(1.05);
 }
 
-/* Dropdown genérico */
-.dropdown{ position:relative; display:inline-block; }
+/* Dropdown */
+.dropdown{ position:relative; }
 .dropdown-menu{
-  display:flex; flex-direction:column; background:transparent; padding:0; border-radius:0;
-  box-shadow:none; margin-top:.5rem; position:absolute; top:100%; left:0; z-index:1000;
+  position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%);
+  z-index:1000; display:flex; flex-direction:column; align-items:stretch; min-width:220px;
+  background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:.6rem .9rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 .dropdown-menu a{
-  color:#000; font-size:1.2rem; text-decoration:none; padding:.1rem 0; transition:color .3s;
-  font-family:'Raleway',sans-serif;
+  color:#000; font-size:1.1rem; text-decoration:none; padding:.45rem .25rem; transition:color .2s;
 }
 .dropdown-menu a:hover{ color:#5d3b8c; }
 
-/* Dropdown de Contacto centrado */
-.contacto-dropdown{
-  left:50%; transform:translateX(-50%); right:auto; min-width:220px;
-  background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:.6rem .9rem;
-  box-shadow:0 8px 20px rgba(0,0,0,.08); text-align:center;
-}
-.contacto-dropdown .contacto-item{
-  display:block; padding:.4rem 0; font-size:1.05rem; font-weight:700; text-decoration:none;
-}
+/* Específico: submenú Contacto centrado */
+.contacto-dropdown{ text-align:center; }
 
 /* ================== Formulario de contacto (2 columnas) ================== */
-.formulario-contacto{
-  max-width:1000px; margin:0 auto 4rem auto; padding:0 1rem;
-}
+.formulario-contacto{ max-width:1000px; margin:0 auto 4rem auto; padding:0 1rem; }
 .formulario-contacto h2{
   font-family:'Playfair Display',serif; color:var(--color-azul);
-  font-size:2.1rem; font-weight:bold; margin-bottom:1.5rem;
+  font-size:2.1rem; font-weight:bold; margin-bottom:1.2rem;
   display:flex; align-items:center; gap:.6rem; text-align:left;
 }
 .formulario-contacto h2::before{
-  content:"\f0e0"; font-family:"Font Awesome 5 Free"; font-weight:900;
-  font-size:1.6rem; color:inherit;
+  content:"\f0e0"; font-family:"Font Awesome 5 Free"; font-weight:900; font-size:1.6rem; color:inherit;
 }
-.formulario-contenedor{
-  display:flex; justify-content:space-between; align-items:flex-start; gap:3rem;
-}
+.formulario-contenedor{ display:flex; justify-content:space-between; align-items:flex-start; gap:3rem; }
+
 .formulario-contacto form{
   flex:0 0 60%; display:flex; flex-direction:column; gap:1rem;
 }
-.formulario-contacto input, .formulario-contacto textarea{
+.formulario-contacto input,
+.formulario-contacto textarea{
   padding:.75rem 1rem; border:1px solid #ccc; border-radius:6px; font-size:1rem; font-family:'Raleway',sans-serif;
+}
+.formulario-contacto textarea{
+  height:150px; resize:none;
 }
 .formulario-contacto button{
   background:linear-gradient(135deg,#044472,#0666a3); color:#fff; border:none;
@@ -113,31 +133,15 @@
   background:linear-gradient(135deg,#03345a,#055a86);
   transform:translateY(-2px) scale(1.05); box-shadow:0 6px 14px rgba(0,0,0,.25);
 }
-.formulario-contacto textarea {
-  padding: .75rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-family: 'Raleway', sans-serif;
-  height: 150px; /* altura fija más grande */
-  resize: none;  /* desactiva el redimensionado */
-}
 
-
-/* Tarjeta info contacto (derecha) */
+/* Tarjeta info a la derecha */
 .info-contacto{
   flex:0 0 35%; padding:2rem; background:rgba(255,255,255,.95); border-radius:10px;
   box-shadow:0 4px 12px rgba(0,0,0,.08);
-  font-family:'Raleway',sans-serif; font-size:1rem; color:#333; line-height:1.4;
+  font-size:1rem; color:#333; line-height:1.4;
 }
-.contact-row{ display:flex; align-items:flex-start; gap:.6rem; }
-.contact-row + .contact-row{ margin-top:1rem; }
-.contact-row i{ color:var(--color-azul); font-size:1.2rem; margin-top:.15rem; }
-.contact-row strong{ display:inline-block; margin-bottom:.35rem; }
-.contact-link{ color:#2a176b; font-weight:700; text-decoration:none; letter-spacing:.2px; }
-.contact-link:hover{ text-decoration:underline; filter:brightness(.95); }
 
-/* ===== Horario (limpio, solo recuadro en reloj) ===== */
+/* Horario dentro de la tarjeta */
 .horario-card{
   width:100%; text-align:center; background:none; border:none; padding:.5rem 1rem; margin-top:-10px; box-shadow:none;
 }
@@ -157,7 +161,7 @@
 .h-time{ white-space:nowrap; color:#111; }
 .h-cerrado{ color:#b02a37; font-weight:700; }
 
-/* ================== Servicios (listado con tarjetas) ================== */
+/* ================== Servicios (tarjetas) ================== */
 .servicios-wrap{
   max-width:1100px; margin:0 auto; background-color:var(--gris-fondo);
   padding:2rem 4rem 3rem; border-radius:12px;
@@ -175,7 +179,7 @@
   display:block; text-decoration:none; background:#fff; border:1px solid #000;
   border-radius:14px; padding:1.1rem; box-shadow:0 6px 18px rgba(0,0,0,.06);
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  color:#111; max-width:300px;
+  color:#111; max-width:300px; width:100%;
 }
 .serv-card:hover{ transform:translateY(-3px); box-shadow:0 10px 22px rgba(0,0,0,.10); border-color:#e6e6e6; }
 .mas-info{ display:block; text-align:right; font-size:.9rem; color:var(--color-azul); font-weight:bold; margin-top:.6rem; }
@@ -189,7 +193,7 @@
 .card-morado{ border-left:6px solid #301934; }
 .card-gris{  border-left:6px solid #6b7280; }
 
-/* ================== Novedades Jurídicas (tarjetas) ================== */
+/* ================== Novedades (tarjetas) ================== */
 .novedades-wrap{
   max-width:1100px; margin:0 auto; background-color:var(--gris-fondo);
   padding:2rem 4rem 3rem; border-radius:12px;
@@ -210,17 +214,14 @@
   border:1px solid #eee; border-radius:14px; padding:1rem 1.1rem 1.1rem;
   box-shadow:0 6px 18px rgba(0,0,0,.06);
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  max-width:340px; width:100%;
 }
 .novedad-card:hover{ transform:translateY(-3px); box-shadow:0 10px 22px rgba(0,0,0,.10); border-color:#e6e6e6; }
 .novedad-card h3{ margin:.4rem 0 .35rem; font-size:1.1rem; color:#111; }
 .novedad-card p{ margin:0 0 .6rem; color:#444; line-height:1.55; }
 .novedad-card time{ font-size:.9rem; color:#777; }
 
-/* Colores y badges novedades (comparten nombres con servicios) */
-.card-azul{ border-left:6px solid #044472; }
-.card-verde{ border-left:6px solid #1f8b4c; }
-.card-rojo{ border-left:6px solid #b02a37; }
-.card-amarillo{ border-left:6px solid #d6a419; }
+/* Badges (si las usas) */
 .badge{
   display:inline-block; font-size:.75rem; line-height:1; padding:.45rem .55rem;
   border-radius:999px; background:#301934; color:#fff; letter-spacing:.2px;
@@ -238,16 +239,9 @@
 .btn-volver:hover{ background:#03345a; transform:translateY(-1px); }
 
 /* ================== Páginas de servicio (detalle) ================== */
-.servicio-container{
-  display:flex; flex-direction:column; align-items:center; padding:3rem;
-}
-.cabecera-horizontal{
-  display:flex; align-items:flex-start; max-width:1000px; width:100%;
-  gap:2rem; flex-wrap:wrap;
-}
-.foto-abogada{
-  border-radius:8px; object-fit:cover; flex-shrink:0; width:350px; height:450px;
-}
+.servicio-container{ display:flex; flex-direction:column; align-items:center; padding:3rem; }
+.cabecera-horizontal{ display:flex; align-items:flex-start; max-width:1000px; width:100%; gap:2rem; flex-wrap:wrap; }
+.foto-abogada{ border-radius:8px; object-fit:cover; flex-shrink:0; width:350px; height:450px; }
 .texto-lateral{ flex:1; display:flex; flex-direction:column; gap:.5rem; }
 .texto-lateral h1{ font-size:2.1rem; color:#000; margin:0; }
 .texto-lateral h2{ font-size:1.9rem; color:#0408db; margin:.8rem 0 0 0; text-decoration:underline; }
@@ -276,92 +270,24 @@
 .site-footer .legal-links a{ color:var(--color-azul); text-decoration:none; }
 .site-footer .legal-links a:hover{ text-decoration:underline; }
 
-/* ================== Responsive ================== */
+/* ================== Responsive extra ================== */
 @media (max-width:1024px){
   .servicios-wrap, .novedades-wrap{ padding:1.5rem 2rem 2.25rem; }
 }
 @media (max-width:768px){
   .header{ flex-direction:column; align-items:center; text-align:center; }
   .logo-foto{ width:10rem; margin-bottom:1rem; }
-  .navegacion{ flex-direction:column; gap:1rem; }
+  .navegacion{ flex-direction:column; gap:.5rem; }
   .formulario-contenedor{ flex-direction:column; }
   .formulario-contacto form, .info-contacto{ flex:1 1 auto; }
   .info-contacto{ text-align:center; padding:1.25rem; }
-  .contact-row{ justify-content:center; }
 }
 @media (max-width:640px){
-  .titulo-despacho{
-    position:static; height:auto; margin:0 0 1rem 0; font-size:2rem;
-  }
-  .dropdown-menu{ position:static; background:transparent; box-shadow:none; padding:.25rem 0; }
-  .contacto-dropdown{ left:50%; transform:translateX(-50%); min-width:75%; }
-  .logo-foto{ width:100%; max-width:420px; height:auto; }
+  .titulo-despacho{ position:static; height:auto; margin:0 0 1rem 0; }
+  .logo-foto{ width:100%; max-width:420px; }
+  .dropdown-menu{ position:static; transform:none; left:auto; top:auto; width:100%;
+    background:transparent; box-shadow:none; padding:.25rem 0; margin-top:.25rem; }
+  .contacto-dropdown{ min-width:75%; }
   .servicios-grid, .novedades-grid{ gap:1.25rem; }
   .formulario-contacto{ padding:0 1rem; }
-}
-
-/* Extra: foto + colegiación bajo la imagen */
-.foto-con-colegiacion{ display:flex; flex-direction:column; align-items:center; }
-.colegiacion-pequena{ font-size:.8rem; color:#333; margin-top:.3rem; text-align:center; }
-
-
-
-/* ===== Navegación: base mejorada ===== */
-.navegacion {
-  display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
-  gap: .75rem;
-}
-.navegacion a,
-.navegacion button,
-.navegacion .dropdown-toggle{
-  display:inline-flex; align-items:center; justify-content:center;
-  text-align:center; line-height:1; white-space:nowrap;
-}
-
-/* ===== Dropdown: centrado debajo del botón en escritorio ===== */
-.dropdown{ position: relative; }
-.dropdown-menu{
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  display: flex; flex-direction: column; align-items: stretch;
-  min-width: 220px;
-}
-
-/* ===== MÓVIL: apilar y menú fluido debajo del botón ===== */
-@media (max-width: 768px){
-  .navegacion{
-    flex-direction: column;
-    gap: .5rem;
-  }
-
-  /* El menú desplegable ocupa el ancho del contenedor y aparece justo debajo */
-  .dropdown-menu{
-    position: static !important;
-    transform: none !important;
-    left: auto !important; top: auto !important;
-    width: 100%;
-    align-items: center;      /* centra los <a> */
-    background: transparent;  /* sin panel */
-    box-shadow: none;
-    padding: .25rem 0;
-    margin-top: .25rem;
-  }
-
-  .dropdown-menu a{
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: .6rem 0;         /* área táctil cómoda */
-    font-size: 1.05rem;
-  }
-}
-
-/* Mejoras de accesibilidad táctil (todas las pantallas) */
-.navegacion a,
-.navegacion button,
-.dropdown-toggle{
-  padding: .6rem .8rem;
 }

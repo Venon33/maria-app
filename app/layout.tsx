@@ -14,15 +14,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {/* ✅ Viewport correcto para adaptarse a cualquier pantalla */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        />
+        <meta charSet="utf-8" />
       </head>
       <body>
         {children}
 
         {/* Footer global */}
         <footer className="site-footer">
-          <p>© {year} Despacho de Abogados María Lara Molina. Todos los derechos reservados.</p>
-        
+          <p>
+            © {year} Despacho de Abogados María Lara Molina. Todos los derechos
+            reservados.
+          </p>
         </footer>
 
         {/* Logo fijo abajo a la derecha */}

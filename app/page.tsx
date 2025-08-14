@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
-  // (puedes borrar showDropdown si ya no lo usas)
+  // (puedes borrar showDropdown si no lo usas ya)
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -13,16 +13,16 @@ export default function Home() {
   const [showContactoDropdown, setShowContactoDropdown] = useState(false);
   const contactoDropdownRef = useRef<HTMLDivElement>(null);
   const contactoTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [now, setNow] = useState(new Date());
-  const [mounted, setMounted] = useState(false);
 
-useEffect(() => {
-  setMounted(true);
-  const id = setInterval(() => setNow(new Date()), 1000);
-  return () => clearInterval(id);
-}, []);
+  // ⏱️ Evitar hidratación: no renderizamos reloj hasta montar
+  const [now, setNow] = useState<Date | null>(null);
 
-
+  useEffect(() => {
+    // monta: fija hora y arranca intervalo
+    setNow(new Date());
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => setShowDropdown(false), 500);
@@ -32,7 +32,7 @@ useEffect(() => {
   };
 
   const handleContactoMouseLeave = () => {
-    contactoTimeoutRef.current = setTimeout(() => setShowContactoDropdown(false), 500);
+    contactoTimeoutRef.current = setTimeout(() => setShowContactoDropdown(false), 300);
   };
   const handleContactoMouseEnter = () => {
     if (contactoTimeoutRef.current) clearTimeout(contactoTimeoutRef.current);
@@ -58,7 +58,7 @@ useEffect(() => {
           <div className="foto-con-colegiacion">
             <Image
               src="/20250622_085709.jpg"
-              alt="Retrato de Marìa Lara Molina"
+              alt="Retrato de María Lara Molina"
               className="logo-foto"
               width={300}
               height={400}
@@ -66,10 +66,12 @@ useEffect(() => {
             />
             <p className="colegiacion-pequena">Colegiada Nº 3316 (ICACR)</p>
           </div>
+
           <div>
             <div className="titulo-despacho">
               Despacho de Abogados<br />María Lara Molina
             </div>
+
             <section className="quienes-somos" id="quienes-somos">
               <h2 className="titulo-quienes">¿Quiénes somos?</h2>
               <p className="texto-quienes">
@@ -113,8 +115,12 @@ useEffect(() => {
             >
               <i className="fas fa-envelope"></i> Contacto
             </button>
+
             {showContactoDropdown && (
-              <div className="dropdown-menu contacto-dropdown" style={{ paddingLeft: '40px', textAlign: 'center' }}>
+              <div
+                className="dropdown-menu contacto-dropdown"
+                style={{ textAlign: 'center', left: '50%', transform: 'translateX(-50%)' }}
+              >
                 <a
                   href="https://wa.me/34747444017"
                   target="_blank"
@@ -144,91 +150,115 @@ useEffect(() => {
         </nav>
       </div>
 
- {/* FORMULARIO DE CONTACTO */}
-<section className="formulario-contacto" id="contacto">
-  <h2>Formulario de Contacto</h2>
-  <div className="formulario-contenedor">
-    
-    {/* Formulario */}
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const form = e.currentTarget as HTMLFormElement;
-        const formData = new FormData(form);
-        const payload = {
-          name: String(formData.get('name') || ''),
-          email: String(formData.get('email') || ''),
-          message: String(formData.get('message') || ''),
-        };
+      {/* FORMULARIO DE CONTACTO */}
+      <section className="formulario-contacto" id="contacto">
+        <h2>Formulario de Contacto</h2>
 
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
+        <div className="formulario-contenedor">
+          {/* Formulario */}
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const form = e.currentTarget as HTMLFormElement;
+              const formData = new FormData(form);
+              const payload = {
+                name: String(formData.get('name') || ''),
+                email: String(formData.get('email') || ''),
+                message: String(formData.get('message') || ''),
+              };
 
-        if (res.ok) {
-          alert('✅ Mensaje enviado. ¡Gracias!');
-          form.reset();
-        } else {
-          const data = await res.json().catch(() => ({}));
-          alert('❌ No se pudo enviar: ' + (data?.error || 'Inténtalo de nuevo'));
-        }
-      }}
-    >
-      <input name="name" type="text" placeholder="Tu nombre" required />
-      <input name="email" type="email" placeholder="Tu correo" required />
-      <textarea name="message" rows={5} placeholder="Tu mensaje" required />
+              const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              });
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <button type="submit">Enviar</button>
-        <span>
-          <i className="fas fa-envelope" style={{ marginRight: '5px', color: '#044472' }}></i>
-          <a className="contact-link" href="mailto:m.lara.abogada@gmail.com">
-            m.lara.abogada@gmail.com
-          </a>
-        </span>
-      </div>
-    </form>
+              if (res.ok) {
+                alert('✅ Mensaje enviado. ¡Gracias!');
+                form.reset();
+              } else {
+                const data = await res.json().catch(() => ({}));
+                alert('❌ No se pudo enviar: ' + (data?.error || 'Inténtalo de nuevo'));
+              }
+            }}
+          >
+            <input name="name" type="text" placeholder="Tu nombre" required />
+            <input name="email" type="email" placeholder="Tu correo" required />
+            <textarea
+              name="message"
+              rows={6}
+              placeholder="Tu mensaje"
+              required
+              style={{ resize: 'none' }}
+            />
 
-    {/* Información de contacto */}
-    <div className="info-contacto">
-      <div className="horario-card">
-        <div className="horario-header" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <i className="fas fa-clock" aria-hidden="true"></i>
-          <span>Horario de atención</span>
-          <span style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <i className="fas fa-phone-alt" style={{ color: '#044472' }}></i>
-            <a className="contact-link" href="tel:+34747444017">(+34) 747 44 40 17</a>
-          </span>
-        </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <button type="submit">Enviar</button>
+              <span>
+                <i className="fas fa-envelope" style={{ marginRight: '5px', color: '#044472' }}></i>
+                <a className="contact-link" href="mailto:m.lara.abogada@gmail.com">
+                  m.lara.abogada@gmail.com
+                </a>
+              </span>
+            </div>
+          </form>
 
-        <div className="clock" aria-live="polite">
-          {now.toLocaleDateString('es-ES', {
-            weekday: 'long', year: 'numeric', month: 'long', day: '2-digit'
-          }).replace(/^\w/, c => c.toUpperCase())}
-          {"  "}
-          {now.toLocaleTimeString('es-ES', { hour12: false })}
-        </div>
+          {/* Información de contacto */}
+          <div className="info-contacto">
+            <div className="horario-card">
+              <div
+                className="horario-header"
+                style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}
+              >
+                <i className="fas fa-clock" aria-hidden="true"></i>
+                <span>Horario de atención</span>
 
-        <div className="horario-list">
-          <div className="horario-item">
-            <span className="h-label">Lunes a Jueves</span>
-            <span className="h-time">10:00 – 21:00</span>
+                <span
+                  style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+                >
+                  <i className="fas fa-phone-alt" style={{ color: '#044472' }}></i>
+                  <a className="contact-link" href="tel:+34747444017">
+                    (+34) 747 44 40 17
+                  </a>
+                </span>
+              </div>
+
+              {/* Reloj: solo se muestra cuando hay fecha para evitar hidratación */}
+              {now ? (
+                <div className="clock" aria-live="polite">
+                  {now.toLocaleDateString('es-ES', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: '2-digit',
+                  }).replace(/^\w/, (c) => c.toUpperCase())}
+                  {'  '}
+                  {now.toLocaleTimeString('es-ES', { hour12: false })}
+                </div>
+              ) : (
+                <div className="clock" aria-hidden="true">--/--/----  --:--:--</div>
+              )}
+
+              <div className="horario-list">
+                <div className="horario-item">
+                  <span className="h-label">Lunes a Jueves</span>
+                  <span className="h-time">10:00 – 21:00</span>
+                </div>
+                <div className="horario-item">
+                  <span className="h-label">Viernes</span>
+                  <span className="h-time">10:00 – 15:00</span>
+                </div>
+                <div className="horario-item">
+                  <span className="h-label">Sábado y Domingo</span>
+                  <span className="h-cerrado">Cerrado</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="horario-item">
-            <span className="h-label">Viernes</span>
-            <span className="h-time">10:00 – 15:00</span>
-          </div>
-          <div className="horario-item">
-            <span className="h-label">Sábado y Domingo</span>
-            <span className="h-cerrado">Cerrado</span>
-          </div>
+          {/* /info-contacto */}
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+        {/* /formulario-contenedor */}
+      </section>
     </main>
   );
 }
