@@ -96,9 +96,14 @@ export default function Home() {
             <i className="fas fa-newspaper"></i> Novedades Jurídicas
           </Link>
 
-          <a href="#casos" className="link-casos">
-            <i className="fas fa-briefcase"></i> Opiniones
-          </a>
+          <a
+  href="https://g.page/r/TU_ID_DE_GOOGLE_RESEÑAS"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="link-casos"
+>
+  <i className="fas fa-briefcase"></i> Opiniones
+</a>
 
           {/* Contacto con submenú */}
           <div
