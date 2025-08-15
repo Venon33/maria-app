@@ -24,6 +24,10 @@ export default function Home() {
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+  fetch("/api/visitas").catch(() => {});
+}, []);
+
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => setShowDropdown(false), 500);
   };
