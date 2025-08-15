@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
-  // (puedes borrar showDropdown si no lo usas ya)
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -14,42 +13,35 @@ export default function Home() {
   const contactoDropdownRef = useRef<HTMLDivElement>(null);
   const contactoTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // ⏱️ Evitar hidratación: no renderizamos reloj hasta montar
+  // ⏱️ reloj solo tras montar (evita hidratación)
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
-    // monta: fija hora y arranca intervalo
     setNow(new Date());
     const id = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
 
+  // 👉 incrementa visitas
   useEffect(() => {
-  fetch("/api/visitas").catch(() => {});
-}, []);
+    (async () => {
+      try {
+        const r = await fetch('/api/visitas', { method: 'POST' });
+        // opcional: const {count} = await r.json(); console.log('📊 Visita #', count);
+      } catch {}
+    })();
+  }, []);
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => setShowDropdown(false), 500);
-  };
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-  };
+  const handleMouseLeave = () => { timeoutRef.current = setTimeout(() => setShowDropdown(false), 500); };
+  const handleMouseEnter = () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
 
-  const handleContactoMouseLeave = () => {
-    contactoTimeoutRef.current = setTimeout(() => setShowContactoDropdown(false), 300);
-  };
-  const handleContactoMouseEnter = () => {
-    if (contactoTimeoutRef.current) clearTimeout(contactoTimeoutRef.current);
-  };
+  const handleContactoMouseLeave = () => { contactoTimeoutRef.current = setTimeout(() => setShowContactoDropdown(false), 300); };
+  const handleContactoMouseEnter = () => { if (contactoTimeoutRef.current) clearTimeout(contactoTimeoutRef.current); };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setShowDropdown(false);
-      }
-      if (contactoDropdownRef.current && !contactoDropdownRef.current.contains(e.target as Node)) {
-        setShowContactoDropdown(false);
-      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setShowDropdown(false);
+      if (contactoDropdownRef.current && !contactoDropdownRef.current.contains(e.target as Node)) setShowContactoDropdown(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -60,14 +52,7 @@ export default function Home() {
       <div className="cabecera-fondo">
         <header className="header">
           <div className="foto-con-colegiacion">
-            <Image
-              src="/20250622_085709.jpg"
-              alt="Retrato de María Lara Molina"
-              className="logo-foto"
-              width={300}
-              height={400}
-              priority
-            />
+            <Image src="/20250622_085709.jpg" alt="Retrato de María Lara Molina" className="logo-foto" width={300} height={400} priority />
             <p className="colegiacion-pequena">Colegiada Nº 3316 (ICACR)</p>
           </div>
 
@@ -90,68 +75,25 @@ export default function Home() {
 
         {/* NAV */}
         <nav className="navegacion">
-          {/* Servicios (link directo a la página con tarjetas) */}
-          <Link href="/servicios" className="link-servicios">
-            <i className="fas fa-gavel"></i> Servicios
-          </Link>
+          <Link href="/servicios" className="link-servicios"><i className="fas fa-gavel"></i> Servicios</Link>
+          <Link href="/novedades-juridicas" className="link-novedades"><i className="fas fa-newspaper"></i> Novedades Jurídicas</Link>
+          <a href="https://g.page/r/TU_ID_DE_GOOGLE_RESEÑAS" target="_blank" rel="noopener noreferrer" className="link-casos">
+            <i className="fas fa-briefcase"></i> Opiniones
+          </a>
 
-          {/* Novedades Jurídicas (link directo) */}
-          <Link href="/novedades-juridicas" className="link-novedades">
-            <i className="fas fa-newspaper"></i> Novedades Jurídicas
-          </Link>
-
-          <a
-  href="https://g.page/r/TU_ID_DE_GOOGLE_RESEÑAS"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="link-casos"
->
-  <i className="fas fa-briefcase"></i> Opiniones
-</a>
-
-          {/* Contacto con submenú */}
-          <div
-            className="dropdown"
-            onMouseLeave={handleContactoMouseLeave}
-            onMouseEnter={handleContactoMouseEnter}
-            ref={contactoDropdownRef}
-          >
-            <button
-              className="link-contacto dropdown-toggle"
-              onClick={() => setShowContactoDropdown(!showContactoDropdown)}
-              aria-haspopup="true"
-              aria-expanded={showContactoDropdown}
-              type="button"
-            >
+          <div className="dropdown" onMouseLeave={handleContactoMouseLeave} onMouseEnter={handleContactoMouseEnter} ref={contactoDropdownRef}>
+            <button className="link-contacto dropdown-toggle" onClick={() => setShowContactoDropdown(!showContactoDropdown)} aria-haspopup="true" aria-expanded={showContactoDropdown} type="button">
               <i className="fas fa-envelope"></i> Contacto
             </button>
-
             {showContactoDropdown && (
-              <div
-                className="dropdown-menu contacto-dropdown"
-                
-              >
-                <a
-                  href="https://wa.me/34747444017"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="contacto-item whatsapp"
-                  style={{ color: '#25D366', fontSize: '1.3rem', fontWeight: 'bold' }}
-                >
+              <div className="dropdown-menu contacto-dropdown">
+                <a href="https://wa.me/34747444017" target="_blank" rel="noreferrer" className="contacto-item whatsapp" style={{ color:'#25D366', fontSize:'1.3rem', fontWeight:'bold' }}>
                   <i className="fab fa-whatsapp"></i> WhatsApp
                 </a>
-                <a
-                  href="mailto:m.lara.abogada@gmail.com"
-                  className="contacto-item correo"
-                  style={{ color: '#E63946', fontSize: '1.3rem', fontWeight: 'bold' }}
-                >
+                <a href="mailto:m.lara.abogada@gmail.com" className="contacto-item correo" style={{ color:'#E63946', fontSize:'1.3rem', fontWeight:'bold' }}>
                   <i className="fas fa-envelope"></i> Correo Electrónico
                 </a>
-                <a
-                  href="tel:+34747444017"
-                  className="contacto-item telefono"
-                  style={{ color: '#044472', fontSize: '1.3rem', fontWeight: 'bold' }}
-                >
+                <a href="tel:+34747444017" className="contacto-item telefono" style={{ color:'#044472', fontSize:'1.3rem', fontWeight:'bold' }}>
                   <i className="fas fa-phone-alt"></i> Teléfono
                 </a>
               </div>
@@ -165,107 +107,68 @@ export default function Home() {
         <h2>Formulario de Contacto</h2>
 
         <div className="formulario-contenedor">
-          {/* Formulario */}
           <form
             onSubmit={async (e) => {
               e.preventDefault();
               const form = e.currentTarget as HTMLFormElement;
-              const formData = new FormData(form);
+              const fd = new FormData(form);
               const payload = {
-                name: String(formData.get('name') || ''),
-                email: String(formData.get('email') || ''),
-                message: String(formData.get('message') || ''),
+                name: String(fd.get('name') || ''),
+                email: String(fd.get('email') || ''),
+                message: String(fd.get('message') || ''),
               };
-
-              const res = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-              });
-
-              if (res.ok) {
-                alert('✅ Mensaje enviado. ¡Gracias!');
-                form.reset();
-              } else {
-                const data = await res.json().catch(() => ({}));
-                alert('❌ No se pudo enviar: ' + (data?.error || 'Inténtalo de nuevo'));
-              }
+              const res = await fetch('/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+              if (res.ok) { alert('✅ Mensaje enviado. ¡Gracias!'); form.reset(); }
+              else { const data = await res.json().catch(()=>({})); alert('❌ No se pudo enviar: ' + (data?.error || 'Inténtalo de nuevo')); }
             }}
           >
             <input name="name" type="text" placeholder="Tu nombre" required />
             <input name="email" type="email" placeholder="Tu correo" required />
-            <textarea
-              name="message"
-              rows={6}
-              placeholder="Tu mensaje"
-              required
-              style={{ resize: 'none' }}
-            />
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <textarea name="message" rows={6} placeholder="Tu mensaje" required style={{ resize:'none' }} />
+            <div style={{ display:'flex', alignItems:'center', gap:'1rem' }}>
               <button type="submit">Enviar</button>
               <span>
-                <i className="fas fa-envelope" style={{ marginRight: '5px', color: '#044472' }}></i>
-                <a className="contact-link" href="mailto:m.lara.abogada@gmail.com">
-                  m.lara.abogada@gmail.com
-                </a>
+                <i className="fas fa-envelope" style={{ marginRight:5, color:'#044472' }} />
+                <a className="contact-link" href="mailto:m.lara.abogada@gmail.com">m.lara.abogada@gmail.com</a>
               </span>
             </div>
           </form>
 
-          {/* Información de contacto */}
           <div className="info-contacto">
             <div className="horario-card">
-              <div className="horario-header" style={{ flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
-  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-    <i className="fas fa-clock" aria-hidden="true"></i>
-    <span>Horario de atención</span>
-  </div>
-  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-    <i className="fas fa-phone-alt" style={{ color: '#044472' }}></i>
-    <a className="contact-link nowrap" href="tel:+34747444017">(+34) 747 44 40 17</a>
-  </div>
-</div>
+              <div className="horario-header" style={{ flexDirection:'column', alignItems:'center', gap:'.25rem' }}>
+                <div style={{ display:'flex', alignItems:'center', gap:'.5rem' }}>
+                  <i className="fas fa-clock" aria-hidden="true"></i><span>Horario de atención</span>
+                </div>
+                <div style={{ display:'flex', alignItems:'center', gap:'.5rem' }}>
+                  <i className="fas fa-phone-alt" style={{ color:'#044472' }}></i>
+                  <a className="contact-link nowrap" href="tel:+34747444017">(+34) 747 44 40 17</a>
+                </div>
+              </div>
 
-              {/* Reloj: solo se muestra cuando hay fecha para evitar hidratación */}
               {now ? (
                 <div className="clock" aria-live="polite">
-                  {now.toLocaleDateString('es-ES', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: '2-digit',
-                  }).replace(/^\w/, (c) => c.toUpperCase())}
+                  {now.toLocaleDateString('es-ES',{ weekday:'long', year:'numeric', month:'long', day:'2-digit' }).replace(/^\w/, c=>c.toUpperCase())}
                   {'  '}
-                  {now.toLocaleTimeString('es-ES', { hour12: false })}
+                  {now.toLocaleTimeString('es-ES',{ hour12:false })}
                 </div>
               ) : (
                 <div className="clock" aria-hidden="true">--/--/----  --:--:--</div>
               )}
 
               <div className="horario-list">
-                <div className="horario-item">
-                  <span className="h-label">Lunes a Jueves</span>
-                  <span className="h-time">10:00 – 21:00</span>
-                </div>
-                <div className="horario-item">
-                  <span className="h-label">Viernes</span>
-                  <span className="h-time">10:00 – 15:00</span>
-                </div>
-                <div className="horario-item">
-                  <span className="h-label">Sábado y Domingo</span>
-                  <span className="h-cerrado">Cerrado</span>
-                </div>
+                <div className="horario-item"><span className="h-label">Lunes a Jueves</span><span className="h-time">10:00 – 21:00</span></div>
+                <div className="horario-item"><span className="h-label">Viernes</span><span className="h-time">10:00 – 15:00</span></div>
+                <div className="horario-item"><span className="h-label">Sábado y Domingo</span><span className="h-cerrado">Cerrado</span></div>
               </div>
             </div>
           </div>
-          {/* /info-contacto */}
         </div>
-        {/* /formulario-contenedor */}
       </section>
     </main>
   );
 }
+
 
 
 
