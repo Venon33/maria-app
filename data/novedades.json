@@ -1,26 +1,38 @@
 [
   {
-    "titulo": "Reforma del Código Civil (2025)",
-    "resumen": "Entró en vigor la nueva regulación sobre contratos digitales...",
-    "fecha": "2025-07-10",
-    "slug": "reforma-codigo-civil"
+    "titulo": "Phishing bancario",
+    "resumen": "Si fuiste víctima de una estafa online y no actuaste con descuido, el banco debe devolverte la cantidad perdida.",
+    "fecha": "",
+    "slug": "phishing-bancario"
   },
   {
-    "titulo": "Cambios en la Ley de Extranjería",
-    "resumen": "Se amplían los plazos para la tramitación de residencia temporal...",
-    "fecha": "2025-06-28",
-    "slug": "cambios-ley-extranjeria"
+    "titulo": "Tarjetas revolving",
+    "resumen": "El Supremo declara abusiva la falta de información. Si contrataste una tarjeta con intereses muy altos y poca transparencia, puedes solicitar la anulación del contrato y recuperar tu dinero.",
+    "fecha": "",
+    "slug": "tarjetas-revolving"
   },
   {
-    "titulo": "Nueva normativa de arrendamientos urbanos",
-    "resumen": "La nueva ley introduce límites a la subida anual de alquileres...",
-    "fecha": "2025-08-05",
-    "slug": "nueva-ley-arrendamientos"
+    "titulo": "Gastos hipotecarios",
+    "resumen": "Puedes reclamar aunque el banco diga que ha pasado el plazo. Nueva oleada de demandas por cláusulas abusivas. El Supremo vuelve a pronunciarse favorablemente este año.",
+    "fecha": "",
+    "slug": "gastos-hipotecarios"
   },
   {
-    "titulo": "Reforma procesal penal",
-    "resumen": "Se agilizan los plazos y se introducen juicios telemáticos...",
-    "fecha": "2025-08-11",
-    "slug": "reforma-procesal-penal"
+    "titulo": "Teletrabajo",
+    "resumen": "Podrás demandar desde tu domicilio, no solo desde la sede de la empresa. Nueva doctrina sobre la competencia territorial en litigios laborales.",
+    "fecha": "",
+    "slug": "teletrabajo"
+  },
+  {
+    "titulo": "Redes sociales",
+    "resumen": "Nuevas sentencias refuerzan la protección frente a comentarios ofensivos o denigrantes en plataformas digitales.",
+    "fecha": "",
+    "slug": "redes-sociales"
+  },
+  {
+    "titulo": "Reforma judicial",
+    "resumen": "Es obligatorio intentar la mediación antes de acudir al juzgado en ciertos casos. Desde abril, en muchos asuntos civiles (familia, vecinos, consumo) debes acudir primero a mediación o arbitraje.",
+    "fecha": "",
+    "slug": "reforma-judicial"
   }
 ]
