@@ -13,5 +13,6 @@ export async function GET() {
   await redis.incr("visitas:total");
   await redis.incr(`visitas:byday:${today}`);
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true }, { headers: { 'Cache-Control': 'no-store' }});
+
 }
