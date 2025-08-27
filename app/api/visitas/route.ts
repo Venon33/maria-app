@@ -1,33 +1,32 @@
 // app/api/visitas/route.ts
-import { NextResponse } from 'next/server';
-import { Redis } from '@upstash/redis';
+import { NextResponse } from 'next/server'
+import { Redis } from '@upstash/redis'
 
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const runtime = 'edge'            // Upstash funciona perfecto en Edge
+export const dynamic = 'force-dynamic'   // evita caché de Next
 
-const url = process.env.UPSTASH_REDIS_REST_URL!;
-const token = process.env.UPSTASH_REDIS_REST_TOKEN!;
-
-const redis = new Redis({ url, token });
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+})
 
 export async function GET() {
-  // clave día en UTC
-  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  try {
+    if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+      return NextResponse.json({ ok: false, error: 'Faltan variables Upstash' }, { status: 500 })
+    }
 
-  await redis.incr('visitas:total');
-  await redis.incr(`visitas:byday:${today}`);
+    // total
+    await redis.incr('visitas:total')
 
-  const [total, todayCount] = await Promise.all([
-    redis.get<number>('visitas:total').then(v => v ?? 0),
-    redis.get<number>(`visitas:byday:${today}`).then(v => v ?? 0),
-  ]);
+    // por día (UTC YYYY-MM-DD, igual que el admin)
+    const today = new Date().toISOString().slice(0, 10)
+    await redis.incr(`visitas:byday:${today}`)
 
-  // info de depuración: máscara del host de tu DB
-  const dbHostMasked = url?.replace(/^https?:\/\//, '').replace(/(.{4}).+(@.+)$/, '$1***$2');
-
-  const res = NextResponse.json({ ok: true, total, today: { date: today, count: todayCount }, db: dbHostMasked });
-  res.headers.set('Cache-Control', 'no-store, no-cache, max-age=0, must-revalidate');
-  return res;
+    return NextResponse.json({ ok: true })
+  } catch (e) {
+    return NextResponse.json({ ok: false, error: 'No se pudo incrementar' }, { status: 500 })
+  }
 }
+
 
