@@ -4,6 +4,7 @@ import { Redis } from '@upstash/redis'
 
 export const runtime = 'edge'
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -13,7 +14,6 @@ const redis = new Redis({
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const key = searchParams.get('key')
-
   if (!process.env.ADMIN_KEY || key !== process.env.ADMIN_KEY) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
@@ -23,7 +23,6 @@ export async function GET(req: Request) {
   const days = Math.max(1, Math.min(31, Number(searchParams.get('days') ?? '10')))
   const today = new Date()
   const byDay: Record<string, number> = {}
-
   for (let i = 0; i < days; i++) {
     const d = new Date(today)
     d.setDate(today.getDate() - i)
@@ -33,6 +32,7 @@ export async function GET(req: Request) {
 
   return NextResponse.json({ ok: true, total, byDay })
 }
+
 
 
 
