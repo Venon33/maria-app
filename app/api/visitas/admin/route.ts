@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -22,7 +24,6 @@ export async function GET(req: Request) {
   const byDay: Record<string, number> = {};
 
   for (let i = 0; i < days; i++) {
-    // fecha UTC para alinear con /api/visitas
     const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
     d.setUTCDate(d.getUTCDate() - i);
     const label = d.toISOString().slice(0, 10);
@@ -30,8 +31,12 @@ export async function GET(req: Request) {
   }
 
   const total = (await redis.get<number>('visitas:total')) ?? 0;
-  return NextResponse.json({ ok: true, total, byDay });
+
+  const res = NextResponse.json({ ok: true, total, byDay });
+  res.headers.set('Cache-Control', 'no-store, no-cache, max-age=0, must-revalidate');
+  return res;
 }
+
 
 
 

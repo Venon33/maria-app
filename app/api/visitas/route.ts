@@ -3,18 +3,16 @@ import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
-if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-  console.warn('⚠️ Falta configurar UPSTASH_REDIS_REST_URL/TOKEN en Vercel');
-}
+const url = process.env.UPSTASH_REDIS_REST_URL!;
+const token = process.env.UPSTASH_REDIS_REST_TOKEN!;
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+const redis = new Redis({ url, token });
 
 export async function GET() {
-  // clave por día en UTC para ser consistente
+  // clave día en UTC
   const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
   await redis.incr('visitas:total');
@@ -25,5 +23,11 @@ export async function GET() {
     redis.get<number>(`visitas:byday:${today}`).then(v => v ?? 0),
   ]);
 
-  return NextResponse.json({ ok: true, total, today: { date: today, count: todayCount } });
+  // info de depuración: máscara del host de tu DB
+  const dbHostMasked = url?.replace(/^https?:\/\//, '').replace(/(.{4}).+(@.+)$/, '$1***$2');
+
+  const res = NextResponse.json({ ok: true, total, today: { date: today, count: todayCount }, db: dbHostMasked });
+  res.headers.set('Cache-Control', 'no-store, no-cache, max-age=0, must-revalidate');
+  return res;
 }
+
