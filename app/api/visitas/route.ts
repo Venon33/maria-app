@@ -1,9 +1,7 @@
-export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import { NextResponse } from "next/server";
+import { Redis } from "@upstash/redis";
 
-import { NextResponse } from 'next/server';
-import { Redis } from '@upstash/redis';
+export const dynamic = "force-dynamic"; // evita cacheo en Vercel
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -12,22 +10,22 @@ const redis = new Redis({
 
 export async function GET() {
   try {
-    if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-      return NextResponse.json({ ok: false, error: 'env_missing' }, { status: 500 });
-    }
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
-    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD (UTC)
-    await redis.incr('visitas:total');
+    // Incrementa contador global y por día
+    await redis.incr("visitas:total");
     await redis.incr(`visitas:byday:${today}`);
 
-    return NextResponse.json({ ok: true }, { headers: { 'Cache-Control': 'no-store' } });
-  } catch (e: any) {
+    return NextResponse.json({ ok: true });
+  } catch (err: any) {
+    console.error("❌ Error en /api/visitas:", err);
     return NextResponse.json(
-      { ok: false, error: 'redis_error', detail: String(e?.message || e) },
-      { status: 500, headers: { 'Cache-Control': 'no-store' } }
+      { ok: false, error: "redis_error", detalle: err.message },
+      { status: 500 }
     );
   }
 }
+
 
 
 
