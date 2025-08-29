@@ -11,29 +11,30 @@ const redis = new Redis({
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  // Si ya tiene cookie, no contamos
-  if (!req.cookies.get("visitado")) {
-    try {
-      const today = new Date().toISOString().slice(0, 10);
-      await redis.incr("visitas:total");
-      await redis.incr(`visitas:byday:${today}`);
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const cookie = req.cookies.get("vdate");
 
-      // Cookie 7 días
-      res.cookies.set("visitado", "1", {
-        maxAge: 60 * 60 * 24 * 7, // 7 días
-        httpOnly: false,          // visible al frontend si quisieras
-        sameSite: "lax",
-        secure: true,             // en producción (https)
-        path: "/",
-      });
-    } catch (e) {
-      console.error("Error incrementando visitas:", e);
-    }
+  // Si ya contamos hoy desde este dispositivo, no sumamos
+  if (cookie?.value === today) return res;
+
+  try {
+    await redis.incr("visitas:total");
+    await redis.incr(`visitas:byday:${today}`);
+  } catch (e) {
+    console.error("Error incrementando visitas:", e);
   }
+
+  // Guardamos la fecha de hoy en la cookie (expira en 2 días por seguridad)
+  res.cookies.set("vdate", today, {
+    maxAge: 60 * 60 * 1, // 1 hora para agregar dias *1, otro *
+    sameSite: "lax",
+    secure: true,
+    path: "/",
+  });
 
   return res;
 }
 
-// Solo en la home
+// Cuenta solo en la home (ajusta si quieres)
 export const config = { matcher: ["/"] };
 
