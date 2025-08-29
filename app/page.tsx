@@ -22,16 +22,6 @@ export default function Home() {
     return () => clearInterval(id);
   }, []);
 
-  // 👉 incrementa visitas
-  useEffect(() => {
-    (async () => {
-      try {
-        const r = await fetch('/api/visitas', { method: 'POST' });
-        // opcional: const {count} = await r.json(); console.log('📊 Visita #', count);
-      } catch {}
-    })();
-  }, []);
-
   const handleMouseLeave = () => { timeoutRef.current = setTimeout(() => setShowDropdown(false), 500); };
   const handleMouseEnter = () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
 
