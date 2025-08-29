@@ -1,14 +1,39 @@
 // middleware.ts
-import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { Redis } from "@upstash/redis";
 
-export const config = {
-  // si solo quieres contar la home, usa matcher: ['/']
-  matcher: ['/:path*'],
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+
+  // Si ya tiene cookie, no contamos
+  if (!req.cookies.get("visitado")) {
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      await redis.incr("visitas:total");
+      await redis.incr(`visitas:byday:${today}`);
+
+      // Cookie 7 días
+      res.cookies.set("visitado", "1", {
+        maxAge: 60 * 60 * 24 * 7, // 7 días
+        httpOnly: false,          // visible al frontend si quisieras
+        sameSite: "lax",
+        secure: true,             // en producción (https)
+        path: "/",
+      });
+    } catch (e) {
+      console.error("Error incrementando visitas:", e);
+    }
+  }
+
+  return res;
 }
 
-export function middleware(req: NextRequest) {
-  // dispara el contador sin bloquear la carga
-  fetch(new URL('/api/visitas', req.url), { cache: 'no-store' }).catch(() => {})
-  return NextResponse.next()
-}
+// Solo en la home
+export const config = { matcher: ["/"] };
+
