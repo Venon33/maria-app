@@ -9,9 +9,9 @@ const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET_KEY || ''
 const REQUIRE_TURNSTILE = process.env.TURNSTILE_REQUIRED === '1'
 
 const escapeHTML = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string))
+  s.replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;' }[c] as string))
 
-// ===== Rate-limit (opcional, sin Upstash no falla) =====
+// ----- Rate limit opcional -----
 let rl: any = null
 async function ensureRL() {
   if (rl) return rl
@@ -22,22 +22,20 @@ async function ensureRL() {
       redis: Redis.fromEnv(),
       limiter: Ratelimit.slidingWindow(5, '10 m'),
     })
-  } catch {
-    rl = null
-  }
+  } catch { rl = null }
   return rl
 }
 
-// ===== Validación =====
+// ----- Validación -----
 const schema = z.object({
   name: z.string().trim().min(2).max(80),
   email: z.string().trim().email().max(120),
   message: z.string().trim().min(10).max(4000),
   website: z.string().optional(),
-  cfTurnstileToken: z.string().min(10).optional(),
+  cfTurnstileToken: REQUIRE_TURNSTILE ? z.string().min(10) : z.string().optional(),
 })
 
-// ===== Email (Nodemailer) =====
+// ----- Email -----
 const EMAIL_HOST = process.env.EMAIL_HOST
 const EMAIL_PORT = Number(process.env.EMAIL_PORT || 465)
 const EMAIL_USER = process.env.EMAIL_USER
@@ -50,10 +48,10 @@ const transporter = nodemailer.createTransport({
   auth: { user: EMAIL_USER, pass: EMAIL_PASS },
 })
 
-// ===== Captcha =====
+// ----- Turnstile verify -----
 async function verifyTurnstile(token?: string, ip?: string) {
-  if (!TURNSTILE_SECRET) return !REQUIRE_TURNSTILE
-  if (!token) return false
+  if (!REQUIRE_TURNSTILE) return true
+  if (!TURNSTILE_SECRET || !token) return false
   const body = new URLSearchParams({ secret: TURNSTILE_SECRET, response: token })
   if (ip) body.append('remoteip', ip)
   const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body })
@@ -61,26 +59,26 @@ async function verifyTurnstile(token?: string, ip?: string) {
   return Boolean(data?.success)
 }
 
+// ----- Orígenes permitidos -----
+const ALLOWED_ORIGINS = [
+  'https://abogadamarialaramolina.com',
+  'https://www.abogadamarialaramolina.com',
+  'https://maria-app.vercel.app',
+  'http://localhost:3000',
+]
+
 export async function POST(req: Request) {
   try {
-    // tamaño y método
     const len = Number(req.headers.get('content-length') || 0)
     if (len > 100_000) return NextResponse.json({ ok: false, error: 'Payload grande' }, { status: 413 })
-    if (req.method !== 'POST') return NextResponse.json({ ok: false, error: 'Método no permitido' }, { status: 405 })
 
-    // Orígenes permitidos
+    // CSRF: origin o referer
     const origin = req.headers.get('origin') || ''
-    const allowedOrigins = [
-       'https://abogadamarialaramolina.com',
-  'https://www.abogadamarialaramolina.com',
-  'https://maria-app.vercel.app',        // preview Vercel
-  'http://localhost:3000',               // local
-];
-    if (!allowedOrigins.includes(origin)) {
-      return NextResponse.json({ ok: false, error: 'Origen inválido' }, { status: 403 })
-    }
+    const referer = req.headers.get('referer') || ''
+    const allowed = ALLOWED_ORIGINS.some(b => origin.startsWith(b) || referer.startsWith(b))
+    if (!allowed) return NextResponse.json({ ok: false, error: 'Origen inválido' }, { status: 403 })
 
-    // rate-limit
+    // Rate limit
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
     const ratelimiter = await ensureRL()
     if (ratelimiter) {
@@ -88,26 +86,31 @@ export async function POST(req: Request) {
       if (!success) return NextResponse.json({ ok: false, error: 'Rate limit' }, { status: 429 })
     }
 
-    // body + validación
+    // Body + validación
     const body = await req.json().catch(() => null)
     const parsed = schema.safeParse(body)
-    if (!parsed.success) return NextResponse.json({ ok: false, error: 'Datos inválidos' }, { status: 422 })
+    if (!parsed.success) {
+      return NextResponse.json(
+        { ok: false, error: 'Datos inválidos', detail: process.env.NODE_ENV === 'production' ? undefined : parsed.error.flatten() },
+        { status: 422 }
+      )
+    }
 
     const { name, email, message, website, cfTurnstileToken } = parsed.data
 
-    // honeypot
+    // Honeypot
     if (website && website.trim() !== '') return NextResponse.json({ ok: true })
 
-    // captcha
+    // Captcha
     const okCaptcha = await verifyTurnstile(cfTurnstileToken, ip)
     if (!okCaptcha) return NextResponse.json({ ok: false, error: 'Captcha inválido' }, { status: 400 })
 
-    // email config
+    // Config email
     if (!EMAIL_HOST || !EMAIL_USER || !EMAIL_PASS) {
       return NextResponse.json({ ok: false, error: 'Servidor email mal configurado' }, { status: 500 })
     }
 
-    // saneado
+    // Saneado y envío
     const safeName = escapeHTML(name)
     const safeEmail = escapeHTML(email).replace(/(\r|\n)/g, ' ')
     const safeMsg = escapeHTML(message)
@@ -139,5 +142,6 @@ export async function POST(req: Request) {
 export async function GET() {
   return NextResponse.json({ ok: false, error: 'Método no permitido' }, { status: 405 })
 }
+
 
 
