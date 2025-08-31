@@ -71,10 +71,11 @@ export async function POST(req: Request) {
     // Orígenes permitidos
     const origin = req.headers.get('origin') || ''
     const allowedOrigins = [
-      'http://localhost:3000',
-      'https://maria-app.vercel.app',
-      'https://tudominio.com', // cuando lo tengas
-    ]
+       'https://abogadamarialaramolina.com',
+  'https://www.abogadamarialaramolina.com',
+  'https://maria-app.vercel.app',        // preview Vercel
+  'http://localhost:3000',               // local
+];
     if (!allowedOrigins.includes(origin)) {
       return NextResponse.json({ ok: false, error: 'Origen inválido' }, { status: 403 })
     }
