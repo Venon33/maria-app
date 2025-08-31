@@ -86,13 +86,13 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   color:#092fd6; transform:scale(1.05);
 }
 
-/* Dropdown */
+/* Dropdown */ /* modificacion del menu desplegable de contacto */
 .dropdown{ position:relative; }
 .dropdown-menu{
   position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%);
   z-index:1000; display:flex; flex-direction:column; align-items:stretch; min-width:220px;
-  background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:.6rem .9rem;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  background:transparent; border:none #e5e7eb; border-radius:10px; padding:.6rem .9rem;
+  box-shadow:none 20px rgba(0,0,0,.08);
 }
 .dropdown-menu a{
   color:#000; font-size:1.1rem; text-decoration:none; padding:.45rem .25rem; transition:color .2s;
@@ -372,3 +372,43 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 }
 
 
+/*botenes de volver de cookies, privacidad y aviso legal*/
+.btn-volver {
+  background: var(--color-azul);
+  color: #fff;
+  padding: .8rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .25s ease, transform .2s ease;
+  display: inline-block;
+
+  /* 🔽 separación más grande para empujar hacia el footer */
+  margin: 4rem auto -8rem auto;
+}
+.btn-volver:hover {
+  background: #03345a;
+  transform: translateY(-2px);
+}
+
+
+/* Teléfono sin subrayado ni azul (incluido iOS) */
+.horario-header .contact-link,
+a[href^="tel:"].contact-link{
+  text-decoration: none;
+  color: inherit;
+  -webkit-text-fill-color: currentColor; /* iOS */
+  border-bottom: 0;
+}
+
+.horario-header .contact-link:hover{
+  text-decoration: underline; /* opcional al pasar el ratón */
+}
+
+/* Mejor toque en móvil */
+.horario-header .contact-link{
+  display: inline-flex;
+  align-items: center;
+  padding: .2rem .3rem;    /* área de toque mayor */
+  border-radius: 6px;
+}
