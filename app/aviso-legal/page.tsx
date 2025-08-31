@@ -37,7 +37,7 @@ export default function AvisoLegal() {
           <p><strong>Titular:</strong> María Lara Molina</p>
           <p><strong>Colegiación:</strong> Nº 3316 (ICACR)</p>
           <p><strong>NIF:</strong> 05939501-G </p>
-          <p><strong>Domicilio:</strong> [dirección profesional]</p>
+          <p><strong>Domicilio:</strong></p>
           <p><strong>Email:</strong> m.lara.abogada@gmail.com</p>
           <p><strong>Teléfono:</strong> (+34) 747 44 40 17</p>
 
