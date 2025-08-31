@@ -1,43 +1,35 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import Script from 'next/script'
 
 export default function Home() {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const [showContactoDropdown, setShowContactoDropdown] = useState(false);
-  const contactoDropdownRef = useRef<HTMLDivElement>(null);
-  const contactoTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // ⏱️ reloj solo tras montar (evita hidratación)
-  const [now, setNow] = useState<Date | null>(null);
+  // dropdowns
+  const [showContactoDropdown, setShowContactoDropdown] = useState(false)
+  const contactoDropdownRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    setNow(new Date());
-    const id = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(id);
-  }, []);
+    const h = (e: MouseEvent) => {
+      if (contactoDropdownRef.current && !contactoDropdownRef.current.contains(e.target as Node)) {
+        setShowContactoDropdown(false)
+      }
+    }
+    document.addEventListener('mousedown', h)
+    return () => document.removeEventListener('mousedown', h)
+  }, [])
 
-  const handleMouseLeave = () => { timeoutRef.current = setTimeout(() => setShowDropdown(false), 500); };
-  const handleMouseEnter = () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+  // reloj
+  const [now, setNow] = useState<Date | null>(null)
+  useEffect(() => { setNow(new Date()); const id = setInterval(() => setNow(new Date()), 1000); return () => clearInterval(id) }, [])
+  const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s)
 
-  const handleContactoMouseLeave = () => { contactoTimeoutRef.current = setTimeout(() => setShowContactoDropdown(false), 300); };
-  const handleContactoMouseEnter = () => { if (contactoTimeoutRef.current) clearTimeout(contactoTimeoutRef.current); };
-
+  // Turnstile
+  const [tsToken, setTsToken] = useState('')
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setShowDropdown(false);
-      if (contactoDropdownRef.current && !contactoDropdownRef.current.contains(e.target as Node)) setShowContactoDropdown(false);
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+    // callback global para el widget
+    ;(window as any).onTurnstileSuccess = (t: string) => setTsToken(t)
+  }, [])
 
   return (
     <main>
@@ -49,17 +41,14 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="titulo-despacho">
-              Despacho de Abogados<br />María Lara Molina
-            </div>
+            <div className="titulo-despacho">Despacho de Abogados<br />María Lara Molina</div>
 
             <section className="quienes-somos" id="quienes-somos">
               <h2 className="titulo-quienes">¿Quiénes somos?</h2>
               <p className="texto-quienes">
                 En despacho de abogados María Lara Molina sabemos que cada situación legal es única y requiere una atención distinta.
                 Por eso, nos enfocamos en ofrecer soluciones jurídicas adaptables a las necesidades y circunstancias particulares de cada cliente.
-                Desde el asesoramiento en cuestiones cotidianas hasta la representación en litigios complejos, estamos aquí para guiarle
-                con la mejor orientación y defensa posible.
+                Desde el asesoramiento en cuestiones cotidianas hasta la representación en litigios complejos, estamos aquí para guiarle con la mejor orientación y defensa posible.
               </p>
             </section>
           </div>
@@ -67,33 +56,27 @@ export default function Home() {
 
         {/* NAV */}
         <nav className="navegacion">
-          <Link href="/servicios" className="link-servicios"><i className="fas fa-gavel"></i> Servicios</Link>
-          <Link href="/novedades-juridicas" className="link-novedades"><i className="fas fa-newspaper"></i> Novedades Jurídicas</Link>
-
-          {/* 🔁 Opiniones → enlace de reseñas de Google */}
-          <a
-            href="https://g.page/r/CZI-nLb_FE2PEAE/review"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="link-casos"
-          >
-            <i className="fas fa-briefcase"></i> Opiniones
+          <Link href="/servicios" className="link-servicios"><i className="fas fa-gavel" /> Servicios</Link>
+          <Link href="/novedades-juridicas" className="link-novedades"><i className="fas fa-newspaper" /> Novedades Jurídicas</Link>
+          <a href="https://g.page/r/CZI-nLb_FE2PEAE/review" target="_blank" rel="noopener noreferrer" className="link-casos">
+            <i className="fas fa-briefcase" /> Opiniones
           </a>
 
-          <div className="dropdown" onMouseLeave={handleContactoMouseLeave} onMouseEnter={handleContactoMouseEnter} ref={contactoDropdownRef}>
-            <button className="link-contacto dropdown-toggle" onClick={() => setShowContactoDropdown(!showContactoDropdown)} aria-haspopup="true" aria-expanded={showContactoDropdown} type="button">
-              <i className="fas fa-envelope"></i> Contacto
+          <div className="dropdown" ref={contactoDropdownRef}>
+            <button className="link-contacto dropdown-toggle" type="button" aria-haspopup="true" aria-expanded={showContactoDropdown}
+              onClick={() => setShowContactoDropdown(v => !v)}>
+              <i className="fas fa-envelope" /> Contacto
             </button>
             {showContactoDropdown && (
               <div className="dropdown-menu contacto-dropdown">
                 <a href="https://wa.me/34747444017" target="_blank" rel="noreferrer" className="contacto-item whatsapp" style={{ color:'#25D366', fontSize:'1.3rem', fontWeight:'bold' }}>
-                  <i className="fab fa-whatsapp"></i> WhatsApp
+                  <i className="fab fa-whatsapp" /> WhatsApp
                 </a>
                 <a href="mailto:m.lara.abogada@gmail.com" className="contacto-item correo" style={{ color:'#E63946', fontSize:'1.3rem', fontWeight:'bold' }}>
-                  <i className="fas fa-envelope"></i> Correo Electrónico
+                  <i className="fas fa-envelope" /> Correo Electrónico
                 </a>
                 <a href="tel:+34747444017" className="contacto-item telefono" style={{ color:'#044472', fontSize:'1.3rem', fontWeight:'bold' }}>
-                  <i className="fas fa-phone-alt"></i> Teléfono
+                  <i className="fas fa-phone-alt" /> Teléfono
                 </a>
               </div>
             )}
@@ -106,67 +89,59 @@ export default function Home() {
         <h2>Formulario de Contacto</h2>
 
         <div className="formulario-contenedor">
-          {/* Script Turnstile (una sola vez en la página) */}
           <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
 
           <form
             onSubmit={async (e) => {
-  e.preventDefault();
-  const form = e.currentTarget as HTMLFormElement;
-  const fd = new FormData(form);
+              e.preventDefault()
+              const form = e.currentTarget as HTMLFormElement
+              const fd = new FormData(form)
 
-  // intenta leer el token de ambas formas
-  const tokenFromApi = (globalThis as any).turnstile?.getResponse?.() || '';
-  const tokenFromInput = (document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement)?.value || '';
-  const cfTurnstileToken = tokenFromApi || tokenFromInput;
+              // fallback si el callback no corrió
+              const domToken = (document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement)?.value || ''
+              const cfTurnstileToken = tsToken || (window as any).turnstile?.getResponse?.() || domToken
 
-  const payload = {
-    name: String(fd.get('name') || ''),
-    email: String(fd.get('email') || ''),
-    message: String(fd.get('message') || ''),
-    website: String(fd.get('website') || ''), // honeypot
-    cfTurnstileToken,
-  };
+              const payload = {
+                name: String(fd.get('name') || ''),
+                email: String(fd.get('email') || ''),
+                message: String(fd.get('message') || ''),
+                website: String(fd.get('website') || ''), // honeypot
+                cfTurnstileToken,
+              }
 
-  // validación mínima cliente
-  if (payload.message.trim().length < 10) {
-    alert('El mensaje debe tener al menos 10 caracteres.');
-    return;
-  }
-  if (!cfTurnstileToken) {
-    alert('Verifica el captcha antes de enviar.');
-    return;
-  }
+              if (payload.message.trim().length < 10) { alert('El mensaje debe tener al menos 10 caracteres.'); return }
+              if (!cfTurnstileToken) { alert('Verifica el captcha antes de enviar.'); return }
 
-  const res = await fetch('/api/contact', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify(payload),
-  });
+              const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              })
 
-  if (res.ok) {
-    alert('✅ Mensaje enviado. ¡Gracias!');
-    form.reset();
-    (globalThis as any).turnstile?.reset?.();
-  } else {
-    const data = await res.json().catch(()=>({}));
-    alert('❌ No se pudo enviar: ' + (data?.error || 'Datos inválidos'));
-  }
-}}
-
+              if (res.ok) {
+                alert('✅ Mensaje enviado. ¡Gracias!')
+                form.reset()
+                setTsToken('')
+                ;(window as any).turnstile?.reset?.()
+              } else {
+                const data = await res.json().catch(() => ({}))
+                alert('❌ No se pudo enviar: ' + (data?.error || 'Datos inválidos'))
+              }
+            }}
           >
             <input name="name" type="text" placeholder="Tu nombre" required autoComplete="name" />
             <input name="email" type="email" placeholder="Tu correo" required autoComplete="email" inputMode="email" />
             <textarea name="message" rows={6} placeholder="Tu mensaje" required style={{ resize:'none' }} />
 
-            {/* Honeypot anti-spam */}
+            {/* Honeypot */}
             <input type="text" name="website" style={{ display:'none' }} tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-            {/* Widget Turnstile: crea input oculto cf-turnstile-response */}
+            {/* Turnstile widget */}
             <div
               className="cf-turnstile"
-              data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+              data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ''}
               data-theme="light"
+              data-callback="onTurnstileSuccess"
             />
 
             <div style={{ display:'flex', alignItems:'center', gap:'1rem' }}>
@@ -182,10 +157,10 @@ export default function Home() {
             <div className="horario-card">
               <div className="horario-header" style={{ flexDirection:'column', alignItems:'center', gap:'.25rem' }}>
                 <div style={{ display:'flex', alignItems:'center', gap:'.5rem' }}>
-                  <i className="fas fa-clock" aria-hidden="true"></i><span>Horario de atención</span>
+                  <i className="fas fa-clock" aria-hidden="true" /><span>Horario de atención</span>
                 </div>
                 <div style={{ display:'flex', alignItems:'center', gap:'.5rem' }}>
-                  <i className="fas fa-phone-alt" style={{ color:'#044472' }}></i>
+                  <i className="fas fa-phone-alt" style={{ color:'#044472' }} />
                   <a className="contact-link nowrap" href="tel:+34747444017">(+34) 747 44 40 17</a>
                 </div>
               </div>
@@ -209,9 +184,8 @@ export default function Home() {
         </div>
       </section>
     </main>
-  );
+  )
 }
-
 
 
 
