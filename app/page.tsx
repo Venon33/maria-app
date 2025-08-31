@@ -111,33 +111,49 @@ export default function Home() {
 
           <form
             onSubmit={async (e) => {
-              e.preventDefault();
-              const form = e.currentTarget as HTMLFormElement;
-              const fd = new FormData(form);
+  e.preventDefault();
+  const form = e.currentTarget as HTMLFormElement;
+  const fd = new FormData(form);
 
-              // token que inyecta Turnstile
-              const tokenEl = document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement | null;
-              const cfTurnstileToken = tokenEl?.value || '';
+  // intenta leer el token de ambas formas
+  const tokenFromApi = (globalThis as any).turnstile?.getResponse?.() || '';
+  const tokenFromInput = (document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement)?.value || '';
+  const cfTurnstileToken = tokenFromApi || tokenFromInput;
 
-              const payload = {
-                name: String(fd.get('name') || ''),
-                email: String(fd.get('email') || ''),
-                message: String(fd.get('message') || ''),
-                website: String(fd.get('website') || ''), // honeypot
-                cfTurnstileToken,
-              };
+  const payload = {
+    name: String(fd.get('name') || ''),
+    email: String(fd.get('email') || ''),
+    message: String(fd.get('message') || ''),
+    website: String(fd.get('website') || ''), // honeypot
+    cfTurnstileToken,
+  };
 
-              const res = await fetch('/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-              if (res.ok) {
-                alert('✅ Mensaje enviado. ¡Gracias!');
-                form.reset();
-                // @ts-ignore
-                window.turnstile?.reset();
-              } else {
-                const data = await res.json().catch(()=>({} as any));
-                alert('❌ No se pudo enviar: ' + (data?.error || 'Inténtalo de nuevo'));
-              }
-            }}
+  // validación mínima cliente
+  if (payload.message.trim().length < 10) {
+    alert('El mensaje debe tener al menos 10 caracteres.');
+    return;
+  }
+  if (!cfTurnstileToken) {
+    alert('Verifica el captcha antes de enviar.');
+    return;
+  }
+
+  const res = await fetch('/api/contact', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(payload),
+  });
+
+  if (res.ok) {
+    alert('✅ Mensaje enviado. ¡Gracias!');
+    form.reset();
+    (globalThis as any).turnstile?.reset?.();
+  } else {
+    const data = await res.json().catch(()=>({}));
+    alert('❌ No se pudo enviar: ' + (data?.error || 'Datos inválidos'));
+  }
+}}
+
           >
             <input name="name" type="text" placeholder="Tu nombre" required autoComplete="name" />
             <input name="email" type="email" placeholder="Tu correo" required autoComplete="email" inputMode="email" />
