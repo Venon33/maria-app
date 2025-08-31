@@ -33,10 +33,10 @@ export default async function NovedadesJuridicasPage() {
 
   return (
     <main className="novedades-wrap">
-      {/* Cabecera con icono */}
+      {/* Cabecera */}
       <header className="novedades-header">
         <h1>
-          <i className="fas fa-newspaper" style={{ marginRight: "10px", color: "#044472" }}></i>
+          <i className="fas fa-newspaper" style={{ marginRight: 10, color: "#044472" }} />
           Novedades Jurídicas
         </h1>
         <p className="novedades-sub">Actualizaciones y cambios legales recientes</p>
@@ -46,31 +46,29 @@ export default async function NovedadesJuridicasPage() {
       <section className="novedades-grid">
         {novedades.map((n, i) => {
           const cls = getClasses(n, i);
+          const dt = new Date(n.fecha);
           return (
             <article key={n.slug} className={`novedad-card ${cls.card}`}>
               <span className={`badge ${cls.badge}`}>{cls.badgeText}</span>
               <h3>{n.titulo}</h3>
               <p>{n.resumen}</p>
-              <time>
-                {new Date(n.fecha).toLocaleDateString("es-ES", {
-                  year: "numeric",
-                  month: "long",
-                  day: "2-digit",
-                })}
+              <time dateTime={dt.toISOString()}>
+                {dt.toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}
               </time>
             </article>
           );
         })}
       </section>
 
-      {/* Botón volver */}
+      {/* Botón volver (ligero) */}
       <div className="novedades-foot">
-        <Link href="/" className="btn-volver">
+        <Link href="/" className="btn-volver-ligero">
           Volver al inicio
         </Link>
       </div>
     </main>
   );
 }
+
 
 

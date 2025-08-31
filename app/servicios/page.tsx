@@ -49,9 +49,11 @@ export default function ServiciosPage() {
       </section>
 
       <div className="novedades-foot" style={{ marginTop: '2rem' }}>
-        <Link href="/" className="btn-volver">Volver al inicio</Link>
+        {/* 🔹 Botón más fino aquí */}
+        <Link href="/" className="btn-volver-ligero">Volver al inicio</Link>
       </div>
     </main>
   );
 }
+
 

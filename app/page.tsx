@@ -69,7 +69,14 @@ export default function Home() {
         <nav className="navegacion">
           <Link href="/servicios" className="link-servicios"><i className="fas fa-gavel"></i> Servicios</Link>
           <Link href="/novedades-juridicas" className="link-novedades"><i className="fas fa-newspaper"></i> Novedades Jurídicas</Link>
-          <a href="https://g.page/r/TU_ID_DE_GOOGLE_RESEÑAS" target="_blank" rel="noopener noreferrer" className="link-casos">
+
+          {/* 🔁 Opiniones → enlace de reseñas de Google */}
+          <a
+            href="https://g.page/r/CZI-nLb_FE2PEAE/review"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-casos"
+          >
             <i className="fas fa-briefcase"></i> Opiniones
           </a>
 

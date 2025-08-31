@@ -412,3 +412,23 @@ a[href^="tel:"].contact-link{
   padding: .2rem .3rem;    /* área de toque mayor */
   border-radius: 6px;
 }
+
+
+
+/* ===== Botón volver "ligero" para Servicios y Novedades ===== */
+.btn-volver-ligero {
+  background: var(--color-azul);
+  color: #fff;
+  padding: .55rem 1.4rem;   /* 🔹 más delgado */
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: .95rem;
+  text-decoration: none;
+  transition: background .25s ease, transform .2s ease;
+  display: inline-block;
+  margin-top: 2rem;
+}
+.btn-volver-ligero:hover {
+  background: #03345a;
+  transform: translateY(-2px);
+}
