@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Script from 'next/script'
 
 export default function Home() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,7 +16,6 @@ export default function Home() {
 
   // ⏱️ reloj solo tras montar (evita hidratación)
   const [now, setNow] = useState<Date | null>(null);
-
   useEffect(() => {
     setNow(new Date());
     const id = setInterval(() => setNow(new Date()), 1000);
@@ -36,6 +36,8 @@ export default function Home() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
 
   return (
     <main>
@@ -97,24 +99,53 @@ export default function Home() {
         <h2>Formulario de Contacto</h2>
 
         <div className="formulario-contenedor">
+          {/* Script Turnstile (una sola vez en la página) */}
+          <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
+
           <form
             onSubmit={async (e) => {
               e.preventDefault();
               const form = e.currentTarget as HTMLFormElement;
               const fd = new FormData(form);
+
+              // token que inyecta Turnstile
+              const tokenEl = document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement | null;
+              const cfTurnstileToken = tokenEl?.value || '';
+
               const payload = {
                 name: String(fd.get('name') || ''),
                 email: String(fd.get('email') || ''),
                 message: String(fd.get('message') || ''),
+                website: String(fd.get('website') || ''), // honeypot
+                cfTurnstileToken,
               };
+
               const res = await fetch('/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-              if (res.ok) { alert('✅ Mensaje enviado. ¡Gracias!'); form.reset(); }
-              else { const data = await res.json().catch(()=>({})); alert('❌ No se pudo enviar: ' + (data?.error || 'Inténtalo de nuevo')); }
+              if (res.ok) {
+                alert('✅ Mensaje enviado. ¡Gracias!');
+                form.reset();
+                // @ts-ignore
+                window.turnstile?.reset();
+              } else {
+                const data = await res.json().catch(()=>({} as any));
+                alert('❌ No se pudo enviar: ' + (data?.error || 'Inténtalo de nuevo'));
+              }
             }}
           >
-            <input name="name" type="text" placeholder="Tu nombre" required />
-            <input name="email" type="email" placeholder="Tu correo" required />
+            <input name="name" type="text" placeholder="Tu nombre" required autoComplete="name" />
+            <input name="email" type="email" placeholder="Tu correo" required autoComplete="email" inputMode="email" />
             <textarea name="message" rows={6} placeholder="Tu mensaje" required style={{ resize:'none' }} />
+
+            {/* Honeypot anti-spam */}
+            <input type="text" name="website" style={{ display:'none' }} tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
+            {/* Widget Turnstile: crea input oculto cf-turnstile-response */}
+            <div
+              className="cf-turnstile"
+              data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+              data-theme="light"
+            />
+
             <div style={{ display:'flex', alignItems:'center', gap:'1rem' }}>
               <button type="submit">Enviar</button>
               <span>
@@ -138,8 +169,7 @@ export default function Home() {
 
               {now ? (
                 <div className="clock" aria-live="polite">
-                  {now.toLocaleDateString('es-ES',{ weekday:'long', year:'numeric', month:'long', day:'2-digit' }).replace(/^\w/, c=>c.toUpperCase())}
-                  {'  '}
+                  {cap(now.toLocaleDateString('es-ES',{ weekday:'long', year:'numeric', month:'long', day:'2-digit' }))}{' '}
                   {now.toLocaleTimeString('es-ES',{ hour12:false })}
                 </div>
               ) : (
