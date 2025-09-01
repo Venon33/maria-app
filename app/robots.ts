@@ -1,13 +1,21 @@
-import type { MetadataRoute } from 'next'
-
-// Cambia esta variable cuando tengas dominio propio
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: '*', allow: '/' }, // permite a todos los bots rastrear todo
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: [
+          '/api/',       // rutas internas
+          '/_next/',     // archivos internos de Next.js
+          '/assets/',    // estáticos que no deben indexarse
+        ],
+      },
     ],
-    sitemap: `${BASE}/sitemap.xml`,
+    sitemap: [
+      'https://www.abogadamarialaramolina.com/sitemap.xml',
+      'https://www.abogadamarialaramolina.com/sitemap-novedades.xml',
+    ],
   }
 }
