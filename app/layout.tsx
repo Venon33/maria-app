@@ -1,3 +1,4 @@
+// app/layout.tsx
 import '../styles/globals.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
@@ -6,6 +7,16 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
+  icons: {
+    icon: '/favicon.ico', // coloca favicon.ico (o .png) en /public
+  },
+  openGraph: {
+    title: 'Despacho de Maria Lara Molina',
+    description: 'Despacho legal profesional',
+    url: 'https://www.abogadamarialaramolina.com',
+    siteName: 'Despacho de Maria Lara Molina',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -14,7 +25,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <head>
-        {/* ✅ Viewport correcto para adaptarse a cualquier pantalla */}
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
@@ -24,7 +34,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {children}
 
-        {/* Footer global */}
         <footer
           className="site-footer"
           style={{
@@ -38,7 +47,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             reservados.
           </p>
 
-          {/* 🔹 Enlaces legales debajo */}
           <nav
             className="legal-links"
             style={{
@@ -57,7 +65,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </nav>
         </footer>
 
-        {/* Logo fijo abajo a la derecha */}
         <img
           src="/IMG-20241215-WA0009.png"
           alt="Logo del despacho"
