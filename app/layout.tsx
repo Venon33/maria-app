@@ -7,8 +7,15 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
+  metadataBase: new URL('https://www.abogadamarialaramolina.com'),
   icons: {
-    icon: '/favicon.ico', // coloca favicon.ico (o .png) en /public
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
   openGraph: {
     title: 'Despacho de Maria Lara Molina',
@@ -25,37 +32,25 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
-        />
+        {/* viewport accesible (sin maximum-scale) */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
+        {/* manifest para iconos en Android/Chrome */}
+        <link rel="manifest" href="/site.webmanifest" />
+        {/* theme color para UI del navegador */}
+        <meta name="theme-color" content="#044472" />
       </head>
       <body>
         {children}
 
         <footer
           className="site-footer"
-          style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-          }}
+          style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
         >
-          <p>
-            © {year} Despacho de Abogados María Lara Molina. Todos los derechos
-            reservados.
-          </p>
-
+          <p>© {year} Despacho de Abogados María Lara Molina. Todos los derechos reservados.</p>
           <nav
             className="legal-links"
-            style={{
-              marginTop: '.35rem',
-              display: 'flex',
-              gap: '.6rem',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-            }}
+            style={{ marginTop: '.35rem', display: 'flex', gap: '.6rem', flexWrap: 'wrap', justifyContent: 'center' }}
           >
             <Link href="/aviso-legal">Aviso legal</Link>
             <span>·</span>
@@ -65,11 +60,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </nav>
         </footer>
 
-        <img
-          src="/IMG-20241215-WA0009.png"
-          alt="Logo del despacho"
-          className="logo-fijo"
-        />
+        {/* usa la versión webp optimizada */}
+        <img src="/IMG-20241215-WA0009.webp" alt="Logo del despacho" className="logo-fijo" />
       </body>
     </html>
   )
