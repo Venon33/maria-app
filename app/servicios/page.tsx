@@ -1,4 +1,11 @@
+// app/servicios/page.tsx
 import Link from "next/link";
+
+export const metadata = {
+  title: "Servicios | Despacho María Lara Molina",
+  description: "Asesoramiento integral y defensa en varias áreas del Derecho.",
+  alternates: { canonical: "https://www.abogadamarialaramolina.com/servicios" },
+};
 
 export default function ServiciosPage() {
   return (
@@ -48,12 +55,10 @@ export default function ServiciosPage() {
         </Link>
       </section>
 
-      <div className="novedades-foot" style={{ marginTop: '2rem' }}>
-        {/* 🔹 Botón más fino aquí */}
+      <div className="novedades-foot" style={{ marginTop: "2rem" }}>
         <Link href="/" className="btn-volver-ligero">Volver al inicio</Link>
       </div>
     </main>
   );
 }
-
 

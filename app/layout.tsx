@@ -1,4 +1,3 @@
-// app/layout.tsx
 import '../styles/globals.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
@@ -36,11 +35,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta charSet="utf-8" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#044472" />
-
-        {/* JSON-LD: LegalService */}
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',

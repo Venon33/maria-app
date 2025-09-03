@@ -1,27 +1,17 @@
-'use client'
-
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function ServicioPage() {
   return (
     <main className="servicio-container">
-      {/* Contenedor foto + texto lateral */}
       <div className="cabecera-horizontal">
-        {/* Foto a la izquierda */}  {/* desactivar/activar foto  */} 
-       {/* <Image 
-          src="/20250622_085709.jpg"
-          alt="Retrato de María Lara Molina"
-          width={250}
-          height={350}
-          className="foto-abogada"*
-        />*/}
+        {/* <Image src="/20250622_085709.jpg" alt="Retrato de María Lara Molina" width={250} height={350} className="foto-abogada" /> */}
 
-        {/* Texto a la derecha */}
         <div className="texto-lateral">
           <h1>Despacho de Abogados María Lara Molina</h1>
           <h2>Derecho Laboral y Seguridad Social</h2>
-          <p>
+
+          <div>
             <h3>Brindamos apoyo profesional en una ampliedad variedad de situaciones laborales, incluyendo:</h3>
             <h3>I   - Negociación de acuerdos laborales</h3>
             <h3>II  - Reclamaciones salariales</h3>
@@ -30,18 +20,13 @@ export default function ServicioPage() {
             <h3>V   - Asesoramiento y defensa en accidentes de trabajo</h3>
             <h3>VI  - Asesoramiento y defensa en casos de acoso laboral</h3>
             <h3>VII - Asistencia en temas relacionados con prestaciones de la Seguridad Social</h3>
-          </p>
+          </div>
         </div>
       </div>
 
-      {/* Botón volver a Servicios */}
       <Link href="/servicios" passHref>
-        <button className="boton-volver">
-          ← Volver a Servicios
-        </button>
+        <button className="boton-volver">← Volver a Servicios</button>
       </Link>
     </main>
   );
 }
-
-
