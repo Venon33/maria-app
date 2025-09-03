@@ -13,17 +13,17 @@ export const metadata: Metadata = {
       { url: '/favicon.ico' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' }
     ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }]
   },
   openGraph: {
     title: 'Despacho de Maria Lara Molina',
     description: 'Despacho legal profesional',
     url: 'https://www.abogadamarialaramolina.com',
     siteName: 'Despacho de Maria Lara Molina',
-    type: 'website',
-  },
+    type: 'website'
+  }
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -32,13 +32,38 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <head>
-        {/* viewport accesible (sin maximum-scale) */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
-        {/* manifest para iconos en Android/Chrome */}
         <link rel="manifest" href="/site.webmanifest" />
-        {/* theme color para UI del navegador */}
         <meta name="theme-color" content="#044472" />
+
+        {/* JSON-LD: LegalService */}
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LegalService',
+              name: 'Despacho de Abogados María Lara Molina',
+              url: 'https://www.abogadamarialaramolina.com',
+              image: 'https://www.abogadamarialaramolina.com/android-chrome-512x512.png',
+              telephone: '+34747444017',
+              email: 'm.lara.abogada@gmail.com',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: '[Dirección profesional]',
+                addressLocality: '[Ciudad]',
+                addressRegion: '[Provincia]',
+                postalCode: '[CP]',
+                addressCountry: 'ES'
+              },
+              areaServed: 'España',
+              priceRange: '€€',
+              sameAs: ['https://g.page/r/CZI-nLb_FE2PEAE/review']
+            })
+          }}
+        />
       </head>
       <body>
         {children}
@@ -60,11 +85,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </nav>
         </footer>
 
-        {/* usa la versión webp optimizada */}
         <img src="/IMG-20241215-WA0009.webp" alt="Logo del despacho" className="logo-fijo" />
       </body>
     </html>
   )
 }
-
 
