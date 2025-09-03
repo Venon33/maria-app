@@ -432,3 +432,21 @@ a[href^="tel:"].contact-link{
   background: #03345a;
   transform: translateY(-2px);
 }
+
+/* --- Arreglo Novedades: sin subrayados y sin fugas de menú --- */
+.novedades-grid .novedad-card,
+.novedades-grid .novedad-card * {
+  text-decoration: none !important;
+}
+
+.novedades-grid .novedad-card a,
+.novedades-grid .novedad-card a:visited,
+.novedades-grid .novedad-card a:hover {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/* El dropdown solo aplica dentro del nav (evita que aparezca en secciones) */
+nav.navegacion .dropdown-menu { position: absolute; z-index: 1000; }
+main .dropdown-menu { display: none; }           /* por si algún HTML externo trae .dropdown-menu */
+nav.navegacion .dropdown-menu { display: flex; } /* se controla por React; aquí sólo restablecemos */
