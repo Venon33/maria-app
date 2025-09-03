@@ -3,16 +3,13 @@ import { NextResponse } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
 
-export const runtime = 'nodejs'        // ✅ necesario para usar fs
-export const dynamic = 'force-static'  // sirve como estático en prod
+export const runtime = 'nodejs'
+export const dynamic = 'force-static'
 
 const BASE = 'https://www.abogadamarialaramolina.com'
 
 function esc(s: string) {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
 export async function GET() {
@@ -40,10 +37,7 @@ export async function GET() {
       },
     })
   } catch {
-    // si no hay datos, devolver sitemap vacío válido
-    const xml =
-      `<?xml version="1.0" encoding="UTF-8"?>` +
-      `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`
+    const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`
     return new NextResponse(xml, {
       headers: { 'Content-Type': 'application/xml; charset=utf-8' },
     })

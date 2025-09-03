@@ -10,6 +10,7 @@ export const metadata = {
   description: "Actualizaciones y cambios legales recientes.",
   alternates: { canonical: "https://www.abogadamarialaramolina.com/novedades-juridicas" },
 };
+
 export const dynamic = "force-static";
 
 export default async function NovedadesJuridicasPage() {
@@ -29,6 +30,7 @@ export default async function NovedadesJuridicasPage() {
 
   return (
     <main className="novedades-wrap">
+      {/* Cabecera */}
       <header className="novedades-header">
         <h1>
           <i className="fas fa-newspaper" style={{ marginRight: 10, color: "#044472" }} />
@@ -37,30 +39,42 @@ export default async function NovedadesJuridicasPage() {
         <p className="novedades-sub">Actualizaciones y cambios legales recientes</p>
       </header>
 
+      {/* Listado de novedades */}
       <section className="novedades-grid">
         {novedades.map((n, i) => {
           const cls = getClasses(n, i);
           const dt = new Date(n.fecha);
           return (
-            <article key={n.slug} className={`novedad-card ${cls.card}`}>
+            <Link
+              key={n.slug}
+              href={`/novedades-juridicas/${n.slug}`}
+              className={`novedad-card ${cls.card}`}
+              aria-label={`Leer: ${n.titulo}`}
+            >
               <span className={`badge ${cls.badge}`}>{cls.badgeText}</span>
               <h3>{n.titulo}</h3>
               <p>{n.resumen}</p>
               <time dateTime={dt.toISOString()}>
-                {dt.toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}
+                {dt.toLocaleDateString("es-ES", {
+                  year: "numeric",
+                  month: "long",
+                  day: "2-digit",
+                })}
               </time>
-            </article>
+            </Link>
           );
         })}
       </section>
 
+      {/* Botón volver */}
       <div className="novedades-foot">
-        <Link href="/" className="btn-volver-ligero">Volver al inicio</Link>
+        <Link href="/" className="btn-volver-ligero">
+          Volver al inicio
+        </Link>
       </div>
     </main>
   );
 }
-
 
 
 
