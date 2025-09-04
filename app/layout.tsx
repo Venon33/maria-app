@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
   metadataBase: new URL('https://www.abogadamarialaramolina.com'),
-  alternates: { canonical: '/' }, // canónica por defecto
   icons: {
     icon: [
       { url: '/favicon.ico' },
