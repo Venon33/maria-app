@@ -25,7 +25,7 @@ export default async function NovedadesJuridicasPage() {
     if (txt.includes("extranjer")) return { card: "card-amarillo", badge: "badge-amarillo", badgeText: "Extranjería" };
     const alt = i % 2 === 0 ? "card-azul" : "card-verde";
     const bad = i % 2 === 0 ? "badge-azul" : "badge-verde";
-    return { card: alt, badge: bad, badgeText: "Civil" };
+    return { card: alt, badge: bad, badgeText: "" };
   };
 
   return (
