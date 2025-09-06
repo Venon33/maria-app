@@ -12,7 +12,7 @@ export default function ServicioPage() {
           <h2>Derecho Laboral y Seguridad Social</h2>
 
           <div>
-            <h3>Brindamos apoyo profesional en una ampliedad variedad de situaciones laborales, incluyendo:</h3>
+            <h3>Brindamos apoyo profesional en una amplia variedad de situaciones laborales, incluyendo:</h3>
             <h3>I   - Negociación de acuerdos laborales</h3>
             <h3>II  - Reclamaciones salariales</h3>
             <h3>III - Modificación sustancial de condiciones de trabajo</h3>
