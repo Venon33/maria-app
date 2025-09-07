@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 
 export default function Home() {
-  // Dropdown Contacto
+  // ===== Dropdown Contacto =====
   const [showContactoDropdown, setShowContactoDropdown] = useState(false)
   const contactoDropdownRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function Home() {
     return () => document.removeEventListener('mousedown', onDoc)
   }, [])
 
-  // Reloj
+  // ===== Reloj =====
   const [now, setNow] = useState<Date | null>(null)
   useEffect(() => {
     setNow(new Date())
@@ -28,7 +28,80 @@ export default function Home() {
   }, [])
   const cap = (s: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s)
 
-  // Turnstile
+  // ===== Festivos nacionales + Castilla-La Mancha + Puertollano (2025) =====
+  const FESTIVOS: string[] = [
+    // Nacionales
+    '2025-01-01','2025-01-06','2025-04-17','2025-04-18','2025-05-01',
+    '2025-08-15','2025-10-12','2025-11-01','2025-12-06','2025-12-08','2025-12-25',
+    // Castilla-La Mancha
+    '2025-05-31','2025-06-19',
+    // Puertollano (local)
+    '2025-09-08',
+  ]
+
+  const toYMD = (d: Date) => {
+    const tz = d.getTimezoneOffset()
+    const local = new Date(d.getTime() - tz * 60 * 1000)
+    return local.toISOString().slice(0, 10)
+  }
+  const parseYMD = (ymd: string) => {
+    // crear fecha local a medianoche
+    const [y,m,day] = ymd.split('-').map(Number)
+    return new Date(y, (m - 1), day, 0, 0, 0, 0)
+  }
+
+  // Horario: Lun-Jue 10:00–21:00; Viernes 10:00–15:00; Sáb/Dom cerrado
+  function estadoApertura(d: Date | null) {
+    if (!d) return { abierto: false, etiqueta: 'Cerrado', motivo: 'desconocido' as const }
+
+    const day = d.getDay()
+    const ymd = toYMD(d)
+    const esFestivo = FESTIVOS.includes(ymd)
+    const esFinde = day === 0 || day === 6
+    if (esFestivo) return { abierto: false, etiqueta: 'Cerrado (festivo)', motivo: 'festivo' as const }
+    if (esFinde) return { abierto: false, etiqueta: 'Cerrado', motivo: 'fin_de_semana' as const }
+
+    const minutes = d.getHours() * 60 + d.getMinutes()
+    const enRango = (ini: number, fin: number) => minutes >= ini && minutes < fin
+
+    if (day >= 1 && day <= 4) {
+      const abierto = enRango(10 * 60, 21 * 60)
+      return { abierto, etiqueta: abierto ? 'Abierto' : 'Cerrado', motivo: abierto ? 'horario' : 'fuera_horario' }
+    }
+    if (day === 5) {
+      const abierto = enRango(10 * 60, 15 * 60)
+      return { abierto, etiqueta: abierto ? 'Abierto' : 'Cerrado', motivo: abierto ? 'horario' : 'fuera_horario' }
+    }
+
+    return { abierto: false, etiqueta: 'Cerrado', motivo: 'fuera_horario' }
+  }
+
+  const estado = estadoApertura(now)
+  const colorEstado = estado.abierto ? '#1f8b4c' : '#b02a37'
+  const estiloPildora: React.CSSProperties = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '.4rem',
+    padding: '.25rem .55rem',
+    borderRadius: 999,
+    fontWeight: 700,
+    color: '#fff',
+    background: colorEstado,
+    marginLeft: '.5rem',
+    fontSize: '.9rem',
+  }
+
+  // ===== Próximos 5 festivos (a partir de hoy) =====
+  const proximosFestivos = (() => {
+    const hoy = now ? new Date(now.getFullYear(), now.getMonth(), now.getDate()) : new Date()
+    return FESTIVOS
+      .map(d => parseYMD(d))
+      .filter(d => d >= hoy)
+      .sort((a,b) => a.getTime() - b.getTime())
+      .slice(0,5)
+  })()
+
+  // ===== Turnstile =====
   const [tsToken, setTsToken] = useState('')
   useEffect(() => {
     ;(window as any).onTurnstileSuccess = (t: string) => setTsToken(t)
@@ -125,7 +198,7 @@ export default function Home() {
         </nav>
       </div>
 
-      {/* FORMULARIO DE CONTACTO */}
+      {/* ===== FORMULARIO DE CONTACTO / HORARIO ===== */}
       <section className="formulario-contacto" id="contacto">
         <h2>Formulario de Contacto</h2>
 
@@ -133,13 +206,13 @@ export default function Home() {
           {/* Turnstile script */}
           <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
 
+          {/* --- formulario (igual que lo tenías) --- */}
           <form
             onSubmit={async (e) => {
               e.preventDefault()
               const form = e.currentTarget as HTMLFormElement
               const fd = new FormData(form)
 
-              // lee token (callback, API o input oculto)
               const domToken = (document.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement)?.value || ''
               // @ts-ignore
               const apiToken = window.turnstile?.getResponse?.() || ''
@@ -204,6 +277,7 @@ export default function Home() {
             </div>
           </form>
 
+          {/* --- Tarjeta de horario con estado + próximos festivos --- */}
           <div className="info-contacto">
             <div className="horario-card">
               <div className="horario-header" style={{ flexDirection: 'column', alignItems: 'center', gap: '.25rem' }}>
@@ -217,9 +291,10 @@ export default function Home() {
               </div>
 
               {now ? (
-                <div className="clock" aria-live="polite">
+                <div className="clock" aria-live="polite" style={{ borderColor: estado.abierto ? '#26a269' : '#dc3545' }}>
                   {cap(now.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' }))}{' '}
                   {now.toLocaleTimeString('es-ES', { hour12: false })}
+                  <span style={estiloPildora}>{estado.etiqueta}</span>
                 </div>
               ) : (
                 <div className="clock" aria-hidden="true">--/--/----  --:--:--</div>
@@ -230,13 +305,31 @@ export default function Home() {
                 <div className="horario-item"><span className="h-label">Viernes</span><span className="h-time">10:00 – 15:00</span></div>
                 <div className="horario-item"><span className="h-label">Sábado y Domingo</span><span className="h-cerrado">Cerrado</span></div>
               </div>
+
+              {/* Próximos festivos */}
+              { /*<div style={{ marginTop: '1rem', textAlign: 'left' }}>
+                <strong>Próximos festivos (CLM / Puertollano):</strong>
+                <ul style={{ margin: '.4rem 0 0', paddingLeft: '1.1rem' }}>
+                  {proximosFestivos.length === 0 ? (
+                    <li>No hay festivos próximos.</li>
+                  ) : (
+                    proximosFestivos.map((d, i) => (
+                      <li key={i}>
+                        {d.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: '2-digit' })}
+                      </li>
+                    ))
+                  )}
+                </ul>
+              </div>*/}
             </div>
           </div>
+          {/* --- /Tarjeta horario --- */}
         </div>
       </section>
     </main>
   )
 }
+
 
 
 
