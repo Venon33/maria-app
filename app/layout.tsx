@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Raleway, Playfair_Display } from 'next/font/google'
+import Beacon from '../components/Beacon'
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -54,10 +55,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/site.webmanifest" />
 
-        {/* Preload de imágenes críticas (evita LCP lento con imágenes de fondo) */}
+        {/* Preload de imágenes críticas */}
         <link rel="preload" as="image" href="/20250622_085709.jpg" />
         <link rel="preload" as="image" href="/fondo%20de%20cabecera.jpeg" />
-        
+
+        {/* JSON-LD: LegalService */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -84,7 +86,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
       </head>
-      {/* Aplica las variables de fuente al body */}
+
       <body className={`${raleway.variable} ${playfair.variable}`}>
         {children}
 
@@ -106,9 +108,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </footer>
 
         <img src="/IMG-20241215-WA0009.webp" alt="Logo del despacho" className="logo-fijo" />
+
+        {/* 🔔 Beacon de visitas (solo cuenta en la home) */}
+        <Beacon path="/api/visitas" />
       </body>
     </html>
   )
 }
+
 
 
