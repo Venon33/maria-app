@@ -3,11 +3,27 @@ import '../styles/globals.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Raleway, Playfair_Display } from 'next/font/google'
+
+const raleway = Raleway({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  display: 'swap',
+  variable: '--font-raleway',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  display: 'swap',
+  variable: '--font-playfair',
+})
 
 export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
   metadataBase: new URL('https://www.abogadamarialaramolina.com'),
+  alternates: { canonical: '/' },
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -33,14 +49,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="es">
       <head>
         <meta charSet="utf-8" />
-        {/* viewport accesible */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* tema del navegador y PWA manifest */}
         <meta name="theme-color" content="#044472" />
         <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/site.webmanifest" />
 
-        {/* JSON-LD: LegalService */}
+        {/* Preload de imágenes críticas (evita LCP lento con imágenes de fondo) */}
+        <link rel="preload" as="image" href="/20250622_085709.jpg" />
+        <link rel="preload" as="image" href="/fondo%20de%20cabecera.jpeg" />
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -67,7 +84,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
       </head>
-      <body>
+      {/* Aplica las variables de fuente al body */}
+      <body className={`${raleway.variable} ${playfair.variable}`}>
         {children}
 
         <footer

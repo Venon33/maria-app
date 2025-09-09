@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Raleway:wght@400;600;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Raleway:wght@400;600;700&display=swap');*/
 
 /* ================== Variables ================== */
 :root{
@@ -482,3 +482,16 @@ nav.navegacion .dropdown-menu { display: flex; } /* se controla por React; aquí
 /* Por si algo cuela estilos antiguos dentro del detalle */
 .detalle-novedad .novedad-card,
 .detalle-novedad .badge { all:unset !important; }
+
+
+/* Fuente base en todo el sitio: Raleway de next/font */
+body {
+  font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* Titulares con Playfair */
+.servicios-header h1,
+.novedades-header h1,
+.quienes-somos .titulo-quienes {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
