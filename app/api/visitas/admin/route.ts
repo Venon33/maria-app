@@ -18,9 +18,12 @@ export async function GET(req: NextRequest) {
   const key = searchParams.get('key') || ''
   const days = Math.max(1, Math.min(60, Number(searchParams.get('days') || '7')))
 
-  // 🔐 Clave de admin en env
-  const ADMIN_KEY = process.env.VISIT_ADMIN_KEY || ''
-  if (!ADMIN_KEY || key !== ADMIN_KEY) {
+  // 🔐 Usa ADMIN_KEY (no VISIT_ADMIN_KEY)
+  const ADMIN_KEY = process.env.ADMIN_KEY || ''
+  if (!ADMIN_KEY) {
+    return NextResponse.json({ ok: false, error: 'server_missing_admin_key' }, { status: 500 })
+  }
+  if (key !== ADMIN_KEY) {
     return NextResponse.json({ ok: false, error: 'unauthorized' }, { status: 401 })
   }
 
@@ -45,10 +48,11 @@ export async function GET(req: NextRequest) {
     }))
 
     return NextResponse.json({ ok: true, total, days, byDay })
-  } catch (e) {
+  } catch {
     return NextResponse.json({ ok: false, error: 'redis_error' }, { status: 500 })
   }
 }
+
 
 
 
