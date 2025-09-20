@@ -594,3 +594,51 @@ body {
   margin-top: 0 !important;
   max-width: 750px;             /* un pelín más ancho para compensar */
 }
+
+
+/* ===== PARCHE MINIMO: estabilidad del título y cabecera ===== */
+
+/* Corrige el typo de la colegiación sin cambiar markup */
+.colegiacion-pequena{ margin-top:.23rem; }
+
+/* Forza que el título no use offsets ni alturas fijas */
+.titulo-despacho{
+  position: static !important;
+  height: auto !important;
+  margin: 0 0 1rem 0 !important;
+  line-height: 1.1;
+  font-weight: 700;
+  /* el <br> que ya tienes fuerza las dos líneas */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  /* tamaño fluido estable */
+  font-size: clamp(2rem, 2.2rem + 2vw, 4.2rem);
+  /* usa tu fuente de titulares si la tienes cargada */
+  font-family: var(--font-playfair, 'Playfair Display'), Georgia, serif;
+}
+
+/* Mantén layout en desktop; centra solo en móvil para evitar saltos */
+@media (max-width: 900px){
+  .header{
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 14px !important;
+  }
+  .titulo-despacho{
+    text-align: center !important;
+    font-size: clamp(1.8rem, 1.4rem + 3vw, 3rem);
+  }
+  .quienes-somos{
+    text-align: center !important;
+    max-width: 100% !important;
+    padding: 0 .5rem !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* Si alguna regla anterior movía la foto con top/left, neutralízala solo en móvil */
+@media (max-width: 900px){
+  .logo-foto{ left: 0 !important; top: 0 !important; }
+}

@@ -54,8 +54,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="preload" as="image" href="/20250622_085709.jpg" />
         <link rel="preload" as="image" href="/fondo%20de%20cabecera.jpeg" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preload" as="image" href="/20250622_085709.jpg" />
+        <link rel="preload" as="image" href="/fondo-de-cabecera.jpeg" />
 
         <script
           type="application/ld+json"
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               name: 'Despacho de Abogados María Lara Molina',
               url: 'https://www.abogadamarialaramolina.com',
               image: 'https://www.abogadamarialaramolina.com/android-chrome-512x512.png',
-              telephone: '+34XXXXXXXXX', // pon tu número real
+              telephone: '+34747444017', // pon tu número real
               email: 'm.lara.abogada@gmail.com',
               address: {
                 '@type': 'PostalAddress',
