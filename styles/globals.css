@@ -28,29 +28,44 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 .container{ width:min(100% - 2rem,1100px); margin-inline:auto; }
 
 /* ================== Cabecera ================== */
-.cabecera-fondo{
-  position:relative;
-  background:url('/fondo de cabecera.jpeg') center/cover no-repeat;
-  padding:20px;
+.cabecera-fondo {
+  position: relative;
+
+  /* Foto de fondo */
+  background-image: url('/fondo de cabecera.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;             /* ajusta: cover o contain */
+  background-position: center -300px;  /* 💡 mueve la foto en vertical (ej: -50px sube la foto) */
+
+  padding: 10px;  /* este padding solo separa el contenido de los bordes */
 }
-.cabecera-fondo::before{
-  content:""; position:absolute; inset:0; background:rgba(255,255,255,.7); z-index:0;
+
+.cabecera-fondo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:linear-gradient(rgba(255, 255, 255, 0.35), rgba(255,255,255,0.10)); /* capa clara */
+  z-index: -0.3; /* mas clara la foto */
 }
-.cabecera-fondo>*{ position:relative; z-index:1; }
+
+.cabecera-fondo > * {
+  position: relative;
+  z-index: 0; /* contenido siempre encima */
+}
 
 .header{
-  display:flex; align-items:flex-start; flex-wrap:wrap; gap:20px; padding:1rem;
+  display:flex; align-items:flex-start; flex-wrap:wrap; gap:40px; padding:2rem;
 }
-.logo-foto{ width:420px; height:auto; box-shadow:0 0 15px rgba(0,0,0,.2); }
+.logo-foto{ width:420px; height:auto; box-shadow:0 0 5px rgba(0,0,0,.2); }
 .foto-con-colegiacion{ display:flex; flex-direction:column; align-items:center; }
-.colegiacion-pequena{ font-size:.8rem; color:#333; margin-top:.3rem; text-align:center; }
+.colegiacion-pequena{ font-size:0.85rem; color:#333; margin-top:.23Srem; text-align:center; margin-right: 80px;}
 
 .titulo-despacho{
   color:#000; font-weight:bold;
   display:flex; align-items:center; justify-content:center;
-  height:350px; max-width:90%; word-break:break-word;
+  height:550px; max-width:90%; word-break:break-word;
   position:relative; top:-90px; left:90px; margin-left:20px;
-  font-size: clamp(1.8rem, 3vw + 1rem, 4rem);
+  font-size: clamp(1.9rem, 3vw + 1rem, 5rem);
 }
 .nombre-firma{ font-weight:900; }
 
@@ -64,12 +79,18 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   font-size:1.8rem; color:#000!important; margin-bottom:.5rem;
   font-family:'Playfair Display',serif; font-weight:600;
 }
-.quienes-somos .texto-quienes{ font-size:1rem; color:#03020e!important; line-height:1.6; }
+.quienes-somos .texto-quienes{ 
+  font-size:1rem; 
+  color:#000000!; 
+  line-height:1.6;
+  font-weight: 700;
+ }
 
 /* ================== Navegación ================== */
 .navegacion{
   display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
-  gap:.75rem; margin:1rem auto; padding:.8rem 1rem; background:transparent; border-radius:.5rem; max-width:90%;
+  gap:.75rem; margin:1.6rem auto; padding:.7rem 1rem; background:transparent; border-radius:.5rem; max-width:100%;
+  background: #fffbfb; border-radius: 8px; box-shadow: 0 2px rgba(0,0,0,.05);
 }
 .navegacion a,
 .navegacion button,
@@ -494,4 +515,82 @@ body {
 .novedades-header h1,
 .quienes-somos .titulo-quienes {
   font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+
+/* ==== Overrides de cabecera (colócalo AL FINAL del CSS) ==== */
+
+/* Arregla el color con !important (tenías un ; mal puesto) */
+.quienes-somos .texto-quienes{
+  color:#000000 !important;
+  font-weight:700;
+}
+
+/* Mover la foto (izquierda/arriba) */
+.header .logo-foto{
+  position:relative;
+  left:-24px;   /* ← mueve a la izquierda (ajusta) */
+  top:-10px;    /* ↑ sube la foto (ajusta) */
+}
+
+/* Permitir desplazar el título pese al !important anterior */
+.cabecera-fondo .header .titulo-despacho{
+  position:relative !important;
+  top:-28px;    /* ↑ súbelo */
+  left:-18px;   /* ← a la izquierda */
+  text-align:left !important;
+  height:auto !important;
+  margin:0 !important;
+}
+
+/* Permitir desplazar el bloque “Quiénes somos” */
+.cabecera-fondo .header .quienes-somos{
+  position:relative !important;
+  top:-16px;    /* ↑ súbelo */
+  left:-14px;   /* ← a la izquierda */
+  margin-top:0 !important;   /* neutraliza el fix previo */
+  max-width:700px;           /* opcional */
+}
+
+/* En móviles, que no se descoloque: volver a posiciones neutras */
+@media (max-width: 900px){
+  .header .logo-foto{ left:0; top:0; }
+  .cabecera-fondo .header .titulo-despacho{ top:0; left:0; text-align:center !important; }
+  .cabecera-fondo .header .quienes-somos{ top:0; left:0; text-align:center; }
+}
+
+/* ==== CLS FIX cabecera & quienes somos (no cambia el look, estabiliza alturas) ==== */
+
+/* En desktop, imita el layout anterior sin usar offsets que muevan el flujo */
+@media (min-width: 1024px) {
+  .header {
+    flex-wrap: nowrap;
+  }
+  .titulo-despacho {
+    margin-left: 15px !important; /* ligera separación de la foto */
+    text-align: left;             /* como lo tenías visualmente */
+  }
+  .quienes-somos {
+    align-self: flex-start;
+    padding-top: .5rem;
+  }
+}
+
+/* Reserva altura de cabecera para que no “salte” al cargar la fuente/foto */
+.cabecera-fondo {
+  min-height: 20px; /* ajusta si ves demasiado espacio */
+}
+
+/* Evita movimientos por offset relativo en el título */
+.titulo-despacho {
+  position: static !important;  /* antes relative con top/left */
+  height: auto !important;
+  margin: 0 0 1rem 0 !important;
+  text-align: center;           /* mantiene apariencia centrada */
+}
+
+/* Quita el margen negativo que provoca salto del contenido */
+.quienes-somos {
+  margin-top: 0 !important;
+  max-width: 750px;             /* un pelín más ancho para compensar */
 }

@@ -1,4 +1,3 @@
-// app/layout.tsx
 import '../styles/globals.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
@@ -24,7 +23,6 @@ export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
   metadataBase: new URL('https://www.abogadamarialaramolina.com'),
-  alternates: { canonical: '/' },
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -54,12 +52,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="theme-color" content="#044472" />
         <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/site.webmanifest" />
-
-        {/* Preload de imágenes críticas */}
         <link rel="preload" as="image" href="/20250622_085709.jpg" />
         <link rel="preload" as="image" href="/fondo%20de%20cabecera.jpeg" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-        {/* JSON-LD: LegalService */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -69,14 +66,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               name: 'Despacho de Abogados María Lara Molina',
               url: 'https://www.abogadamarialaramolina.com',
               image: 'https://www.abogadamarialaramolina.com/android-chrome-512x512.png',
-              telephone: '+34747444017',
+              telephone: '+34XXXXXXXXX', // pon tu número real
               email: 'm.lara.abogada@gmail.com',
               address: {
                 '@type': 'PostalAddress',
-                streetAddress: '[Dirección profesional]',
-                addressLocality: '[Ciudad]',
-                addressRegion: '[Provincia]',
-                postalCode: '[CP]',
+                streetAddress: 'Calle y número',
+                addressLocality: 'Ciudad',
+                addressRegion: 'Provincia',
+                postalCode: 'CP',
                 addressCountry: 'ES',
               },
               areaServed: 'España',
@@ -109,7 +106,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         <img src="/IMG-20241215-WA0009.webp" alt="Logo del despacho" className="logo-fijo" />
 
-        {/* 🔔 Beacon de visitas (solo cuenta en la home) */}
         <Beacon path="/api/visitas" />
       </body>
     </html>

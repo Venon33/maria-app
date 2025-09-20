@@ -131,8 +131,8 @@ export default function Home() {
             <section className="quienes-somos" id="quienes-somos">
               <h2 className="titulo-quienes">¿Quiénes somos?</h2>
               <p className="texto-quienes">
-                En despacho de abogados María Lara Molina sabemos que cada situación legal es única y requiere una atención distinta.
-                Por eso, nos enfocamos en ofrecer soluciones jurídicas adaptables a las necesidades y circunstancias particulares de cada cliente.
+                En despacho de abogados María Lara Molina sabemos que cada situación legal
+                es única y requiere una atención distinta. Por eso, nos enfocamos en ofrecer soluciones jurídicas adaptables a las necesidades y circunstancias particulares de cada cliente.
                 Desde el asesoramiento en cuestiones cotidianas hasta la representación en litigios complejos, estamos aquí para guiarle
                 con la mejor orientación y defensa posible.
               </p>

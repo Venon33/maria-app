@@ -5,7 +5,6 @@ import path from 'path'
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.abogadamarialaramolina.com'
 
-  // 🔹 páginas fijas del sitio
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },
     { url: `${baseUrl}/servicios`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
@@ -15,7 +14,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/cookies`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
   ]
 
-  // 🔹 páginas de servicios
   const servicios = [
     'derecho-laboral-y-seguridad-social',
     'derecho-de-la-familia',
@@ -32,7 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // 🔹 novedades dinámicas desde /data/novedades.json
   let novedades: MetadataRoute.Sitemap = []
   try {
     const filePath = path.join(process.cwd(), 'data', 'novedades.json')
@@ -45,7 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     }))
   } catch {
-    // si no hay archivo, no pasa nada
+    // no hay archivo de novedades
   }
 
   return [...staticPages, ...servicePages, ...novedades]

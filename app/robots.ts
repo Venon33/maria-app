@@ -6,16 +6,11 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: [
-          '/api/',       // rutas internas
-          '/_next/',     // archivos internos de Next.js
-          '/assets/',    // estáticos que no deben indexarse
-        ],
+        disallow: ['/api/', '/_next/', '/assets/'],
       },
     ],
     sitemap: [
       'https://www.abogadamarialaramolina.com/sitemap.xml',
-      'https://www.abogadamarialaramolina.com/sitemap-novedades.xml',
     ],
   }
 }
