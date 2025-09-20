@@ -642,3 +642,70 @@ body {
 @media (max-width: 900px){
   .logo-foto{ left: 0 !important; top: 0 !important; }
 }
+
+
+/* ===== Fix Android: cabecera centrada y menú legible ===== */
+
+/* Título y bloque quiénes-somos centrados en móvil */
+@media (max-width: 900px){
+  .header{ flex-direction:column !important; align-items:center !important; text-align:center !important; gap:12px !important; }
+
+  .titulo-despacho{
+    text-align:center !important;
+    margin: .25rem 0 0 0 !important;
+    font-size: clamp(2rem, 3.8vw + 1.1rem, 3rem) !important; /* más compacto */
+    line-height: 1.08 !important;
+  }
+
+  .quienes-somos{
+    max-width: 680px !important;
+    width: 100% !important;
+    margin: .5rem auto 0 auto !important;
+    text-align: center !important;
+    padding: 0 .75rem !important;
+  }
+  .quienes-somos .titulo-quienes{
+    font-size: clamp(1.4rem, 1.2rem + 1.5vw, 1.8rem) !important;
+    margin: .4rem 0 .2rem 0 !important;
+  }
+  .quienes-somos .texto-quienes{
+    font-size: 1rem !important;
+  }
+}
+
+/* Menú vertical: más grande y menos separación */
+@media (max-width: 900px){
+  .navegacion{
+    flex-direction: column !important;
+    gap: .35rem !important;              /* antes demasiado hueco */
+    padding: .6rem .75rem !important;
+    max-width: 780px !important;
+    margin: 1rem auto !important;
+  }
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    font-size: clamp(1.05rem, 1rem + 1.5vw, 1.4rem) !important; /* más legible */
+    padding: .55rem .8rem !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* Evita que la imagen de fondo “empuje” el contenido y asegura contraste */
+.cabecera-fondo{ background-position: center top !important; }
+.cabecera-fondo::before{ background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.15)) !important; }
+
+/* Imagen y colegiación compactas en móvil para que no descuadren */
+@media (max-width: 640px){
+  .logo-foto{ width: 260px !important; }
+  .colegiacion-pequena{ font-size: .8rem !important; }
+}
+/* Restaurar encuadre original del fondo */
+.cabecera-fondo{
+  background-position: center -300px !important; /* vuelve al encuadre anterior */
+}
+
+/* Restaurar la luz original del degradado */
+.cabecera-fondo::before{
+  background: linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.10)) !important;
+}
