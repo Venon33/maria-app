@@ -113,13 +113,14 @@ export default function Home() {
         <header className="header">
           <div className="foto-con-colegiacion">
             <Image
-              src="/20250622_085709.jpg"
-              alt="Retrato de María Lara Molina"
-              className="logo-foto"
-              width={300}
-              height={400}
-              priority
-            />
+  src="/20250622_085709-720.webp"
+  alt="Retrato de María Lara Molina"
+  width={300}
+  height={400}
+  sizes="(max-width:640px) 80vw, (max-width:1024px) 40vw, 300px"
+  priority
+  className="logo-foto" 
+/>
             <p className="colegiacion-pequena">Colegiada Nº 3316 (ICACR)</p>
           </div>
 

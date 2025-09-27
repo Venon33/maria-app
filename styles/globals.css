@@ -30,29 +30,39 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 /* ================== Cabecera ================== */
 .cabecera-fondo {
   position: relative;
+  padding: 10px;
 
-  /* Foto de fondo */
-  background-image: url('/fondo de cabecera.jpeg');
+  /* Fondo responsive optimizado */
+  background-image: image-set(
+    url('/fondo-768.webp') type('image/webp') 1x,
+    url('/fondo-1280.webp') type('image/webp') 2x
+  );
   background-repeat: no-repeat;
-  background-size: cover;             /* ajusta: cover o contain */
-  background-position: center -300px;  /* 💡 mueve la foto en vertical (ej: -50px sube la foto) */
-
-  padding: 10px;  /* este padding solo separa el contenido de los bordes */
+  background-size: cover;
+  background-position: center -300px; /* mantiene el encuadre vertical */
 }
 
+/* Capa clara encima del fondo */
 .cabecera-fondo::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:linear-gradient(rgba(255, 255, 255, 0.35), rgba(255,255,255,0.10)); /* capa clara */
-  z-index: -0.3; /* mas clara la foto */
+  background: linear-gradient(rgba(255,255,255,0.35), rgba(255,255,255,0.10));
+  z-index: 0;
 }
 
+/* El contenido siempre por encima */
 .cabecera-fondo > * {
   position: relative;
-  z-index: 0; /* contenido siempre encima */
+  z-index: 1;
 }
 
+/* En pantallas anchas usa la versión grande */
+@media (min-width:1280px){
+  .cabecera-fondo{
+    background-image: url('/fondo-1920.webp');
+  }
+}
 .header{
   display:flex; align-items:flex-start; flex-wrap:wrap; gap:40px; padding:2rem;
 }
@@ -709,3 +719,726 @@ body {
 .cabecera-fondo::before{
   background: linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.10)) !important;
 }
+
+
+/* ==== PARCHE FOCAL: foto controlada + cabecera estable ==== */
+
+/* 1) No dejes que el retrato empuje el layout */
+.logo-foto{
+  width: 300px !important;        /* fijo para desktop */
+  max-width: 34vw !important;     /* tope relativo si la pantalla es estrecha */
+  height: auto !important;
+  aspect-ratio: 3 / 4 !important; /* evita saltos */
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* 2) En tablet/móvil baja aún más el ancho de la foto */
+@media (max-width: 900px){
+  .logo-foto{ width: 240px !important; max-width: 70vw !important; }
+}
+
+/* 3) Evita que el título cree huecos enormes en pantallas pequeñas */
+@media (max-width: 900px){
+  .titulo-despacho{
+    position: static !important;
+    height: auto !important;
+    margin: 0 0 .75rem 0 !important;
+    line-height: 1.1 !important;
+    font-size: clamp(2rem, 3.4vw + 1rem, 3rem) !important;
+  }
+  .quienes-somos{ margin-top: 0 !important; }
+}
+
+/* 4) Mantén el header compacto para que el menú no baje */
+.header{
+  align-items: flex-start !important;
+  gap: 28px !important;     /* reduce hueco entre foto y texto */
+  row-gap: 20px !important; /* si envuelve, que no deje huecos grandes */
+}
+
+/* 5) Menú legible y sin “brincos” */
+.navegacion{
+  gap: .75rem !important;
+  padding: .7rem 1rem !important;
+}
+.navegacion a,
+.navegacion button,
+.navegacion .dropdown-toggle{
+  font-size: clamp(1.05rem, 1rem + 1vw, 1.6rem) !important;
+  line-height: 1.2 !important;
+  padding: .55rem .9rem !important;
+}
+
+/* 6) Asegura capas: fondo debajo, contenido encima */
+.cabecera-fondo::before{ z-index: 0 !important; }
+.cabecera-fondo > *{ z-index: 1 !important; position: relative; }
+
+
+/* ===== Tamaño del retrato proporcional al texto ===== */
+.header{ align-items:flex-start !important; gap:28px !important; }
+.foto-con-colegiacion{ flex:0 0 auto !important; }
+
+/* La columna de texto puede crecer. La foto queda acotada. */
+.cabecera-fondo .header > div:last-child{
+  flex:1 1 520px !important;
+  min-width:520px;        /* asegura espacio al texto en desktop */
+}
+
+/* Foto: escala con el ancho de la ventana, con límites sanos */
+.logo-foto{
+  width: clamp(300px, 26vw, 380px) !important; /* desktop base */
+  height: auto !important;
+  aspect-ratio: 3 / 4 !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* En pantallas muy grandes, se permite algo más, pero controlado */
+@media (min-width: 1400px){
+  .logo-foto{ width: clamp(320px, 24vw, 420px) !important; }
+}
+
+/* En portátiles medianos, un poco más contenida */
+@media (max-width: 1024px){
+  .logo-foto{ width: clamp(260px, 34vw, 320px) !important; }
+}
+
+/* En móvil, fija para que no empuje el menú */
+@media (max-width: 900px){
+  .logo-foto{ width: 260px !important; }
+  .cabecera-fondo .header > div:last-child{ min-width:0 !important; }
+}
+
+/* ===== Evita huecos que empujan el menú ===== */
+.titulo-despacho{
+  position: static !important;
+  height: auto !important;
+  margin: 0 0 .75rem 0 !important;
+  line-height: 1.1 !important;
+}
+.quienes-somos{ margin-top: 0 !important; }
+
+
+/* ===== Menú principal: más alto y con separación amplia ===== */
+.navegacion{
+  /* 🔹 Sube el bloque respecto al texto */
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+
+  /* 🔹 Más aire dentro del bloque */
+  padding: 1rem 1.5rem !important;
+
+  /* 🔹 Fondo y borde */
+  background: #ffffff !important;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.06);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  /* 🔹 Espacio horizontal entre items */
+  gap: 3rem !important;
+}
+
+/* Enlaces del menú */
+.navegacion a,
+.navegacion button,
+.navegacion .dropdown-toggle{
+  font-size: clamp(1.25rem, 1.15rem + 0.8vw, 1.6rem) !important;
+  font-weight: 700 !important;
+  padding: .65rem 1.2rem !important;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Hover: pequeño realce */
+.navegacion a:hover,
+.navegacion button:hover,
+.navegacion .dropdown-toggle:hover{
+  color: var(--color-azul) !important;
+  transform: scale(1.06);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px){
+  .navegacion{
+    flex-direction: column !important;
+    gap: .7rem !important;
+    padding: .8rem !important;
+    margin-top: 1rem !important;
+  }
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    font-size: 1.3rem !important;
+    width: 100%;
+  }
+}
+/* Subir el menú para acercarlo al fondo */
+.navegacion{
+  margin-top: -0.5rem !important;  /* valor negativo lo acerca a la foto */
+}
+/* Fondo transparente para el menú y letras con sombra */
+.navegacion{
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.navegacion a,
+.navegacion button,
+.navegacion .dropdown-toggle{
+  color: #000;                     /* texto oscuro */
+  text-shadow: 0 1px 3px rgba(255,255,255,0.7); /* mejora contraste sobre la foto */
+}
+
+
+/* Texto de ¿Quiénes somos? más ligero y legible */
+.quienes-somos .texto-quienes{
+  font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, sans-serif !important;
+  font-weight: 400 !important;        /* antes 700 */
+  font-style: normal !important;       /* quita cursiva */
+  color: #222 !important;              /* menos duro que #000 */
+  line-height: 1.6 !important;
+  letter-spacing: .01em;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.075rem);  /* fluido, sin “gritar” */
+  max-width: 65ch;                     /* ancho cómodo de lectura */
+  margin-top: .25rem;
+  text-decoration: none !important;    /* por si hereda subrayado */
+}
+
+/* (Opcional) Evita subrayados dentro de tarjetas de servicios */
+.serv-card a{ text-decoration: none !important; }
+.serv-card a:hover{ text-decoration: underline; }
+
+/* (Opcional) Asegura que el botón “volver” siga visible */
+.btn-volver,
+.btn-volver-ligero{
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Compactar items del dropdown Contacto */
+.dropdown-menu.contacto-dropdown{
+  padding: .4rem .6rem !important;
+  gap: .35rem !important;
+}
+
+.dropdown-menu.contacto-dropdown a{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem !important;
+  font-weight: 600;
+  padding: .3rem 0 !important;
+  text-align: center;
+}
+
+/* ===== Ajuste cabecera móvil ===== */
+@media (max-width: 640px) {
+  .cabecera-fondo .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;           /* espacio uniforme entre elementos */
+    padding: 1rem;
+  }
+
+  .cabecera-fondo .logo-foto {
+    width: 230px;           /* tamaño cómodo en móviles */
+    max-width: 90%;
+    height: auto;
+  }
+
+  .cabecera-fondo .colegiacion-pequena {
+    margin: 0.25rem 0;
+    text-align: center;
+  }
+
+  .cabecera-fondo .titulo-despacho {
+    position: static;
+    margin: 0.5rem 0;
+    font-size: clamp(1.6rem, 1.4rem + 2vw, 2.3rem);
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .cabecera-fondo .quienes-somos {
+    position: static;
+    max-width: 90%;
+    margin: 0.75rem auto 0;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+}
+/* ===== Centro perfecto en móvil: foto, colegiación, título y "¿Quiénes somos?" ===== */
+@media (max-width: 768px){
+  .cabecera-fondo .header{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    gap: .75rem !important;
+    padding: 1rem !important;
+  }
+
+  /* Fuerza una sola columna centrada */
+  .cabecera-fondo .header > .foto-con-colegiacion,
+  .cabecera-fondo .header > div{
+    width:100% !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-width:0 !important;       /* anula el min-width de desktop */
+  }
+
+  /* Neutraliza offsets previos que desalinean */
+  .cabecera-fondo .header .logo-foto{
+    position: static !important;  /* ignora left/top anteriores */
+    left: auto !important;
+    top: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .cabecera-fondo .header .colegiacion-pequena{
+    text-align:center !important;
+    margin: .25rem 0 .5rem 0 !important;
+  }
+
+  .cabecera-fondo .header .titulo-despacho{
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    margin: .5rem 0 !important;
+    margin-left: 0 !important;    /* anula el margin-left del desktop */
+    text-align:center !important;
+  }
+
+  .cabecera-fondo .header .quienes-somos{
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    max-width: 90% !important;
+    margin: .5rem auto 0 auto !important;
+    padding: 0 .5rem !important;
+    text-align:center !important;
+  }
+}
+/* Subir título y "¿Quiénes somos?" respecto a la foto en móviles */
+@media (max-width: 768px){
+  .cabecera-fondo .header .titulo-despacho{
+    margin-top: 0 !important;
+    transform: translateY(-70px);   /* ajusta: -10px = sube */
+  }
+
+  .cabecera-fondo .header .quienes-somos{
+    transform: translateY(-10px);    /* ajusta para alinear */
+  }
+}
+@media (max-width: 768px){
+  .cabecera-fondo .header .quienes-somos{
+    position: relative !important;
+    top: -40px !important;   /* antes -70px */
+    margin-top: 0 !important;
+  }
+}
+
+/* Menú en 2 columnas en pantallas pequeñas */
+@media (max-width: 768px){
+  .navegacion{
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .75rem 1.5rem;      /* fila / columna */
+    justify-items: center;
+    padding: .8rem 1rem;
+    background: transparent; /* elimina caja blanca si molesta */
+    box-shadow: none;
+  }
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    font-size: 1.1rem;
+    padding: .4rem .6rem;
+  }
+}
+/* Ajustar separación entre texto y menú */
+.quienes-somos{
+  margin-bottom: 1rem !important;   /* antes tenías ~3-4rem implícitos */
+}
+
+.navegacion{
+  margin-top: 1rem !important;      /* baja si sigue muy pegado */
+}
+/* 🔹 Sube el menú solo en móviles sin afectar lo de arriba */
+@media (max-width: 768px) {
+  .navegacion {
+    transform: translateY(-170px); /* Ajusta el valor: -30px, -40px, -50px… */
+  }
+}
+
+/* Dropdown Contacto siempre en overlay, sin empujar nada */
+nav.navegacion{ position: relative !important; }
+nav.navegacion .dropdown{ position: relative !important; }
+
+nav.navegacion .dropdown-menu{
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  gap: .35rem !important;
+
+  background: rgba(255,255,255,.97) !important; /* legible sobre la foto */
+  border-radius: 10px !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12) !important;
+  padding: .5rem .75rem !important;
+}
+
+@media (max-width: 900px){
+  nav.navegacion .dropdown-menu{
+    width: min(90vw, 360px) !important;
+  }
+}
+
+/* Compactar items */
+nav.navegacion .dropdown-menu a{
+  padding: .35rem 0 !important;
+  font-size: 1.1rem !important;
+  text-align: center !important;
+}
+
+/* Dropdown Contacto: transparente y compacto */
+nav.navegacion{ position: relative !important; }
+nav.navegacion .dropdown{ position: relative !important; }
+
+nav.navegacion .dropdown-menu{
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  gap: .25rem !important;       /* ← menos separación */
+  background: transparent !important;  /* ← SIN fondo */
+  box-shadow: none !important;
+  border: none !important;
+  padding: .25rem 0 !important;
+}
+
+@media (max-width:900px){
+  nav.navegacion .dropdown-menu{
+    width: min(90vw, 340px) !important;
+  }
+}
+
+/* Enlaces del dropdown más compactos */
+nav.navegacion .dropdown-menu a{
+  padding: .3rem 0 !important;
+  font-size: 1.15rem !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+}
+
+/* === CONTACTO: overlay pegado al botón, sin desplazar nada === */
+nav.navegacion{ position: relative !important; }
+nav.navegacion .dropdown{ position: relative !important; display:inline-block !important; }
+
+nav.navegacion .dropdown-menu{
+  position: absolute !important;
+  top: calc(100% + 4px) !important;   /* antes 8px -> más pegado */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  gap: .2rem !important;              /* menos separación entre items */
+  padding: .2rem 0 !important;
+  margin: 0 !important;
+
+  background: transparent !important; /* sin recuadro */
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+nav.navegacion .dropdown-menu a{
+  padding: .25rem 0 !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+}
+
+/* Evita que el botón "Contacto" cambie de tamaño al abrir */
+.navegacion .dropdown-toggle{
+  line-height: 1.2 !important;
+  padding-bottom: .6rem !important;   /* fija altura */
+}
+
+/* === LOGO FIJO: tamaño responsive y sin “moverse” === */
+.logo-fijo{
+  position: fixed !important;
+  right: 10px; bottom: 10px;
+  width: clamp(56px, 7vw, 96px) !important;  /* ajusta a pantalla */
+  height: auto !important;
+  z-index: 50 !important;                     /* por encima del dropdown */
+  pointer-events: none;                       /* no captura clics del dropdown */
+}
+@media (max-width: 480px){
+  .logo-fijo{ right: 8px; bottom: 8px; width: 64px !important; }
+}
+/* ===== Logo fijo adaptativo y estable ===== */
+.logo-fijo {
+  position: fixed;                 /* siempre visible */
+  bottom: 1rem;
+  right: 1rem;
+  width: clamp(45px, 7vw, 85px);   /* escala según pantalla */
+  height: auto;
+  opacity: 0.9;
+  z-index: 1000;                   /* por encima del menú y del dropdown */
+  filter: drop-shadow(0 0 5px #fff);
+  transition: transform .3s ease, opacity .3s ease;
+  pointer-events: none;            /* evita que el dropdown lo empuje */
+}
+
+.logo-fijo:hover {
+  transform: scale(1.05);
+  opacity: .75;
+}
+/* === Logo siempre fijo, sin depender del flujo del layout === */
+.logo-fijo {
+  position: fixed;          /* ← fuera del flujo */
+  bottom: 1rem;             /* distancia al borde inferior */
+  right: 1rem;              /* distancia al borde derecho */
+  width: clamp(60px, 7vw, 90px); /* tamaño fluido segun pantalla */
+  height: auto;
+  z-index: 9999;            /* por encima de todo */
+  pointer-events: none;     /* no bloquea clics del menú */
+  transition: transform .3s ease;
+}
+
+/* Efecto opcional en escritorio */
+@media (hover:hover) {
+  .logo-fijo:hover {
+    transform: scale(1.08);
+  }
+}
+
+
+/* Sube todo el bloque de contacto */
+section.formulario-contacto{
+  margin-top: -10px !important;  /* prueba con -20, -30, -40 */
+}
+/* ==== Ajuste RESPONSIVE: acercar el formulario al menú sin romper nada ==== */
+
+/* espacio inferior de la cabecera para que no choque en ningún dispositivo */
+.cabecera-fondo{ padding-bottom: clamp(8px, 2vw, 20px) !important; }
+
+/* el menú bien pegado a la cabecera */
+nav.navegacion{ margin-bottom: .5rem !important; }
+
+/* bloque de contacto: posición responsive (sube sin afectar desktop) */
+:root{
+  --shift-contacto-desktop: clamp(-40px, -6vw, -20px);
+  --shift-contacto-tablet:  clamp(-48px, -8vw, -16px);
+  --shift-contacto-mobile:  clamp(-36px, -10vw, -10px);
+}
+
+section.formulario-contacto{
+  position: relative;
+  z-index: 0;
+  margin-top: var(--shift-contacto-desktop) !important;   /* ordenadores */
+}
+
+/* tablets (iPad, Galaxy Tab, Fold en modo tablet) */
+@media (max-width: 1024px){
+  section.formulario-contacto{
+    margin-top: var(--shift-contacto-tablet) !important;
+  }
+}
+
+/* móviles */
+@media (max-width: 768px){
+  section.formulario-contacto{
+    margin-top: var(--shift-contacto-mobile) !important;
+  }
+}
+
+/* por si el dropdown de Contacto se superpone, siempre encima del formulario */
+nav.navegacion{ position: relative; z-index: 5; }
+section.formulario-contacto{ z-index: 0; }
+
+/* ==== Menú principal: texto más grande y uniforme ==== */
+.navegacion a,
+.navegacion button,
+.navegacion .dropdown-toggle {
+  font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+}
+
+/* ====== TABLET (769–1024px: iPad Air, etc.) ====== */
+@media (min-width:769px) and (max-width:1024px){
+  .header{ gap:20px; align-items:center; }
+  .logo-foto{ width: clamp(240px, 28vw, 320px); left:auto!important; top:auto!important; }
+  .titulo-despacho,.quienes-somos{ text-align:center; margin:0; transform:none!important; }
+  .navegacion{ margin-top: .9rem !important; gap: 1.6rem !important; }
+}
+
+/* ====== MÓVIL (≤768px: iPhone, Galaxy, Fold, etc.) ====== */
+@media (max-width:768px){
+  .header{
+    flex-direction:column; align-items:center; text-align:center; gap:.9rem; padding:1rem;
+  }
+  .logo-foto{ width:230px; max-width:90%; margin:0 auto; left:auto!important; top:auto!important; }
+  .titulo-despacho,.quienes-somos{
+    max-width:90%; margin:0; transform:none!important; top:auto!important; left:auto!important;
+    text-align:center;
+  }
+  /* Menú en 2 columnas y más grande */
+  .navegacion{
+    display:grid !important; grid-template-columns:repeat(2,1fr);
+    gap:.7rem 1.4rem !important; margin-top:.8rem !important; background:transparent; box-shadow:none;
+  }
+  .navegacion a,.navegacion button,.navegacion .dropdown-toggle{
+    font-size:1.2rem !important; padding:.5rem .6rem !important;
+  }
+  /* Dropdown flotante, sin mover nada */
+  nav.navegacion{ position:relative !important; }
+  nav.navegacion .dropdown-menu{
+    position:absolute !important; top:calc(100% + 4px) !important; left:50% !important;
+    transform:translateX(-50%) !important; background:transparent !important; box-shadow:none !important;
+    padding:.25rem 0 !important; gap:.2rem !important; z-index:9999 !important;
+  }
+}
+
+/* Logo siempre fijo en todas las vistas */
+.logo-fijo{
+  position:fixed; bottom:1rem; right:1rem;
+  width:clamp(60px,7vw,90px); height:auto; z-index:1000; pointer-events:none;
+}
+
+
+/* =========================================================================
+   🔧 PARCHE MÍNIMO (pégalo al FINAL de tu globals.css)
+   - No cambia tu escritorio (desktop) visual.
+   - Arregla: logo fijo en móvil, dropdown “Contacto” flotante,
+     quita empujón del menú en móvil, centra cabecera en móvil,
+     y sube un poco el formulario sin romper nada.
+   ========================================================================= */
+
+/* 1) LOGO SIEMPRE FIJO (también en móvil) */
+.logo-fijo{
+  position: fixed !important;     /* fuera del flujo: no se mueve jamás */
+  right: 1rem !important;
+  bottom: 1rem !important;
+  width: clamp(60px, 7vw, 90px) !important;
+  height: auto !important;
+  z-index: 9999 !important;       /* por encima de menú y dropdown */
+  pointer-events: none !important;/* no intercepta clics del dropdown */
+  transform: none !important;     /* evita efectos raros al abrir menú */
+}
+
+/* 2) DROPDOWN “CONTACTO” SIEMPRE EN OVERLAY (no empuja nada) */
+nav.navegacion{ position: relative !important; z-index: 50 !important; }
+nav.navegacion .dropdown{ position: relative !important; }
+nav.navegacion .dropdown-menu{
+  position: absolute !important;        /* flotante */
+  top: calc(100% + 4px) !important;     /* pegado al botón */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+  background: transparent !important;   /* sin recuadro blanco */
+  box-shadow: none !important;
+  border: 0 !important;
+  padding: .25rem 0 !important;
+  gap: .2rem !important;
+}
+nav.navegacion .dropdown-menu a{
+  padding: .3rem 0 !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+}
+
+/* 3) MÓVIL: QUITAR CUALQUIER EMPUJÓN DEL MENÚ (evita que “salte”) */
+@media (max-width: 768px){
+  .navegacion{
+    transform: none !important;   /* anula translateY previos */
+    margin-top: .6rem !important; /* separa un poco del texto de arriba */
+  }
+}
+
+/* 4) SUBIR EL FORMULARIO UN POCO, DE FORMA RESPONSIVE Y ESTABLE */
+@media (min-width: 1025px){
+  section.formulario-contacto{ margin-top: -20px !important; }
+}
+@media (max-width: 1024px){
+  section.formulario-contacto{ margin-top: -18px !important; }
+}
+@media (max-width: 768px){
+  section.formulario-contacto{ margin-top: -14px !important; }
+}
+
+/* 5) MÓVIL: CABECERA CENTRADA (sin offsets heredados) */
+@media (max-width: 900px){
+  .cabecera-fondo .header{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: .8rem !important;
+    padding: 1rem !important;
+  }
+  .header .logo-foto,
+  .cabecera-fondo .header .titulo-despacho,
+  .cabecera-fondo .header .quienes-somos{
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+  .cabecera-fondo .header .titulo-despacho{
+    font-size: clamp(1.8rem, 1.5rem + 2.2vw, 2.4rem) !important;
+    line-height: 1.12 !important;
+  }
+  .cabecera-fondo .header .quienes-somos{
+    max-width: 90% !important;
+    padding: 0 .5rem !important;
+  }
+}
+
+/* 6) MÓVIL: MENÚ EN DOS COLUMNAS (más compacto y legible) */
+@media (max-width: 768px){
+  .navegacion{
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: .75rem 1.4rem !important;   /* fila / columna */
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: .8rem 1rem !important;
+  }
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    font-size: 1.2rem !important;
+    padding: .5rem .6rem !important;
+  }
+}
+
+/* 7) SEGURIDAD DE CAPAS: el dropdown nunca queda detrás del formulario */
+section.formulario-contacto{ position: relative; z-index: 0; }
+nav.navegacion{ z-index: 5; }

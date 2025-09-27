@@ -1,3 +1,4 @@
+// app/layout.tsx
 import '../styles/globals.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
@@ -5,13 +6,13 @@ import Link from 'next/link'
 import { Raleway, Playfair_Display } from 'next/font/google'
 import Beacon from '../components/Beacon'
 
+// === Fuentes con next/font (exponen las CSS vars usadas en tu CSS) ===
 const raleway = Raleway({
   subsets: ['latin'],
   weight: ['400', '600', '700'],
   display: 'swap',
   variable: '--font-raleway',
 })
-
 const playfair = Playfair_Display({
   subsets: ['latin'],
   weight: ['600', '700'],
@@ -19,6 +20,7 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
 })
 
+// === SEO básico / OpenGraph ===
 export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
@@ -47,18 +49,38 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <head>
+        {/* Metas esenciales */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#044472" />
         <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="preload" as="image" href="/20250622_085709.jpg" />
-        <link rel="preload" as="image" href="/fondo%20de%20cabecera.jpeg" />
-        <link rel="preload" as="image" href="/20250622_085709.jpg" />
-        <link rel="preload" as="image" href="/fondo-de-cabecera.jpeg" />
 
+        {/* ========= PRELOADS CORRECTOS =========
+           Usa atributos en minúscula: imagesrcset / imagesizes.
+           Evita warnings de “preloaded but not used” al tenerlos bien formados.
+        */}
+        {/* Fondo (hero background) */}
+        <link
+          rel="preload"
+          as="image"
+          href="/fondo-1280.webp"
+          imageSrcSet="/fondo-768.webp 768w, /fondo-1280.webp 1280w, /fondo-1920.webp 1920w"
+          imageSizes="100vw"
+        />
+        {/* Retrato (hero image). El <Image> de la página ya tiene priority. */}
+        <link
+          rel="preload"
+          as="image"
+          href="/20250622_085709-720.webp"
+          imageSrcSet="/20250622_085709-480.webp 480w, /20250622_085709-720.webp 720w, /20250622_085709-1080.webp 1080w"
+          imageSizes="(max-width:640px) 80vw, (max-width:1024px) 40vw, 300px"
+        />
+
+        {/* JSON-LD (datos estructurados de negocio) */}
         <script
           type="application/ld+json"
+          // Nota: usa JSON.stringify para no romper el HTML
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
@@ -66,7 +88,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               name: 'Despacho de Abogados María Lara Molina',
               url: 'https://www.abogadamarialaramolina.com',
               image: 'https://www.abogadamarialaramolina.com/android-chrome-512x512.png',
-              telephone: '+34747444017', // pon tu número real
+              telephone: '+34747444017',
               email: 'm.lara.abogada@gmail.com',
               address: {
                 '@type': 'PostalAddress',
@@ -84,9 +106,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
 
+      {/* Aplica las variables de fuente al body (coinciden con tu CSS) */}
       <body className={`${raleway.variable} ${playfair.variable}`}>
         {children}
 
+        {/* Footer simple y accesible */}
         <footer
           className="site-footer"
           style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
@@ -94,23 +118,29 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <p>© {year} Despacho de Abogados María Lara Molina. Todos los derechos reservados.</p>
           <nav
             className="legal-links"
+            aria-label="Enlaces legales"
             style={{ marginTop: '.35rem', display: 'flex', gap: '.6rem', flexWrap: 'wrap', justifyContent: 'center' }}
           >
             <Link href="/aviso-legal">Aviso legal</Link>
-            <span>·</span>
+            <span aria-hidden>·</span>
             <Link href="/privacidad">Privacidad</Link>
-            <span>·</span>
+            <span aria-hidden>·</span>
             <Link href="/cookies">Cookies</Link>
           </nav>
         </footer>
 
-        <img src="/IMG-20241215-WA0009.webp" alt="Logo del despacho" className="logo-fijo" />
+        {/* Logo fijo: su posición/medidas las controla tu CSS (.logo-fijo) */}
+        <img
+          src="/IMG-20241215-WA0009.webp"
+          alt="Logo del despacho"
+          className="logo-fijo"
+          decoding="async"
+        />
 
+        {/* Beacon: conteo de visitas, no bloquea render */}
         <Beacon path="/api/visitas" />
       </body>
     </html>
   )
 }
-
-
 
