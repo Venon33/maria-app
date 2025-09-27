@@ -1536,3 +1536,67 @@ nav.navegacion .dropdown-menu{
   width:clamp(56px, 7vw, 90px) !important; height:auto !important;
   z-index:1000 !important; pointer-events:none;
 }
+
+
+/* ===== Menú al ras del fondo en móvil ===== */
+@media (max-width: 768px){
+  /* 1) Reservamos hueco para el menú dentro del fondo */
+  .cabecera-fondo{
+    position: relative !important;
+    padding-bottom: 110px !important; /* ↑ si aún toca el formulario, sube a 120–130px */
+    background-position: center -80px !important; /* opcional, mueve el encuadre */
+  }
+
+  /* 2) Anclamos el menú al borde inferior del fondo */
+  .cabecera-fondo nav.navegacion{
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 8px !important;           /* distancia al borde del fondo */
+    transform: translateX(-50%) !important;
+    width: min(92vw, 560px) !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: .75rem 1.25rem !important;
+
+    margin: 0 !important;
+    padding: .6rem .8rem !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    z-index: 5 !important;
+  }
+
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    font-size: 1.15rem !important;
+    line-height: 1.2 !important;
+    padding: .45rem .55rem !important;
+  }
+
+  /* 3) El formulario empieza justo después del fondo (no se pisa) */
+  section.formulario-contacto{
+    margin-top: 0 !important;
+    position: relative;
+    z-index: 0;
+  }
+
+  /* 4) El dropdown de “Contacto” siempre flotante encima */
+  nav.navegacion .dropdown-menu{
+    position: absolute !important;
+    top: calc(100% + 6px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    padding: .25rem 0 !important;
+    z-index: 9 !important;
+  }
+}
+
+/* Extra: móviles muy estrechos */
+@media (max-width: 380px){
+  .cabecera-fondo{ padding-bottom: 125px !important; } /* da un poco más de hueco */
+  .cabecera-fondo nav.navegacion{ bottom: 10px !important; gap: .6rem 1rem !important; }
+}
