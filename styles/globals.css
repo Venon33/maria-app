@@ -1600,3 +1600,44 @@ nav.navegacion .dropdown-menu{
   .cabecera-fondo{ padding-bottom: 125px !important; } /* da un poco más de hueco */
   .cabecera-fondo nav.navegacion{ bottom: 10px !important; gap: .6rem 1rem !important; }
 }
+
+/* Ajuste fino: bajar un poco más el menú pegado al fondo (solo móvil) */
+@media (max-width: 768px){
+  .cabecera-fondo nav.navegacion{
+    bottom: -10px !important;   /* ↓ más abajo. Prueba -6, -10, -14… */
+  }
+  .cabecera-fondo{
+    padding-bottom: 120px !important; /* compensa el nuevo “salto” */
+  }
+}
+
+
+/* CONTACTO: dropdown legible, encima de todo y sin mezclarse con el texto */
+nav.navegacion{ position:relative; z-index: 20; }
+
+nav.navegacion .dropdown-menu{
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+
+  z-index: 10000 !important;                 /* por encima del formulario y del logo */
+  background: rgba(255,255,255,.98) !important; /* opaco/legible */
+  backdrop-filter: blur(6px) saturate(120%);  /* (opc.) */
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 24px rgba(0,0,0,.12) !important;
+
+  padding: .6rem .8rem !important;
+  gap: .35rem !important;
+  min-width: 220px !important;
+  max-width: 90vw !important;
+}
+
+nav.navegacion .dropdown-menu a{
+  display:block !important;
+  text-decoration:none !important;
+  padding:.45rem 0 !important;
+  font-weight:700 !important;
+  text-align:center !important;
+}
