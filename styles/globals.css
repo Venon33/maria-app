@@ -1442,3 +1442,37 @@ nav.navegacion .dropdown-menu a{
 /* 7) SEGURIDAD DE CAPAS: el dropdown nunca queda detrás del formulario */
 section.formulario-contacto{ position: relative; z-index: 0; }
 nav.navegacion{ z-index: 5; }
+
+
+/* ===== AJUSTE FINO MÓVIL: título + quiénes-somos dentro del fondo y menú más cerca ===== */
+@media (max-width: 768px){
+  .cabecera-fondo{
+    /* haz “más alta” la zona de fondo para que quepa el texto dentro */
+    padding-top: 8px !important;
+    padding-bottom: 220px !important;   /* sube/baja aumentando o reduciendo este valor */
+    background-position: center -80px !important;
+  }
+
+  .cabecera-fondo .titulo-despacho{
+    margin-top: -28px !important;       /* sube el título */
+  }
+  .cabecera-fondo .quienes-somos{
+    margin-top: -14px !important;       /* sube el bloque de texto */
+  }
+
+  /* acerca el menú a la cabecera sin mover lo de arriba */
+  nav.navegacion{
+    margin-top: -140px !important;      /* ajusta: -100 / -160 según necesites */
+  }
+}
+
+/* ===== AJUSTE FINO TABLET (iPad / Fold apaisado) ===== */
+@media (min-width: 769px) and (max-width: 1024px){
+  .cabecera-fondo{
+    padding-bottom: 160px !important;
+    background-position: center -110px !important;
+  }
+  .cabecera-fondo .titulo-despacho{ margin-top: -18px !important; }
+  .cabecera-fondo .quienes-somos{  margin-top: -10px !important; }
+  nav.navegacion{ margin-top: -90px !important; }
+}
