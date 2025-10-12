@@ -34,11 +34,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 /* ================== Cabecera ================== */
 .cabecera-fondo {
   position: relative;
-  /* puedes cambiar solo esta línea si prefieres image-set */
-  background-image: url('/fondo-1920.webp');
-  background-size: 85% !important;
-  background-position: 130% center!important;
-  background-repeat: no-repeat;
+  /* (fondo forzado más abajo) */
   min-height: 500px;
   display: flex;
   flex-direction: column;
@@ -55,7 +51,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   .cabecera-fondo {
     min-height: 300px;
     padding-bottom: 1rem;
-    background-position: center var(--fondo-y-mobile);
+    /* (no tocar fondo aquí) */
   }
 }
 
@@ -492,10 +488,9 @@ nav.navegacion .dropdown-menu{
 nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.45rem 0; font-weight:700; text-align:center; }
 
 /* ===== Desktop: fondo centrado y estable (manteniendo tu altura) ===== */
+/* (el fondo real se fija al final) */
 @media (min-width: 1025px){
   .cabecera-fondo{
-    background-position: center var(--fondo-y);
-    background-size: cover;
     min-height: 640px;
     padding-bottom: 5rem;
   }
@@ -511,7 +506,6 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
   }
 }
 
-
 /* ===== AJUSTE SOLO PARA MÓVILES ===== */
 @media (max-width: 768px) {
   .titulo-despacho {
@@ -519,38 +513,17 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
     top: 50px !important;       /* BAJA el título */
     margin-bottom: 20px !important;
     text-align: center !important;
-    background: rgba(255,255,255,0.6); /* OPCIONAL: Fondo blanquecino para evitar que se pierda con la imagen */
+    background: rgba(255,255,255,0.6); /* OPCIONAL */
     padding: 8px 12px;
     border-radius: 6px;
   }
 }
-/* ===== Fondo responsive: tablet y móvil ===== */
-@media (max-width: 1024px){
-  .cabecera-fondo{
-    background-size: cover !important;     /* llena el ancho/alto */
-    background-position: center top !important;
-    min-height: 420px !important;          /* alto visible suficiente */
-    padding-bottom: 90px !important;       /* hueco para el menú si va pegado */
-  }
-}
-
-@media (max-width: 768px){
-  .cabecera-fondo{
-    background-size: cover !important;     /* asegura cobertura en móvil */
-    background-position: center top !important;
-    min-height: 380px !important;
-    padding-bottom: 110px !important;      /* un poco más de hueco en móvil */
-  }
-}
-
-
-
 
 /* === ÚLTIMO BLOQUE: fondo cabecera (forzar en prod) === */
 .cabecera-fondo{
-  background-image: url('/fondo-1920.webp?v=6') !important; /* cache-bust */
-  background-size: 85% !important;               /* como lo tienes en local */
-  background-position: 130% center !important;   /* desplazar a la derecha */
+  background-image: url('/fondo-1920.webp?v=7') !important; /* cache-bust nuevo */
+  background-size: 85% !important;               /* igual que en tu local */
+  background-position: 130% center !important;   /* desplazada a la derecha */
   background-repeat: no-repeat !important;
 }
 
@@ -568,12 +541,5 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
     background-size: cover !important;
     background-position: center top !important;
     min-height: 380px !important;
-  }
-}
-@media (min-width: 1025px){
-  .cabecera-fondo{
-    /* NO tocar el encuadre fijado arriba */
-    min-height: 640px;
-    padding-bottom: 5rem;
   }
 }
