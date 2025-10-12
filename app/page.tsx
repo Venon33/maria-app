@@ -135,9 +135,8 @@ export default function Home() {
               En despacho de abogados María Lara Molina sabemos que cada situación legal
               es única y requiere una atención distinta. Por eso, nos enfocamos en ofrecer
               soluciones jurídicas adaptables a las necesidades y circunstancias particulares
-              de cada cliente. Desde el asesoramiento en cuestiones cotidianas <br />
-              hasta la representación en litigios complejos, estamos aquí para <br />
-              guiarle con la mejor orientación y defensa posible.
+              de cada cliente. Desde el asesoramiento en cuestiones cotidiana hasta la representación en litigios complejos,<br />
+             estamos aquí para guiarle con la mejor orientación y defensa posible.
             </p>
           </section>
         </div>
