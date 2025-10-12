@@ -520,29 +520,6 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
 }
 
 /* === ÚLTIMO BLOQUE: fondo cabecera (forzar en prod) === */
-.cabecera-fondo{
-  background-image: url('/fondo-1920.webp?v=7') !important; /* cache-bust nuevo */
-  background-size: 85% !important;               /* igual que en tu local */
-  background-position: 130% center !important;   /* desplazada a la derecha */
-  background-repeat: no-repeat !important;
-}
-
-/* Tablet */
-@media (max-width:1024px){
-  .cabecera-fondo{
-    background-size: cover !important;
-    background-position: center top !important;
-  }
-}
-
-/* Móvil */
-@media (max-width:768px){
-  .cabecera-fondo{
-    background-size: cover !important;
-    background-position: center top !important;
-    min-height: 380px !important;
-  }
-}
 
 
 /* === FORZAR FONDO EN PRODUCCIÓN (último gana) === */
