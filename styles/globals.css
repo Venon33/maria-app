@@ -519,32 +519,38 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
   }
 }
 
-/* === ÚLTIMO BLOQUE: fondo cabecera (forzar en prod) === */
-
-
-/* === FORZAR FONDO EN PRODUCCIÓN (último gana) === */
-@media (min-width:1025px){
-  :where(.cabecera-fondo){
-    background-image: url('/fondo-1920.webp?v=8') !important; /* cache-bust nuevo */
-    background-size: 85% !important;        /* igual que tu local */
-    background-position: 130% center !important;  /* a la derecha */
-    background-repeat: no-repeat !important;
+@media (min-width: 769px){
+  .quienes-somos{ background: none !important; }
+}
+@media (max-width: 768px){
+  .quienes-somos{
+    background: rgba(255,255,255,.85) !important; /* ya no saldrá tachado */
   }
 }
 
-/* Tablets */
-@media (min-width:769px) and (max-width:1024px){
-  :where(.cabecera-fondo){
-    background-image: url('/fondo-1920.webp?v=8') !important;
+
+
+
+
+
+/* === ÚLTIMO BLOQUE: fondo cabecera (forzar en prod) === */
+
+
+/* === FORZAR FONDO IGUAL QUE LOCAL (cache-bust) === */
+.cabecera-fondo{
+  background-image: url('/fondo-1920.webp?v=10') !important;
+  background-size: 85% !important;
+  background-position: 130% center !important;
+  background-repeat: no-repeat !important;
+}
+@media (max-width:1024px){
+  .cabecera-fondo{
     background-size: cover !important;
     background-position: center top !important;
   }
 }
-
-/* Móviles */
 @media (max-width:768px){
-  :where(.cabecera-fondo){
-    background-image: url('/fondo-1920.webp?v=8') !important;
+  .cabecera-fondo{
     background-size: cover !important;
     background-position: center top !important;
     min-height: 380px !important;
