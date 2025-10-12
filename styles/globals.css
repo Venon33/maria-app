@@ -6,6 +6,10 @@
   --color-secundario:#000000;
   --color-azul:#044472;
   --gris-fondo:#f5f5f5;
+
+  /* Control fino del encuadre del fondo */
+  --fondo-y: -80px;          /* ↑ baja la imagen en desktop/tablet */
+  --fondo-y-mobile: -80px;  /* ajuste específico para móvil */
 }
 
 /* ================== Base / Reset útil ================== */
@@ -28,12 +32,12 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 .container{ width:min(100% - 2rem,1100px); margin-inline:auto; }
 
 /* ================== Cabecera ================== */
-
 .cabecera-fondo {
   position: relative;
-  background-image: url('/fondo-1920.webp'); /* aquí va tu estatua */
-  background-size: cover;
-  background-position: center 50px;  /* <-- BAJA LA IMAGEN */
+  /* puedes cambiar solo esta línea si prefieres image-set */
+  background-image: url('/fondo-1920.webp');
+  background-size: 85% !important;
+  background-position: 130% center!important;
   background-repeat: no-repeat;
   min-height: 500px;
   display: flex;
@@ -41,22 +45,20 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   justify-content: flex-end;
   padding-bottom: 5rem;
 }
-/* tablets */
 @media (max-width: 1024px) {
   .cabecera-fondo {
     min-height: 380px;
     padding-bottom: 1.5rem;
   }
 }
-
-/* móviles */
 @media (max-width: 768px) {
   .cabecera-fondo {
     min-height: 300px;
     padding-bottom: 1rem;
+    background-position: center var(--fondo-y-mobile);
   }
-
 }
+
 .header{
   display:flex; align-items:flex-start; flex-wrap:wrap; gap:40px; padding:2rem;
 }
@@ -70,26 +72,47 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   height:550px; max-width:90%; word-break:break-word;
   position:relative; top:-90px; left:90px; margin-left:20px;
   font-size: clamp(1.9rem, 3vw + 1rem, 5rem);
-  transform: translateX(-20px); /* mueve a la izquierda sin afectar el flujo */
+  transform: translateX(-20px);
 }
 .nombre-firma{ font-weight:900; }
 
 /* ¿Quiénes somos? */
 .quienes-somos{
-  max-width:550px; text-align:left; font-size:1rem; line-height:1.5;
-  margin-top:-140px; background:none!important; border:none!important; box-shadow:none!important;
-  border-radius:0!important; padding:.5rem!important;
+  max-width:550px;
+  text-align:left;
+  font-size:1rem;
+  line-height:1.5;
+  margin-top:-140px;
+  background:none!important;
+  border:none!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  padding:.5rem!important;
 }
+
 .quienes-somos .titulo-quienes{
-  font-size:1.8rem; color:#000!important; margin-bottom:.5rem;
-  font-family:'Playfair Display',serif; font-weight:600;
+  font-size:1.8rem;
+  color:#000!important;
+  margin-bottom:.5rem;
+  font-family:'Playfair Display',serif;
+  font-weight:600;
 }
+
 .quienes-somos .texto-quienes{ 
-  font-size:1rem; 
-  color:#000000!; 
-  line-height:1.6;
-  font-weight: 700;
- }
+  font-size:1.15rem;      /* 🔹 Más grande */
+  color:#222 !important;  /* 🔹 Color gris suave y legible */
+  line-height:1.7;        /* 🔹 Más aireado */
+  font-weight:400 !important;        /* 🔹 Sin negrita */
+}
+
+@media (max-width:768px){
+  .quienes-somos{
+    background:rgba(255,255,255,0.85); /* 🔹 Fondo semitransparente para que nunca se mezcle con la imagen */
+    padding:1rem;
+    border-radius:8px;
+  }
+}
+
 
 /* ================== Navegación ================== */
 .navegacion{
@@ -98,7 +121,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   justify-content:center;
   flex-wrap:wrap;
   gap:2.25rem;
-  margin-top:2rem; /* <-- AÑADIDO */
+  margin-top:2rem;
   margin-bottom:2rem;
   padding:.7rem 1rem;
   background:#fffbfb;
@@ -120,20 +143,18 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   color:#092fd6; transform:scale(1.05);
 }
 
-/* Dropdown */ /* modificacion del menu desplegable de contacto */
+/* Dropdown */
 .dropdown{ position:relative; }
 .dropdown-menu{
   position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%);
   z-index:1000; display:flex; flex-direction:column; align-items:stretch; min-width:220px;
-  background:transparent; border:none #e5e7eb; border-radius:10px; padding:.6rem .9rem;
-  box-shadow:none 20px rgba(0,0,0,.08);
+  background:transparent; border:none; border-radius:10px; padding:.6rem .9rem;
+  box-shadow:none;
 }
 .dropdown-menu a{
   color:#000; font-size:1.1rem; text-decoration:none; padding:.45rem .25rem; transition:color .2s;
 }
 .dropdown-menu a:hover{ color:#5d3b8c; }
-
-/* Específico: submenú Contacto centrado */
 .contacto-dropdown{ text-align:center; }
 
 /* ================== Formulario de contacto (2 columnas) ================== */
@@ -147,17 +168,12 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   content:"\f0e0"; font-family:"Font Awesome 5 Free"; font-weight:900; font-size:1.6rem; color:inherit;
 }
 .formulario-contenedor{ display:flex; justify-content:space-between; align-items:flex-start; gap:3rem; }
-
-.formulario-contacto form{
-  flex:0 0 60%; display:flex; flex-direction:column; gap:1rem;
-}
+.formulario-contacto form{ flex:0 0 60%; display:flex; flex-direction:column; gap:1rem; }
 .formulario-contacto input,
 .formulario-contacto textarea{
   padding:.75rem 1rem; border:1px solid #ccc; border-radius:6px; font-size:1rem; font-family:'Raleway',sans-serif;
 }
-.formulario-contacto textarea{
-  height:150px; resize:none;
-}
+.formulario-contacto textarea{ height:150px; resize:none; }
 .formulario-contacto button{
   background:linear-gradient(135deg,#044472,#0666a3); color:#fff; border:none;
   padding:.9rem 2.5rem; border-radius:50px; cursor:pointer; font-weight:bold; font-size:1.3rem;
@@ -176,13 +192,8 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 }
 
 /* Horario dentro de la tarjeta */
-.horario-card{
-  width:100%; text-align:center; background:none; border:none; padding:.5rem 1rem; margin-top:-10px; box-shadow:none;
-}
-.horario-header{
-  display:inline-flex; align-items:center; gap:.5rem; font-weight:700; color:var(--color-azul);
-  margin-bottom:.35rem; font-size:1.05rem;
-}
+.horario-card{ width:100%; text-align:center; background:none; border:none; padding:.5rem 1rem; margin-top:-10px; box-shadow:none; }
+.horario-header{ display:inline-flex; align-items:center; gap:.5rem; font-weight:700; color:var(--color-azul); margin-bottom:.35rem; font-size:1.05rem; }
 .horario-header i{ font-size:1.1rem; }
 .clock{
   font-family:"Courier New", ui-monospace, monospace; font-weight:700; letter-spacing:.5px;
@@ -196,44 +207,22 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 .h-cerrado{ color:#b02a37; font-weight:700; }
 
 /* ================== Servicios (tarjetas) ================== */
-.servicios-wrap{
-  max-width:1500px; margin:0 auto; background-color:var(--gris-fondo);
-  padding:2rem 4rem 3rem; border-radius:12px;
-}
+.servicios-wrap{ max-width:1500px; margin:0 auto; background-color:var(--gris-fondo); padding:2rem 4rem 3rem; border-radius:12px; }
 .servicios-header{ text-align:center; margin-bottom:1.5rem; }
-.servicios-header h1{
-  font-family:'Playfair Display',serif; font-size:2.2rem; margin:0; color:#000; font-weight:700;
-}
+.servicios-header h1{ font-family:'Playfair Display',serif; font-size:2.2rem; margin:0; color:#000; font-weight:700; }
 .servicios-sub{ color:#555; margin-top:.4rem; }
-
-/* mismo layout; en desktop las tarjetas se estiran a la misma altura */
-.servicios-grid{
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:3.5rem; justify-items:center; align-items:stretch;
-}
-
-/* tarjetas con alto uniforme */
+.servicios-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:3.5rem; justify-items:center; align-items:stretch; }
 .serv-card{
-  display:flex; flex-direction:column; /* para poder empujar +info al final */
-  text-decoration:none; background:#fff; border:1px solid #000;
+  display:flex; flex-direction:column; text-decoration:none; background:#fff; border:1px solid #000;
   border-radius:14px; padding:1.1rem; box-shadow:0 6px 18px rgba(0,0,0,.06);
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  color:#111; max-width:300px; width:100%;
-  min-height: 190px;   /* 🔹 alto mínimo uniforme (ajusta si quieres) */
+  color:#111; max-width:300px; width:100%; min-height: 190px;
 }
 .serv-card h3{ margin:.2rem 0 .4rem; font-weight:700; font-size:1.15rem; }
-.serv-card p{ margin:0; line-height:1.55; flex:1 1 auto; }  /* 🔹 ocupa el espacio medio */
+.serv-card p{ margin:0; line-height:1.55; flex:1 1 auto; }
 .serv-card:hover{ transform:translateY(-3px); box-shadow:0 10px 22px rgba(0,0,0,.10); border-color:#e6e6e6; }
-
-/* +info siempre abajo a la derecha y homogéneo */
-.mas-info{
-  margin-top:auto;         /* 🔹 empuja hacia el fondo */
-  align-self:flex-end;     /* 🔹 a la derecha */
-  font-size:.9rem; color:var(--color-azul); font-weight:bold; text-decoration:none;
-}
+.mas-info{ margin-top:auto; align-self:flex-end; font-size:.9rem; color:var(--color-azul); font-weight:bold; text-decoration:none; }
 .mas-info:hover{ text-decoration:underline; }
-
-/* Colores borde tarjetas servicios */
 .card-verde{ border-left:6px solid #1f8b4c; }
 .card-azul{  border-left:6px solid #044472; }
 .card-rojo{  border-left:6px solid #b02a37; }
@@ -242,19 +231,14 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 .card-gris{  border-left:6px solid #6b7280; }
 
 /* ================== Novedades (tarjetas) ================== */
-.novedades-wrap{
-  max-width:1500px; margin:0 auto; background-color:var(--gris-fondo);
-  padding:2rem 4rem 3rem; border-radius:12px;
-}
+.novedades-wrap{ max-width:1500px; margin:0 auto; background-color:var(--gris-fondo); padding:2rem 4rem 3rem; border-radius:12px; }
 .novedades-header{ text-align:center; margin-bottom:1.5rem; }
 .novedades-header h1{
   font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:bold;
   margin:0; color:var(--color-azul); display:flex; align-items:center; justify-content:center; gap:.6rem;
 }
 .novedades-sub{ color:#555; margin-top:.4rem; }
-.novedades-grid{
-  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.25rem;
-}
+.novedades-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.25rem; }
 @media (max-width:980px){ .novedades-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width:640px){ .novedades-grid{ grid-template-columns:1fr; } }
 .novedad-card{
@@ -268,22 +252,10 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 .novedad-card h3{ margin:.4rem 0 .35rem; font-size:1.1rem; color:#111; }
 .novedad-card p{ margin:0 0 .6rem; color:#444; line-height:1.55; }
 .novedad-card time{ font-size:.9rem; color:#777; }
-
-/* Badges (si las usas) */
-.badge{
-  display:inline-block; font-size:.75rem; line-height:1; padding:.45rem .55rem;
-  border-radius:999px; background:#301934; color:#fff; letter-spacing:.2px;
-}
-.badge-azul{ background:#044472; }
-.badge-verde{ background:#1f8b4c; }
-.badge-rojo{ background:#b02a37; }
-.badge-amarillo{ background:#d6a419; }
-
+.badge{ display:inline-block; font-size:.75rem; line-height:1; padding:.45rem .55rem; border-radius:999px; background:#301934; color:#fff; letter-spacing:.2px; }
+.badge-azul{ background:#044472; } .badge-verde{ background:#1f8b4c; } .badge-rojo{ background:#b02a37; } .badge-amarillo{ background:#d6a419; }
 .novedades-foot{ display:flex; justify-content:center; margin-top:2rem; }
-.btn-volver{
-  background:var(--color-azul); color:#fff; text-decoration:none; padding:.65rem 1.1rem;
-  border-radius:10px; transition:background .25s ease, transform .2s ease;
-}
+.btn-volver{ background:var(--color-azul); color:#fff; text-decoration:none; padding:.65rem 1.1rem; border-radius:10px; transition:background .25s ease, transform .2s ease; }
 .btn-volver:hover{ background:#03345a; transform:translateY(-1px); }
 
 /* ================== Páginas de servicio (detalle) ================== */
@@ -295,10 +267,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 .texto-lateral h2{ font-size:1.9rem; color:#0408db; margin:.8rem 0 0 0; text-decoration:underline; }
 .texto-lateral h3{ font-size:1.1rem; color:#000; margin:.8rem 0 0 0; }
 .texto-lateral p{ font-size:1.2rem; line-height:1.6; margin-top:.5rem; }
-.boton-volver{
-  margin-top:2rem; padding:.6rem 2.2rem; background:var(--color-azul); color:#fff;
-  border:none; border-radius:10px; cursor:pointer; transition:background .3s ease; font-size:1.1rem;
-}
+.boton-volver{ margin-top:2rem; padding:.6rem 2.2rem; background:var(--color-azul); color:#fff; border:none; border-radius:10px; cursor:pointer; transition:background .3s ease; font-size:1.1rem; }
 .boton-volver:hover{ background:#03345a; }
 
 /* ================== Logo fijo ================== */
@@ -340,17 +309,12 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   .formulario-contacto{ padding:0 1rem; }
 }
 
-
 /* ===== Desktop: más aire entre items del menú ===== */
 @media (min-width: 1025px){
-  .navegacion{
-    gap: 2.25rem;        /* antes estaba muy junto */
-  }
+  .navegacion{ gap: 2.25rem; }
   .navegacion a,
   .navegacion button,
-  .navegacion .dropdown-toggle{
-    padding: .6rem 1rem; /* área clicable cómoda */
-  }
+  .navegacion .dropdown-toggle{ padding: .6rem 1rem; }
 }
 
 /* ===== Tablet/Móvil: evitar solapes en la cabecera ===== */
@@ -362,32 +326,25 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
     gap: 14px;
   }
   .titulo-despacho{
-    position: static;   /* quita offsets */
+    position: static;
     left: auto; top: auto;
     height: auto;
     margin: 0 0 .75rem 0;
   }
   .quienes-somos{
-    margin-top: 0;      /* sin margen negativo */
+    margin-top: 0;
     max-width: 100%;
     padding: 0 .5rem;
     text-align: center;
   }
 }
 
-/* ===== Dropdown Contacto: centrado bajo el botón en desktop, fluido en móvil ===== */
-.dropdown{ position: relative; }
-.dropdown-menu{
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-}
+/* ===== Dropdown fluido en móvil ===== */
 @media (max-width: 768px){
   .dropdown-menu{
-    position: static !important;
-    transform: none !important;
-    left: auto !important; top: auto !important;
+    position: static;
+    transform: none;
+    left: auto; top: auto;
     width: 100%;
     background: transparent;
     box-shadow: none;
@@ -397,1341 +354,191 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   }
 }
 
-/* ===== Evitar que el teléfono/email se partan en dos líneas ===== */
+/* ===== Evitar que el teléfono/email se partan ===== */
 .nowrap{ white-space: nowrap; }
+@supports (overflow-wrap: anywhere){ .contact-link{ overflow-wrap: anywhere; } }
 
-/* Por si el número sigue rompiendo en móviles muy estrechos */
-@supports (overflow-wrap: anywhere){
-  .contact-link{ overflow-wrap: anywhere; }
-}
-
-
-/*botenes de volver de cookies, privacidad y aviso legal*/
+/* botones volver */
 .btn-volver {
-  background: var(--color-azul);
-  color: #fff;
-  padding: .8rem 2rem;
-  border-radius: 10px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background .25s ease, transform .2s ease;
-  display: inline-block;
-
-  /* 🔽 separación más grande para empujar hacia el footer */
-  margin: 4rem auto -8rem auto;
+  background: var(--color-azul); color: #fff; padding: .8rem 2rem; border-radius: 10px;
+  font-weight: 600; text-decoration: none; transition: background .25s ease, transform .2s ease;
+  display: inline-block; margin: 4rem auto -8rem auto;
 }
-.btn-volver:hover {
-  background: #03345a;
-  transform: translateY(-2px);
+.btn-volver:hover { background: #03345a; transform: translateY(-2px); }
+.horario-header .contact-link, a[href^="tel:"].contact-link{
+  text-decoration: none; color: inherit; -webkit-text-fill-color: currentColor; border-bottom: 0;
 }
+.horario-header .contact-link:hover{ text-decoration: underline; }
+.horario-header .contact-link{ display: inline-flex; align-items: center; padding: .2rem .3rem; border-radius: 6px; }
 
-
-/* Teléfono sin subrayado ni azul (incluido iOS) */
-.horario-header .contact-link,
-a[href^="tel:"].contact-link{
-  text-decoration: none;
-  color: inherit;
-  -webkit-text-fill-color: currentColor; /* iOS */
-  border-bottom: 0;
-}
-
-.horario-header .contact-link:hover{
-  text-decoration: underline; /* opcional al pasar el ratón */
-}
-
-/* Mejor toque en móvil */
-.horario-header .contact-link{
-  display: inline-flex;
-  align-items: center;
-  padding: .2rem .3rem;    /* área de toque mayor */
-  border-radius: 6px;
-}
-
-
-
-/* ===== Botón volver "ligero" para Servicios y Novedades ===== */
+/* volver ligero */
 .btn-volver-ligero {
-  background: var(--color-azul);
-  color: #fff;
-  padding: .55rem 1.4rem;   /* 🔹 más delgado */
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: .95rem;
-  text-decoration: none;
-  transition: background .25s ease, transform .2s ease;
-  display: inline-block;
-  margin-top: 2rem;
+  background: var(--color-azul); color: #fff; padding: .55rem 1.4rem; border-radius: 8px;
+  font-weight: 500; font-size: .95rem; text-decoration: none; transition: background .25s ease, transform .2s ease;
+  display: inline-block; margin-top: 2rem;
 }
-.btn-volver-ligero:hover {
-  background: #03345a;
-  transform: translateY(-2px);
+.btn-volver-ligero:hover { background: #03345a; transform: translateY(-2px); }
+
+/* Novedades: sin subrayados heredados */
+.novedades-grid .novedad-card, .novedades-grid .novedad-card * { text-decoration: none !important; }
+.novedades-grid .novedad-card a, .novedades-grid .novedad-card a:visited, .novedades-grid .novedad-card a:hover {
+  color: inherit !important; text-decoration: none !important;
 }
 
-/* --- Arreglo Novedades: sin subrayados y sin fugas de menú --- */
-.novedades-grid .novedad-card,
-.novedades-grid .novedad-card * {
-  text-decoration: none !important;
-}
-
-.novedades-grid .novedad-card a,
-.novedades-grid .novedad-card a:visited,
-.novedades-grid .novedad-card a:hover {
-  color: inherit !important;
-  text-decoration: none !important;
-}
-
-/* El dropdown solo aplica dentro del nav (evita que aparezca en secciones) */
-nav.navegacion .dropdown-menu { position: absolute; z-index: 1000; }
-main .dropdown-menu { display: none; }           /* por si algún HTML externo trae .dropdown-menu */
-nav.navegacion .dropdown-menu { display: flex; } /* se controla por React; aquí sólo restablecemos */
-
-
-
-/* ===== Detalle Novedad: no heredar “tarjeta” ===== */
-.detalle-novedad-wrap{
-  display:grid;
-  place-items:center;
-  padding: 0 1rem;
-}
-.detalle-novedad{
-  max-width:720px;
-  width:100%;
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  padding:0;
-}
-.detalle-novedad h3{ margin:0 0 .5rem; font-weight:700; }
-.detalle-novedad p{ margin:0; line-height:1.6; }
-
-/* Si por cualquier motivo se cuela una clase .novedad-card dentro, la anulamos */
-.detalle-novedad .novedad-card{ all:unset !important; display:block !important; }
-
-/* Detalle: vista limpia, sin “tarjeta” */
-.detalle-novedad-wrap{ display:grid; place-items:center; padding:0 1rem; }
-.detalle-novedad{ max-width:720px; width:100%; background:transparent; border:0; box-shadow:none; padding:0; }
-.detalle-novedad h3{ margin:0 0 .5rem; font-weight:700; }
-.detalle-novedad p{ margin:0; line-height:1.6; }
-
-/* Por si algo cuela estilos antiguos dentro del detalle */
-.detalle-novedad .novedad-card,
-.detalle-novedad .badge { all:unset !important; }
-
-
-/* Fuente base en todo el sitio: Raleway de next/font */
-body {
-  font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-}
-
-/* Titulares con Playfair */
-.servicios-header h1,
-.novedades-header h1,
-.quienes-somos .titulo-quienes {
+/* Fuente base next/font */
+body { font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+.servicios-header h1, .novedades-header h1, .quienes-somos .titulo-quienes {
   font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
 }
 
-
-/* ==== Overrides de cabecera (colócalo AL FINAL del CSS) ==== */
-
-/* Arregla el color con !important (tenías un ; mal puesto) */
-.quienes-somos .texto-quienes{
-  color:#000000 !important;
-  font-weight:700;
-}
-
-/* Mover la foto (izquierda/arriba) */
-.header .logo-foto{
-  position:relative;
-  left:-24px;   /* ← mueve a la izquierda (ajusta) */
-  top:-10px;    /* ↑ sube la foto (ajusta) */
-}
-
-/* Permitir desplazar el título pese al !important anterior */
+/* ==== Overrides cabecera (conservados) ==== */
+.quienes-somos .texto-quienes{ color:#000000 !important; font-weight:700; }
+.header .logo-foto{ position:relative; left:-24px; top:-10px; }
 .cabecera-fondo .header .titulo-despacho{
-  position:relative !important;
-  top:-28px;    /* ↑ súbelo */
-  left:-18px;   /* ← a la izquierda */
-  text-align:left !important;
-  height:auto !important;
-  margin:0 !important;
+  position:relative; top:-28px; left:-18px; text-align:left; height:auto; margin:0;
 }
-
-/* Permitir desplazar el bloque “Quiénes somos” */
 .cabecera-fondo .header .quienes-somos{
-  position:relative !important;
-  top:-16px;    /* ↑ súbelo */
-  left:-14px;   /* ← a la izquierda */
-  margin-top:0 !important;   /* neutraliza el fix previo */
-  max-width:700px;           /* opcional */
+  position:relative; top:-16px; left:-14px; margin-top:0; max-width:700px;
 }
-
-/* En móviles, que no se descoloque: volver a posiciones neutras */
 @media (max-width: 900px){
   .header .logo-foto{ left:0; top:0; }
-  .cabecera-fondo .header .titulo-despacho{ top:0; left:0; text-align:center !important; }
+  .cabecera-fondo .header .titulo-despacho{ top:0; left:0; text-align:center; }
   .cabecera-fondo .header .quienes-somos{ top:0; left:0; text-align:center; }
 }
 
-/* ==== CLS FIX cabecera & quienes somos (no cambia el look, estabiliza alturas) ==== */
-
-/* En desktop, imita el layout anterior sin usar offsets que muevan el flujo */
+/* Estabilidad título/cabecera (conservado) */
 @media (min-width: 1024px) {
-  .header {
-    flex-wrap: nowrap;
-  }
-  .titulo-despacho {
-    margin-left: 15px !important; /* ligera separación de la foto */
-    text-align: left;             /* como lo tenías visualmente */
-  }
-  .quienes-somos {
-    align-self: flex-start;
-    padding-top: .5rem;
-  }
+  .header { flex-wrap: nowrap; }
+  .titulo-despacho { margin-left: 15px; text-align: left; }
+  .quienes-somos { align-self: flex-start; padding-top: .5rem; }
 }
-
-/* Reserva altura de cabecera para que no “salte” al cargar la fuente/foto */
-.cabecera-fondo {
-  min-height: 20px; /* ajusta si ves demasiado espacio */
-}
-
-/* Evita movimientos por offset relativo en el título */
+.cabecera-fondo { min-height: 20px; }
 .titulo-despacho {
-  position: static !important;  /* antes relative con top/left */
-  height: auto !important;
-  margin: 0 0 1rem 0 !important;
-  text-align: center;           /* mantiene apariencia centrada */
+  position: static; height: auto; margin: 0 0 1rem 0; text-align: center;
 }
 
-/* Quita el margen negativo que provoca salto del contenido */
-.quienes-somos {
-  margin-top: 0 !important;
-  max-width: 750px;             /* un pelín más ancho para compensar */
-}
-
-
-/* ===== PARCHE MINIMO: estabilidad del título y cabecera ===== */
-
-/* Corrige el typo de la colegiación sin cambiar markup */
+/* Parche mínimo (conservado) */
 .colegiacion-pequena{ margin-top:.23rem; }
-
-/* Forza que el título no use offsets ni alturas fijas */
 .titulo-despacho{
-  position: static !important;
-  height: auto !important;
-  margin: 0 0 1rem 0 !important;
-  line-height: 1.1;
-  font-weight: 700;
-  /* el <br> que ya tienes fuerza las dos líneas */
-  word-break: keep-all;
-  overflow-wrap: normal;
-  text-wrap: balance;
-  /* tamaño fluido estable */
+  position: static; height: auto; margin: 0 0 1rem 0; line-height: 1.1; font-weight: 700;
+  word-break: keep-all; overflow-wrap: normal; text-wrap: balance;
   font-size: clamp(2rem, 2.2rem + 2vw, 4.2rem);
-  /* usa tu fuente de titulares si la tienes cargada */
   font-family: var(--font-playfair, 'Playfair Display'), Georgia, serif;
 }
-
-/* Mantén layout en desktop; centra solo en móvil para evitar saltos */
 @media (max-width: 900px){
-  .header{
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    gap: 14px !important;
-  }
-  .titulo-despacho{
-    text-align: center !important;
-    font-size: clamp(1.8rem, 1.4rem + 3vw, 3rem);
-  }
-  .quienes-somos{
-    text-align: center !important;
-    max-width: 100% !important;
-    padding: 0 .5rem !important;
-    margin-top: 0 !important;
-  }
+  .header{ flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+  .titulo-despacho{ text-align: center; font-size: clamp(1.8rem, 1.4rem + 3vw, 3rem); }
+  .quienes-somos{ text-align: center; max-width: 100%; padding: 0 .5rem; margin-top: 0; }
+  .logo-foto{ left: 0; top: 0; }
 }
 
-/* Si alguna regla anterior movía la foto con top/left, neutralízala solo en móvil */
-@media (max-width: 900px){
-  .logo-foto{ left: 0 !important; top: 0 !important; }
-}
-
-
-/* ===== Fix Android: cabecera centrada y menú legible ===== */
-
-/* Título y bloque quiénes-somos centrados en móvil */
-@media (max-width: 900px){
-  .header{ flex-direction:column !important; align-items:center !important; text-align:center !important; gap:12px !important; }
-
-  .titulo-despacho{
-    text-align:center !important;
-    margin: .25rem 0 0 0 !important;
-    font-size: clamp(2rem, 3.8vw + 1.1rem, 3rem) !important; /* más compacto */
-    line-height: 1.08 !important;
-  }
-
-  .quienes-somos{
-    max-width: 680px !important;
-    width: 100% !important;
-    margin: .5rem auto 0 auto !important;
-    text-align: center !important;
-    padding: 0 .75rem !important;
-  }
-  .quienes-somos .titulo-quienes{
-    font-size: clamp(1.4rem, 1.2rem + 1.5vw, 1.8rem) !important;
-    margin: .4rem 0 .2rem 0 !important;
-  }
-  .quienes-somos .texto-quienes{
-    font-size: 1rem !important;
-  }
-}
-
-/* Menú vertical: más grande y menos separación */
+/* Menú vertical en móvil (conservado) */
 @media (max-width: 900px){
   .navegacion{
-    flex-direction: column !important;
-    gap: .35rem !important;              /* antes demasiado hueco */
-    padding: .6rem .75rem !important;
-    max-width: 780px !important;
-    margin: 1rem auto !important;
-  }
-  .navegacion a,
-  .navegacion button,
-  .navegacion .dropdown-toggle{
-    font-size: clamp(1.05rem, 1rem + 1.5vw, 1.4rem) !important; /* más legible */
-    padding: .55rem .8rem !important;
-    line-height: 1.2 !important;
-  }
-}
-
-/* Evita que la imagen de fondo “empuje” el contenido y asegura contraste */
-.cabecera-fondo{ background-position: center top !important; }
-.cabecera-fondo::before{ background: linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.15)) !important; }
-
-/* Imagen y colegiación compactas en móvil para que no descuadren */
-@media (max-width: 640px){
-  .logo-foto{ width: 260px !important; }
-  .colegiacion-pequena{ font-size: .8rem !important; }
-}
-/* Restaurar encuadre original del fondo */
-.cabecera-fondo{
-  background-position: center -300px !important; /* vuelve al encuadre anterior */
-}
-
-/* Restaurar la luz original del degradado */
-.cabecera-fondo::before{
-  background: linear-gradient(rgba(255,255,255,.35), rgba(255,255,255,.10)) !important;
-}
-
-
-/* ==== PARCHE FOCAL: foto controlada + cabecera estable ==== */
-
-/* 1) No dejes que el retrato empuje el layout */
-.logo-foto{
-  width: 300px !important;        /* fijo para desktop */
-  max-width: 34vw !important;     /* tope relativo si la pantalla es estrecha */
-  height: auto !important;
-  aspect-ratio: 3 / 4 !important; /* evita saltos */
-  object-fit: cover !important;
-  display: block !important;
-}
-
-/* 2) En tablet/móvil baja aún más el ancho de la foto */
-@media (max-width: 900px){
-  .logo-foto{ width: 240px !important; max-width: 70vw !important; }
-}
-
-/* 3) Evita que el título cree huecos enormes en pantallas pequeñas */
-@media (max-width: 900px){
-  .titulo-despacho{
-    position: static !important;
-    height: auto !important;
-    margin: 0 0 .75rem 0 !important;
-    line-height: 1.1 !important;
-    font-size: clamp(2rem, 3.4vw + 1rem, 3rem) !important;
-  }
-  .quienes-somos{ margin-top: 0 !important; }
-}
-
-/* 4) Mantén el header compacto para que el menú no baje */
-.header{
-  align-items: flex-start !important;
-  gap: 28px !important;     /* reduce hueco entre foto y texto */
-  row-gap: 20px !important; /* si envuelve, que no deje huecos grandes */
-}
-
-/* 5) Menú legible y sin “brincos” */
-.navegacion{
-  gap: .75rem !important;
-  padding: .7rem 1rem !important;
-}
-.navegacion a,
-.navegacion button,
-.navegacion .dropdown-toggle{
-  font-size: clamp(1.05rem, 1rem + 1vw, 1.6rem) !important;
-  line-height: 1.2 !important;
-  padding: .55rem .9rem !important;
-}
-
-/* 6) Asegura capas: fondo debajo, contenido encima */
-.cabecera-fondo::before{ z-index: 0 !important; }
-.cabecera-fondo > *{ z-index: 1 !important; position: relative; }
-
-
-/* ===== Tamaño del retrato proporcional al texto ===== */
-.header{ align-items:flex-start !important; gap:28px !important; }
-.foto-con-colegiacion{ flex:0 0 auto !important; }
-
-/* La columna de texto puede crecer. La foto queda acotada. */
-.cabecera-fondo .header > div:last-child{
-  flex:1 1 520px !important;
-  min-width:520px;        /* asegura espacio al texto en desktop */
-}
-
-/* Foto: escala con el ancho de la ventana, con límites sanos */
-.logo-foto{
-  width: clamp(300px, 26vw, 380px) !important; /* desktop base */
-  height: auto !important;
-  aspect-ratio: 3 / 4 !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-
-/* En pantallas muy grandes, se permite algo más, pero controlado */
-@media (min-width: 1400px){
-  .logo-foto{ width: clamp(320px, 24vw, 420px) !important; }
-}
-
-/* En portátiles medianos, un poco más contenida */
-@media (max-width: 1024px){
-  .logo-foto{ width: clamp(260px, 34vw, 320px) !important; }
-}
-
-/* En móvil, fija para que no empuje el menú */
-@media (max-width: 900px){
-  .logo-foto{ width: 260px !important; }
-  .cabecera-fondo .header > div:last-child{ min-width:0 !important; }
-}
-
-/* ===== Evita huecos que empujan el menú ===== */
-.titulo-despacho{
-  position: static !important;
-  height: auto !important;
-  margin: 0 0 .75rem 0 !important;
-  line-height: 1.1 !important;
-}
-.quienes-somos{ margin-top: 0 !important; }
-
-
-/* ===== Menú principal: más alto y con separación amplia ===== */
-.navegacion{
-  /* 🔹 Sube el bloque respecto al texto */
-  margin-top: 1rem !important;
-  margin-bottom: 0 !important;
-
-  /* 🔹 Más aire dentro del bloque */
-  padding: 1rem 1.5rem !important;
-
-  /* 🔹 Fondo y borde */
-  background: #ffffff !important;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,.06);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  /* 🔹 Espacio horizontal entre items */
-  gap: 3rem !important;
-}
-
-/* Enlaces del menú */
-.navegacion a,
-.navegacion button,
-.navegacion .dropdown-toggle{
-  font-size: clamp(1.25rem, 1.15rem + 0.8vw, 1.6rem) !important;
-  font-weight: 700 !important;
-  padding: .65rem 1.2rem !important;
-  line-height: 1.2;
-  text-align: center;
-}
-
-/* Hover: pequeño realce */
-.navegacion a:hover,
-.navegacion button:hover,
-.navegacion .dropdown-toggle:hover{
-  color: var(--color-azul) !important;
-  transform: scale(1.06);
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 900px){
-  .navegacion{
-    flex-direction: column !important;
-    gap: .7rem !important;
-    padding: .8rem !important;
-    margin-top: 1rem !important;
-  }
-  .navegacion a,
-  .navegacion button,
-  .navegacion .dropdown-toggle{
-    font-size: 1.3rem !important;
-    width: 100%;
-  }
-}
-/* Subir el menú para acercarlo al fondo */
-.navegacion{
-  margin-top: -0.5rem !important;  /* valor negativo lo acerca a la foto */
-}
-/* Fondo transparente para el menú y letras con sombra */
-.navegacion{
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.navegacion a,
-.navegacion button,
-.navegacion .dropdown-toggle{
-  color: #000;                     /* texto oscuro */
-  text-shadow: 0 1px 3px rgba(255,255,255,0.7); /* mejora contraste sobre la foto */
-}
-
-
-/* Texto de ¿Quiénes somos? más ligero y legible */
-.quienes-somos .texto-quienes{
-  font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, sans-serif !important;
-  font-weight: 400 !important;        /* antes 700 */
-  font-style: normal !important;       /* quita cursiva */
-  color: #222 !important;              /* menos duro que #000 */
-  line-height: 1.6 !important;
-  letter-spacing: .01em;
-  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.075rem);  /* fluido, sin “gritar” */
-  max-width: 65ch;                     /* ancho cómodo de lectura */
-  margin-top: .25rem;
-  text-decoration: none !important;    /* por si hereda subrayado */
-}
-
-/* (Opcional) Evita subrayados dentro de tarjetas de servicios */
-.serv-card a{ text-decoration: none !important; }
-.serv-card a:hover{ text-decoration: underline; }
-
-/* (Opcional) Asegura que el botón “volver” siga visible */
-.btn-volver,
-.btn-volver-ligero{
-  display: inline-block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
-/* Compactar items del dropdown Contacto */
-.dropdown-menu.contacto-dropdown{
-  padding: .4rem .6rem !important;
-  gap: .35rem !important;
-}
-
-.dropdown-menu.contacto-dropdown a{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem !important;
-  font-weight: 600;
-  padding: .3rem 0 !important;
-  text-align: center;
-}
-
-/* ===== Ajuste cabecera móvil ===== */
-@media (max-width: 640px) {
-  .cabecera-fondo .header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.75rem;           /* espacio uniforme entre elementos */
-    padding: 1rem;
-  }
-
-  .cabecera-fondo .logo-foto {
-    width: 230px;           /* tamaño cómodo en móviles */
-    max-width: 90%;
-    height: auto;
-  }
-
-  .cabecera-fondo .colegiacion-pequena {
-    margin: 0.25rem 0;
-    text-align: center;
-  }
-
-  .cabecera-fondo .titulo-despacho {
-    position: static;
-    margin: 0.5rem 0;
-    font-size: clamp(1.6rem, 1.4rem + 2vw, 2.3rem);
-    line-height: 1.15;
-    text-align: center;
-  }
-
-  .cabecera-fondo .quienes-somos {
-    position: static;
-    max-width: 90%;
-    margin: 0.75rem auto 0;
-    padding: 0 0.5rem;
-    text-align: center;
-  }
-}
-/* ===== Centro perfecto en móvil: foto, colegiación, título y "¿Quiénes somos?" ===== */
-@media (max-width: 768px){
-  .cabecera-fondo .header{
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:center !important;
-    justify-content:center !important;
-    text-align:center !important;
-    gap: .75rem !important;
-    padding: 1rem !important;
-  }
-
-  /* Fuerza una sola columna centrada */
-  .cabecera-fondo .header > .foto-con-colegiacion,
-  .cabecera-fondo .header > div{
-    width:100% !important;
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:center !important;
-    justify-content:center !important;
-    min-width:0 !important;       /* anula el min-width de desktop */
-  }
-
-  /* Neutraliza offsets previos que desalinean */
-  .cabecera-fondo .header .logo-foto{
-    position: static !important;  /* ignora left/top anteriores */
-    left: auto !important;
-    top: auto !important;
-    margin: 0 auto !important;
-  }
-
-  .cabecera-fondo .header .colegiacion-pequena{
-    text-align:center !important;
-    margin: .25rem 0 .5rem 0 !important;
-  }
-
-  .cabecera-fondo .header .titulo-despacho{
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    margin: .5rem 0 !important;
-    margin-left: 0 !important;    /* anula el margin-left del desktop */
-    text-align:center !important;
-  }
-
-  .cabecera-fondo .header .quienes-somos{
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    max-width: 90% !important;
-    margin: .5rem auto 0 auto !important;
-    padding: 0 .5rem !important;
-    text-align:center !important;
-  }
-}
-/* Subir título y "¿Quiénes somos?" respecto a la foto en móviles */
-@media (max-width: 768px){
-  .cabecera-fondo .header .titulo-despacho{
-    margin-top: 0 !important;
-    transform: translateY(-70px);   /* ajusta: -10px = sube */
-  }
-
-  .cabecera-fondo .header .quienes-somos{
-    transform: translateY(-10px);    /* ajusta para alinear */
-  }
-}
-@media (max-width: 768px){
-  .cabecera-fondo .header .quienes-somos{
-    position: relative !important;
-    top: -40px !important;   /* antes -70px */
-    margin-top: 0 !important;
-  }
-}
-
-/* Menú en 2 columnas en pantallas pequeñas */
-@media (max-width: 768px){
-  .navegacion{
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr);
-    gap: .75rem 1.5rem;      /* fila / columna */
-    justify-items: center;
-    padding: .8rem 1rem;
-    background: transparent; /* elimina caja blanca si molesta */
-    box-shadow: none;
-  }
-  .navegacion a,
-  .navegacion button,
-  .navegacion .dropdown-toggle{
-    font-size: 1.1rem;
-    padding: .4rem .6rem;
-  }
-}
-/* Ajustar separación entre texto y menú */
-.quienes-somos{
-  margin-bottom: 1rem !important;   /* antes tenías ~3-4rem implícitos */
-}
-
-.navegacion{
-  margin-top: 1rem !important;      /* baja si sigue muy pegado */
-}
-/* 🔹 Sube el menú solo en móviles sin afectar lo de arriba */
-@media (max-width: 768px) {
-  .navegacion {
-    transform: translateY(-170px); /* Ajusta el valor: -30px, -40px, -50px… */
-  }
-}
-
-/* Dropdown Contacto siempre en overlay, sin empujar nada */
-nav.navegacion{ position: relative !important; }
-nav.navegacion .dropdown{ position: relative !important; }
-
-nav.navegacion .dropdown-menu{
-  position: absolute !important;
-  top: calc(100% + 8px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 9999 !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  gap: .35rem !important;
-
-  background: rgba(255,255,255,.97) !important; /* legible sobre la foto */
-  border-radius: 10px !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,.12) !important;
-  padding: .5rem .75rem !important;
-}
-
-@media (max-width: 900px){
-  nav.navegacion .dropdown-menu{
-    width: min(90vw, 360px) !important;
-  }
-}
-
-/* Compactar items */
-nav.navegacion .dropdown-menu a{
-  padding: .35rem 0 !important;
-  font-size: 1.1rem !important;
-  text-align: center !important;
-}
-
-/* Dropdown Contacto: transparente y compacto */
-nav.navegacion{ position: relative !important; }
-nav.navegacion .dropdown{ position: relative !important; }
-
-nav.navegacion .dropdown-menu{
-  position: absolute !important;
-  top: calc(100% + 8px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 9999 !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  gap: .25rem !important;       /* ← menos separación */
-  background: transparent !important;  /* ← SIN fondo */
-  box-shadow: none !important;
-  border: none !important;
-  padding: .25rem 0 !important;
-}
-
-@media (max-width:900px){
-  nav.navegacion .dropdown-menu{
-    width: min(90vw, 340px) !important;
-  }
-}
-
-/* Enlaces del dropdown más compactos */
-nav.navegacion .dropdown-menu a{
-  padding: .3rem 0 !important;
-  font-size: 1.15rem !important;
-  font-weight: 600 !important;
-  text-align: center !important;
-  text-decoration: none !important;
-}
-
-/* === CONTACTO: overlay pegado al botón, sin desplazar nada === */
-nav.navegacion{ position: relative !important; }
-nav.navegacion .dropdown{ position: relative !important; display:inline-block !important; }
-
-nav.navegacion .dropdown-menu{
-  position: absolute !important;
-  top: calc(100% + 4px) !important;   /* antes 8px -> más pegado */
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 9999 !important;
-
-  display: flex !important;
-  flex-direction: column !important;
-  gap: .2rem !important;              /* menos separación entre items */
-  padding: .2rem 0 !important;
-  margin: 0 !important;
-
-  background: transparent !important; /* sin recuadro */
-  box-shadow: none !important;
-  border: 0 !important;
-}
-
-nav.navegacion .dropdown-menu a{
-  padding: .25rem 0 !important;
-  font-size: 1.1rem !important;
-  font-weight: 600 !important;
-  line-height: 1.1 !important;
-  text-align: center !important;
-}
-
-/* Evita que el botón "Contacto" cambie de tamaño al abrir */
-.navegacion .dropdown-toggle{
-  line-height: 1.2 !important;
-  padding-bottom: .6rem !important;   /* fija altura */
-}
-
-/* === LOGO FIJO: tamaño responsive y sin “moverse” === */
-.logo-fijo{
-  position: fixed !important;
-  right: 10px; bottom: 10px;
-  width: clamp(56px, 7vw, 96px) !important;  /* ajusta a pantalla */
-  height: auto !important;
-  z-index: 50 !important;                     /* por encima del dropdown */
-  pointer-events: none;                       /* no captura clics del dropdown */
-}
-@media (max-width: 480px){
-  .logo-fijo{ right: 8px; bottom: 8px; width: 64px !important; }
-}
-/* ===== Logo fijo adaptativo y estable ===== */
-.logo-fijo {
-  position: fixed;                 /* siempre visible */
-  bottom: 1rem;
-  right: 1rem;
-  width: clamp(45px, 7vw, 85px);   /* escala según pantalla */
-  height: auto;
-  opacity: 0.9;
-  z-index: 1000;                   /* por encima del menú y del dropdown */
-  filter: drop-shadow(0 0 5px #fff);
-  transition: transform .3s ease, opacity .3s ease;
-  pointer-events: none;            /* evita que el dropdown lo empuje */
-}
-
-.logo-fijo:hover {
-  transform: scale(1.05);
-  opacity: .75;
-}
-/* === Logo siempre fijo, sin depender del flujo del layout === */
-.logo-fijo {
-  position: fixed;          /* ← fuera del flujo */
-  bottom: 1rem;             /* distancia al borde inferior */
-  right: 1rem;              /* distancia al borde derecho */
-  width: clamp(60px, 7vw, 90px); /* tamaño fluido segun pantalla */
-  height: auto;
-  z-index: 9999;            /* por encima de todo */
-  pointer-events: none;     /* no bloquea clics del menú */
-  transition: transform .3s ease;
-}
-
-/* Efecto opcional en escritorio */
-@media (hover:hover) {
-  .logo-fijo:hover {
-    transform: scale(1.08);
-  }
-}
-
-
-/* Sube todo el bloque de contacto */
-section.formulario-contacto{
-  margin-top: -10px !important;  /* prueba con -20, -30, -40 */
-}
-/* ==== Ajuste RESPONSIVE: acercar el formulario al menú sin romper nada ==== */
-
-/* espacio inferior de la cabecera para que no choque en ningún dispositivo */
-.cabecera-fondo{ padding-bottom: clamp(8px, 2vw, 20px) !important; }
-
-/* el menú bien pegado a la cabecera */
-nav.navegacion{ margin-bottom: .5rem !important; }
-
-/* bloque de contacto: posición responsive (sube sin afectar desktop) */
-:root{
-  --shift-contacto-desktop: clamp(-40px, -6vw, -20px);
-  --shift-contacto-tablet:  clamp(-48px, -8vw, -16px);
-  --shift-contacto-mobile:  clamp(-36px, -10vw, -10px);
-}
-
-section.formulario-contacto{
-  position: relative;
-  z-index: 0;
-  margin-top: var(--shift-contacto-desktop) !important;   /* ordenadores */
-}
-
-/* tablets (iPad, Galaxy Tab, Fold en modo tablet) */
-@media (max-width: 1024px){
-  section.formulario-contacto{
-    margin-top: var(--shift-contacto-tablet) !important;
-  }
-}
-
-/* móviles */
-@media (max-width: 768px){
-  section.formulario-contacto{
-    margin-top: var(--shift-contacto-mobile) !important;
-  }
-}
-
-/* por si el dropdown de Contacto se superpone, siempre encima del formulario */
-nav.navegacion{ position: relative; z-index: 5; }
-section.formulario-contacto{ z-index: 0; }
-
-/* ==== Menú principal: texto más grande y uniforme ==== */
-.navegacion a,
-.navegacion button,
-.navegacion .dropdown-toggle {
-  font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem) !important;
-  font-weight: 700 !important;
-  line-height: 1.25 !important;
-}
-
-/* ====== TABLET (769–1024px: iPad Air, etc.) ====== */
-@media (min-width:769px) and (max-width:1024px){
-  .header{ gap:20px; align-items:center; }
-  .logo-foto{ width: clamp(240px, 28vw, 320px); left:auto!important; top:auto!important; }
-  .titulo-despacho,.quienes-somos{ text-align:center; margin:0; transform:none!important; }
-  .navegacion{ margin-top: .9rem !important; gap: 1.6rem !important; }
-}
-
-/* ====== MÓVIL (≤768px: iPhone, Galaxy, Fold, etc.) ====== */
-@media (max-width:768px){
-  .header{
-    flex-direction:column; align-items:center; text-align:center; gap:.9rem; padding:1rem;
-  }
-  .logo-foto{ width:230px; max-width:90%; margin:0 auto; left:auto!important; top:auto!important; }
-  .titulo-despacho,.quienes-somos{
-    max-width:90%; margin:0; transform:none!important; top:auto!important; left:auto!important;
-    text-align:center;
-  }
-  /* Menú en 2 columnas y más grande */
-  .navegacion{
-    display:grid !important; grid-template-columns:repeat(2,1fr);
-    gap:.7rem 1.4rem !important; margin-top:.8rem !important; background:transparent; box-shadow:none;
-  }
-  .navegacion a,.navegacion button,.navegacion .dropdown-toggle{
-    font-size:1.2rem !important; padding:.5rem .6rem !important;
-  }
-  /* Dropdown flotante, sin mover nada */
-  nav.navegacion{ position:relative !important; }
-  nav.navegacion .dropdown-menu{
-    position:absolute !important; top:calc(100% + 4px) !important; left:50% !important;
-    transform:translateX(-50%) !important; background:transparent !important; box-shadow:none !important;
-    padding:.25rem 0 !important; gap:.2rem !important; z-index:9999 !important;
-  }
-}
-
-/* Logo siempre fijo en todas las vistas */
-.logo-fijo{
-  position:fixed; bottom:1rem; right:1rem;
-  width:clamp(60px,7vw,90px); height:auto; z-index:1000; pointer-events:none;
-}
-
-
-/* =========================================================================
-   🔧 PARCHE MÍNIMO (pégalo al FINAL de tu globals.css)
-   - No cambia tu escritorio (desktop) visual.
-   - Arregla: logo fijo en móvil, dropdown “Contacto” flotante,
-     quita empujón del menú en móvil, centra cabecera en móvil,
-     y sube un poco el formulario sin romper nada.
-   ========================================================================= */
-
-/* 1) LOGO SIEMPRE FIJO (también en móvil) */
-.logo-fijo{
-  position: fixed !important;     /* fuera del flujo: no se mueve jamás */
-  right: 1rem !important;
-  bottom: 1rem !important;
-  width: clamp(60px, 7vw, 90px) !important;
-  height: auto !important;
-  z-index: 9999 !important;       /* por encima de menú y dropdown */
-  pointer-events: none !important;/* no intercepta clics del dropdown */
-  transform: none !important;     /* evita efectos raros al abrir menú */
-}
-
-/* 2) DROPDOWN “CONTACTO” SIEMPRE EN OVERLAY (no empuja nada) */
-nav.navegacion{ position: relative !important; z-index: 50 !important; }
-nav.navegacion .dropdown{ position: relative !important; }
-nav.navegacion .dropdown-menu{
-  position: absolute !important;        /* flotante */
-  top: calc(100% + 4px) !important;     /* pegado al botón */
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 1000 !important;
-  background: transparent !important;   /* sin recuadro blanco */
-  box-shadow: none !important;
-  border: 0 !important;
-  padding: .25rem 0 !important;
-  gap: .2rem !important;
-}
-nav.navegacion .dropdown-menu a{
-  padding: .3rem 0 !important;
-  line-height: 1.1 !important;
-  text-align: center !important;
-  text-decoration: none !important;
-}
-
-/* 3) MÓVIL: QUITAR CUALQUIER EMPUJÓN DEL MENÚ (evita que “salte”) */
-@media (max-width: 768px){
-  .navegacion{
-    transform: none !important;   /* anula translateY previos */
-    margin-top: .6rem !important; /* separa un poco del texto de arriba */
-  }
-}
-
-/* 4) SUBIR EL FORMULARIO UN POCO, DE FORMA RESPONSIVE Y ESTABLE */
-@media (min-width: 1025px){
-  section.formulario-contacto{ margin-top: -20px !important; }
-}
-@media (max-width: 1024px){
-  section.formulario-contacto{ margin-top: -18px !important; }
-}
-@media (max-width: 768px){
-  section.formulario-contacto{ margin-top: -14px !important; }
-}
-
-/* 5) MÓVIL: CABECERA CENTRADA (sin offsets heredados) */
-@media (max-width: 900px){
-  .cabecera-fondo .header{
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    gap: .8rem !important;
-    padding: 1rem !important;
-  }
-  .header .logo-foto,
-  .cabecera-fondo .header .titulo-despacho,
-  .cabecera-fondo .header .quienes-somos{
-    position: static !important;
-    left: auto !important;
-    top: auto !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-  }
-  .cabecera-fondo .header .titulo-despacho{
-    font-size: clamp(1.8rem, 1.5rem + 2.2vw, 2.4rem) !important;
-    line-height: 1.12 !important;
-  }
-  .cabecera-fondo .header .quienes-somos{
-    max-width: 90% !important;
-    padding: 0 .5rem !important;
-  }
-}
-
-/* 6) MÓVIL: MENÚ EN DOS COLUMNAS (más compacto y legible) */
-@media (max-width: 768px){
-  .navegacion{
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: .75rem 1.4rem !important;   /* fila / columna */
-    background: transparent !important;
-    box-shadow: none !important;
-    padding: .8rem 1rem !important;
-  }
-  .navegacion a,
-  .navegacion button,
-  .navegacion .dropdown-toggle{
-    font-size: 1.2rem !important;
-    padding: .5rem .6rem !important;
-  }
-}
-
-/* 7) SEGURIDAD DE CAPAS: el dropdown nunca queda detrás del formulario */
-section.formulario-contacto{ position: relative; z-index: 0; }
-nav.navegacion{ z-index: 5; }
-
-
-/* ======== RESPONSIVE UNIVERSAL (no toca desktop) ======== */
-
-/* 1) Tipografía fluida en móvil y tablet */
-@media (max-width: 1024px){
-  :root{
-    --fs-h1: clamp(1.8rem, 4.5vw + 0.6rem, 3rem);
-    --fs-h2: clamp(1.2rem, 2.4vw + 0.6rem, 1.6rem);
-    --fs-p:  clamp(1rem, 1.2vw + 0.8rem, 1.125rem);
-  }
-  .titulo-despacho{ font-size: var(--fs-h1) !important; line-height: 1.12 !important; }
-  .quienes-somos .titulo-quienes{ font-size: var(--fs-h2) !important; }
-  .quienes-somos .texto-quienes{ font-size: var(--fs-p) !important; }
-}
-
-/* 2) Cabecera: columna centrada y sin offsets en ≤1024px */
-@media (max-width: 1024px){
-  .cabecera-fondo .header{
-    display:flex !important; flex-direction:column !important;
-    align-items:center !important; text-align:center !important; gap:.9rem !important;
-    padding:1rem !important;
-  }
-  .logo-foto{ width: clamp(220px, 36vw, 300px) !important; height:auto !important; left:auto !important; top:auto !important; }
-  .cabecera-fondo .titulo-despacho,
-  .cabecera-fondo .quienes-somos{
-    position:static !important; margin:0 !important; left:auto !important; top:auto !important;
-    max-width:min(90%, 42rem) !important;
-  }
-}
-
-/* 3) Ajuste fino móvil (≤768px):
-      - sube un poco el título
-      - el texto queda dentro del fondo
-      - el menú queda pegado al fondo sin pisar nada */
-@media (max-width: 768px){
-  .cabecera-fondo{ 
-    padding-bottom: 64px !important;              /* reserva hueco para el menú */
-    background-position: center -80px !important; /* mueve encuadre si hace falta */
-  }
-  .cabecera-fondo .titulo-despacho{ margin-top: -12px !important; }
-  .cabecera-fondo .quienes-somos{ margin-top: .25rem !important; }
-
-  nav.navegacion{
-    display:grid !important; grid-template-columns:repeat(2,1fr);
-    gap:.75rem 1.25rem !important;
-    margin-top: .25rem !important;                /* no se mete en el texto */
-    background:transparent !important; box-shadow:none !important;
+    flex-direction: column; gap: .35rem; padding: .6rem .75rem;
+    max-width: 780px; margin: 1rem auto;
   }
   .navegacion a, .navegacion button, .navegacion .dropdown-toggle{
-    font-size: clamp(1.05rem, 1.2vw + .95rem, 1.25rem) !important;
-    padding: .5rem .6rem !important;
-    line-height: 1.2 !important;
+    font-size: clamp(1.05rem, 1rem + 1.5vw, 1.4rem); padding: .55rem .8rem; line-height: 1.2;
   }
 }
 
-/* 4) Móviles muy estrechos (≤380px): compensa alturas y evita solapes */
-@media (max-width: 380px){
-  .cabecera-fondo{ padding-bottom: 72px !important; background-position:center -60px !important; }
-  .cabecera-fondo .titulo-despacho{ margin-top:-8px !important; }
-  .navegacion{ gap:.6rem 1rem !important; }
-  .navegacion a, .navegacion button, .navegacion .dropdown-toggle{ font-size:1.05rem !important; }
+/* ===== Ajuste cabecera móvil + centrado ===== */
+@media (max-width: 640px){
+  .cabecera-fondo .header { flex-direction: column; align-items: center; text-align: center; gap: 0.75rem; padding: 1rem; }
+  .cabecera-fondo .logo-foto { width: 230px; max-width: 90%; height: auto; }
+  .cabecera-fondo .colegiacion-pequena { margin: 0.25rem 0; text-align: center; }
+  .cabecera-fondo .titulo-despacho { position: static; margin: 0.5rem 0; font-size: clamp(1.6rem, 1.4rem + 2vw, 2.3rem); line-height: 1.15; text-align: center; }
+  .cabecera-fondo .quienes-somos { position: static; max-width: 90%; margin: 0.75rem auto 0; padding: 0 0.5rem; text-align: center; }
 }
-
-/* 5) Tablet (769–1024px): separaciones cómodas, sin cajas extras */
-@media (min-width:769px) and (max-width:1024px){
-  .header{ gap:20px !important; }
-  .navegacion{ margin-top:.8rem !important; gap:1.5rem !important; background:transparent !important; box-shadow:none !important; }
-}
-
-/* 6) Dropdown Contacto siempre flotante, no empuja contenido */
-nav.navegacion{ position:relative !important; z-index:5; }
-nav.navegacion .dropdown{ position:relative !important; }
-nav.navegacion .dropdown-menu{
-  position:absolute !important; top:calc(100% + 6px) !important; left:50% !important;
-  transform:translateX(-50%) !important; z-index:9999 !important;
-  background:transparent !important; box-shadow:none !important; border:0 !important;
-  padding:.25rem 0 !important; gap:.25rem !important;
-}
-
-/* 7) Formulario: acércalo al menú en pantallas pequeñas */
-@media (max-width:1024px){
-  section.formulario-contacto{ margin-top:-24px !important; }
-}
-@media (max-width:768px){
-  section.formulario-contacto{ margin-top:-32px !important; }
-}
-
-/* 8) Logo fijo: tamaño fluido y por encima de todo */
-.logo-fijo{
-  position:fixed !important; right:1rem; bottom:1rem;
-  width:clamp(56px, 7vw, 90px) !important; height:auto !important;
-  z-index:1000 !important; pointer-events:none;
-}
-
-
-/* ===== Menú al ras del fondo en móvil ===== */
 @media (max-width: 768px){
-  /* 1) Reservamos hueco para el menú dentro del fondo */
-  .cabecera-fondo{
-    position: relative !important;
-    padding-bottom: 110px !important; /* ↑ si aún toca el formulario, sube a 120–130px */
-    background-position: center -80px !important; /* opcional, mueve el encuadre */
+  .cabecera-fondo .header{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.75rem; padding: 1rem; }
+  .cabecera-fondo .header > .foto-con-colegiacion, .cabecera-fondo .header > div{
+    width:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; min-width:0;
   }
-
-  /* 2) Anclamos el menú al borde inferior del fondo */
-  .cabecera-fondo nav.navegacion{
-    position: absolute !important;
-    left: 50% !important;
-    bottom: 8px !important;           /* distancia al borde del fondo */
-    transform: translateX(-50%) !important;
-    width: min(92vw, 560px) !important;
-
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: .75rem 1.25rem !important;
-
-    margin: 0 !important;
-    padding: .6rem .8rem !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    z-index: 5 !important;
-  }
-
-  .navegacion a,
-  .navegacion button,
-  .navegacion .dropdown-toggle{
-    font-size: 1.15rem !important;
-    line-height: 1.2 !important;
-    padding: .45rem .55rem !important;
-  }
-
-  /* 3) El formulario empieza justo después del fondo (no se pisa) */
-  section.formulario-contacto{
-    margin-top: 0 !important;
-    position: relative;
-    z-index: 0;
-  }
-
-  /* 4) El dropdown de “Contacto” siempre flotante encima */
-  nav.navegacion .dropdown-menu{
-    position: absolute !important;
-    top: calc(100% + 6px) !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border: 0 !important;
-    padding: .25rem 0 !important;
-    z-index: 9 !important;
-  }
+  .cabecera-fondo .header .logo-foto{ position: static; left: auto; top: auto; margin: 0 auto; }
+  .cabecera-fondo .header .colegiacion-pequena{ text-align:center; margin: .25rem 0 .5rem 0; }
+  .cabecera-fondo .header .titulo-despacho{ position: static; top: auto; left: auto; margin: .5rem 0; margin-left: 0; text-align:center; }
+  .cabecera-fondo .header .quienes-somos{ position: static; top: auto; left: auto; max-width: 90%; margin: .5rem auto 0 auto; padding: 0 .5rem; text-align:center; }
+  .cabecera-fondo .header .titulo-despacho{ margin-top: 0; transform: translateY(-70px); }
+  .cabecera-fondo .header .quienes-somos{ transform: translateY(-10px); }
+  .cabecera-fondo .header .quienes-somos{ position: relative; top: -40px; margin-top: 0; }
 }
 
-/* Extra: móviles muy estrechos */
-@media (max-width: 380px){
-  .cabecera-fondo{ padding-bottom: 125px !important; } /* da un poco más de hueco */
-  .cabecera-fondo nav.navegacion{ bottom: 10px !important; gap: .6rem 1rem !important; }
-}
-
-/* Ajuste fino: bajar un poco más el menú pegado al fondo (solo móvil) */
+/* Menú en 2 columnas (conservado) */
 @media (max-width: 768px){
-  .cabecera-fondo nav.navegacion{
-    bottom: -10px !important;   /* ↓ más abajo. Prueba -6, -10, -14… */
+  .navegacion{
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: .75rem 1.5rem; justify-items: center; padding: .8rem 1rem;
+    background: transparent; box-shadow: none;
   }
-  .cabecera-fondo{
-    padding-bottom: 120px !important; /* compensa el nuevo “salto” */
-  }
+  .navegacion a, .navegacion button, .navegacion .dropdown-toggle{ font-size: 1.1rem; padding: .4rem .6rem; }
 }
+.quienes-somos{ margin-bottom: 1rem !important; }
+.navegacion{ margin-top: 1rem; }
 
+/* Anclar el menú un poco más arriba (pegado al fondo) */
+.navegacion { position: relative; top: -2rem; }
 
-/* CONTACTO: dropdown legible, encima de todo y sin mezclarse con el texto */
+/* CONTACTO siempre overlay legible (conservado) */
 nav.navegacion{ position:relative; z-index: 20; }
-
+nav.navegacion .dropdown{ position:relative; }
 nav.navegacion .dropdown-menu{
-  position: absolute !important;
-  top: calc(100% + 6px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-
-  z-index: 10000 !important;                 /* por encima del formulario y del logo */
-  background: rgba(255,255,255,.98) !important; /* opaco/legible */
-  backdrop-filter: blur(6px) saturate(120%);  /* (opc.) */
-  border: 1px solid #e5e7eb !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 24px rgba(0,0,0,.12) !important;
-
-  padding: .6rem .8rem !important;
-  gap: .35rem !important;
-  min-width: 220px !important;
-  max-width: 90vw !important;
+  position:absolute; top:calc(100% + 6px); left:50%; transform:translateX(-50%);
+  z-index:10000; background: rgba(255,255,255,.98); backdrop-filter: blur(6px) saturate(120%);
+  border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.12);
+  padding: .6rem .8rem; gap: .35rem; min-width: 220px; max-width: 90vw;
 }
+nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.45rem 0; font-weight:700; text-align:center; }
 
-nav.navegacion .dropdown-menu a{
-  display:block !important;
-  text-decoration:none !important;
-  padding:.45rem 0 !important;
-  font-weight:700 !important;
-  text-align:center !important;
-}
-
-/* ==== Desktop: fondo centrado y estable (no afecta móvil/tablet) ==== */
+/* ===== Desktop: fondo centrado y estable (manteniendo tu altura) ===== */
 @media (min-width: 1025px){
   .cabecera-fondo{
-    /* centra la imagen y evita desplazamientos */
-    background-position: center top;  /* X=50%  Y=50% */
-    background-size: 99% auto;              /* llena sin deformar */
-    background-repeat: no-repeat !important;
-    background-position: center center !important;
-
-    /* altura visual cómoda; ajusta si quieres */
-    min-height: 640px !important;
-    padding-bottom: 5rem !important;                /* espacio bajo el header */
-  }
-
-  /* el menú mantiene su sitio (sin empujes raros) */
-  nav.navegacion{
-    margin-top: 1rem !important;
-    transform: none !important;
+    background-position: center var(--fondo-y);
+    background-size: cover;
+    min-height: 640px;
+    padding-bottom: 5rem;
   }
 }
 
-/* 🔧 Forzar fondo (misma config que ya tienes), solo cambiamos la imagen */
-.cabecera-fondo {
-  position: relative;
-  padding: 10px;
-  background-image: image-set(
-    url('/fondo-768.webp') type('image/webp') 1x,
-    url('/fondo-1280.webp') type('image/webp') 2x,
-    url('/fondo-1920.webp') type('image/webp') 3x
-  );
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
-/* === Fondo con estatua a la derecha (desktop) === */
-.cabecera-fondo{
-  /* usa tus .webp ya convertidos */
-  background-image: image-set(
-    url('/fondo-768.webp') type('image/webp') 1x,
-    url('/fondo-1280.webp') type('image/webp') 2x,
-    url('/fondo-1920.webp') type('image/webp') 3x
-  ) !important;
-  background-repeat: no-repeat !important;
-}
-
-/* Desktop / portátiles: mover a la derecha y “ensanchar” un poco */
-@media (min-width: 1025px){
-  .cabecera-fondo{
-    /* desplaza el punto focal hacia la derecha */
-    background-position: 150% center !important; /* prueba 80–90% */
-    /* zoom suave del fondo para dar más “amplitud” sin deformar */
-    background-size: 90% auto !important;      /* prueba 110–125% */
-    min-height: 120px !important;               /* alto visible cómodo */
-  }
-}
-
-/* Tablets: menos zoom, foco algo a la derecha */
-@media (min-width: 769px) and (max-width: 1024px){
-  .cabecera-fondo{
-    background-position: 70% center !important;
-    background-size: 108% auto !important;
-    min-height: 430px !important;
-  }
-}
-
-/* Móviles: centrada y “cover” para que no se corte la estatua mal */
-@media (max-width: 768px){
-  .cabecera-fondo{
-    background-position: center top !important;
-    background-size: cover !important;
-    min-height: 360px !important;
-  }
-}
-
-.navegacion {
-  position: relative;
-  top: -2rem;  /* Ajusta -2rem / -3rem según lo que necesites */
-}
-
-
-@media (max-width:768px) {  /* SOLO móvil y tablets pequeñas */
-
+/* ===== Legibilidad extra del párrafo en móvil ===== */
+@media (max-width:768px){
   .quienes-somos .texto-quienes {
-    background: rgba(255, 255, 255, 0.22); /* Fondo blanco con transparencia */
+    background: rgba(255, 255, 255, 0.22);
     padding: 0.8rem;
     border-radius: 8px;
-    color: #000; /* Asegura legibilidad */
+    color: #000;
   }
+}
 
+
+/* ===== AJUSTE SOLO PARA MÓVILES ===== */
+@media (max-width: 768px) {
+  .titulo-despacho {
+    position: relative !important;
+    top: 50px !important;       /* BAJA el título */
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    background: rgba(255,255,255,0.6); /* OPCIONAL: Fondo blanquecino para evitar que se pierda con la imagen */
+    padding: 8px 12px;
+    border-radius: 6px;
+  }
+}
+/* ===== Fondo responsive: tablet y móvil ===== */
+@media (max-width: 1024px){
+  .cabecera-fondo{
+    background-size: cover !important;     /* llena el ancho/alto */
+    background-position: center top !important;
+    min-height: 420px !important;          /* alto visible suficiente */
+    padding-bottom: 90px !important;       /* hueco para el menú si va pegado */
+  }
+}
+
+@media (max-width: 768px){
+  .cabecera-fondo{
+    background-size: cover !important;     /* asegura cobertura en móvil */
+    background-position: center top !important;
+    min-height: 380px !important;
+    padding-bottom: 110px !important;      /* un poco más de hueco en móvil */
+  }
 }

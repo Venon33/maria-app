@@ -126,18 +126,18 @@ export default function Home() {
 
         <div>
           <div className="titulo-despacho">
-            Despacho de Abogada<br />María Lara Molina
+            Despacho de Abogados<br />María Lara Molina
           </div>
 
           <section className="quienes-somos" id="quienes-somos">
             <h2 className="titulo-quienes">¿Quiénes somos?</h2>
-            <p className="texto-quienes">
-              En despacho de abogados María Lara Molina sabemos que cada situación legal
-              es única y requiere una atención distinta. Por eso, nos enfocamos en ofrecer
-              soluciones jurídicas adaptables a las necesidades y circunstancias particulares
-              de cada cliente. Desde el asesoramiento en cuestiones cotidiana hasta la representación en litigios complejos,<br />
-             estamos aquí para guiarle con la mejor orientación y defensa posible.
-            </p>
+          <p className="texto-quienes">
+  En despacho de abogados María Lara Molina sabemos que cada situación legal es única y requiere una atención distinta.
+  Por eso, nos enfocamos en ofrecer soluciones jurídicas adaptables a las necesidades y circunstancias particulares de cada cliente.<br />
+  Desde el asesoramiento en cuestiones cotidiana hasta la<br />
+  representación en litigios complejos,<br />
+  guiarle con la mejor orientación y defensa posible.
+</p>
           </section>
         </div>
       </header>
