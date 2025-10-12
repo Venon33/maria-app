@@ -570,3 +570,10 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
     min-height: 380px !important;
   }
 }
+@media (min-width: 1025px){
+  .cabecera-fondo{
+    /* NO tocar el encuadre fijado arriba */
+    min-height: 640px;
+    padding-bottom: 5rem;
+  }
+}
