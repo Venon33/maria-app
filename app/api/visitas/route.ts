@@ -2,7 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Redis } from '@upstash/redis'
 
-export const runtime = 'edge' // rápido y compatible con sendBeacon
+export const runtime = 'nodejs';          // ← antes: 'edge'
+export const dynamic = 'force-dynamic';   // si haces lecturas/escrituras
+
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
