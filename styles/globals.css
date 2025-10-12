@@ -546,32 +546,27 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
 
 
 
-
-
-/* ====== FORZAR ENCUDRE IGUAL EN PRODUCCIÓN (último bloque) ====== */
-
-/* Base */
+/* === ÚLTIMO BLOQUE: fondo cabecera (forzar en prod) === */
 .cabecera-fondo{
-  background-image: url('/fondo-1920.webp') !important;
+  background-image: url('/fondo-1920.webp?v=6') !important; /* cache-bust */
+  background-size: 85% !important;               /* como lo tienes en local */
+  background-position: 130% center !important;   /* desplazar a la derecha */
   background-repeat: no-repeat !important;
 }
 
-/* Desktop (≥1025px): mismo zoom y desplazamiento que usas local */
-@media (min-width: 1025px){
-  .cabecera-fondo{
-    background-size: 85% !important;           /* tu valor bueno */
-    background-position: 130% center !important;/* a la derecha */
-    min-height: 640px !important;
-    padding-bottom: 5rem !important;
-  }
-}
-
-/* Tablet y móvil (≤1024px): que cubra y se centre */
-@media (max-width: 1024px){
+/* Tablet */
+@media (max-width:1024px){
   .cabecera-fondo{
     background-size: cover !important;
     background-position: center top !important;
   }
 }
 
-
+/* Móvil */
+@media (max-width:768px){
+  .cabecera-fondo{
+    background-size: cover !important;
+    background-position: center top !important;
+    min-height: 380px !important;
+  }
+}
