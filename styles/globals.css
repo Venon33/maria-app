@@ -556,3 +556,31 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
     min-height: 380px !important;
   }
 }
+/* === FORZAR FONDO IGUAL QUE LOCALHOST, EN TODAS LAS ANCHURAS === */
+.cabecera-fondo{
+  background-image: url('/fondo-1920.webp?v=11') !important; /* cache-bust */
+  background-repeat: no-repeat !important;
+  background-size: 85% !important;            /* igual que local */
+  background-position: 130% center !important;/* desplazado a la derecha */
+}
+
+/* Neutraliza cualquier media-query anterior que pusiera 'cover/top' */
+@media (max-width:1400px){
+  .cabecera-fondo{
+    background-size: 85% !important;
+    background-position: 130% center !important;
+  }
+}
+@media (max-width:1024px){
+  .cabecera-fondo{
+    background-size: 85% !important;
+    background-position: 130% center !important;
+  }
+}
+@media (max-width:768px){
+  .cabecera-fondo{
+    background-size: 85% !important;
+    background-position: 130% center !important;
+    min-height: 380px !important; /* conserva altura móvil */
+  }
+}
