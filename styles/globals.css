@@ -587,5 +587,24 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
 /* === Evitar que el texto se suba y pise el fondo === */
 .cabecera-fondo .quienes-somos {
   margin-top: 0 !important;    /* quita el desplazamiento peligroso */
-  padding-top: 2rem !important;/* crea separación sin solaparse */
+  padding-top: 0rem !important;/* crea separación sin solaparse */
+}
+/* === Anti-solapes en cabecera (desktop) === */
+@media (min-width: 1025px){
+  /* Quita posiciones y traslaciones heredadas */
+  .cabecera-fondo .header .titulo-despacho,
+  .cabecera-fondo .header .quienes-somos{
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin-top: 0 !important;
+  }
+
+  /* Separa el texto del borde/estatua */
+  .cabecera-fondo .header{ padding-left: 1.5rem !important; }
+
+  /* Un poco más de aire vertical para que no “pise” el fondo */
+  .quienes-somos{ padding-top: 2.25rem !important; }
+  .cabecera-fondo{ padding-bottom: 7rem !important; }
 }
