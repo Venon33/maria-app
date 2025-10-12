@@ -28,40 +28,34 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 .container{ width:min(100% - 2rem,1100px); margin-inline:auto; }
 
 /* ================== Cabecera ================== */
+
 .cabecera-fondo {
   position: relative;
-  padding: 10px;
-
-  /* Fondo responsive optimizado */
-  background-image: image-set(
-    url('/fondo-768.webp') type('image/webp') 1x,
-    url('/fondo-1280.webp') type('image/webp') 2x
-  );
-  background-repeat: no-repeat;
+  background-image: url('/fondo-1920.webp'); /* aquí va tu estatua */
   background-size: cover;
-  background-position: center -300px; /* mantiene el encuadre vertical */
+  background-position: center 50px;  /* <-- BAJA LA IMAGEN */
+  background-repeat: no-repeat;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 5rem;
 }
-
-/* Capa clara encima del fondo */
-.cabecera-fondo::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(rgba(255,255,255,0.35), rgba(255,255,255,0.10));
-  z-index: 0;
-}
-
-/* El contenido siempre por encima */
-.cabecera-fondo > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* En pantallas anchas usa la versión grande */
-@media (min-width:1280px){
-  .cabecera-fondo{
-    background-image: url('/fondo-1920.webp');
+/* tablets */
+@media (max-width: 1024px) {
+  .cabecera-fondo {
+    min-height: 380px;
+    padding-bottom: 1.5rem;
   }
+}
+
+/* móviles */
+@media (max-width: 768px) {
+  .cabecera-fondo {
+    min-height: 300px;
+    padding-bottom: 1rem;
+  }
+
 }
 .header{
   display:flex; align-items:flex-start; flex-wrap:wrap; gap:40px; padding:2rem;
@@ -76,6 +70,7 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   height:550px; max-width:90%; word-break:break-word;
   position:relative; top:-90px; left:90px; margin-left:20px;
   font-size: clamp(1.9rem, 3vw + 1rem, 5rem);
+  transform: translateX(-20px); /* mueve a la izquierda sin afectar el flujo */
 }
 .nombre-firma{ font-weight:900; }
 
@@ -98,9 +93,17 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 
 /* ================== Navegación ================== */
 .navegacion{
-  display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
-  gap:.75rem; margin:1.6rem auto; padding:.7rem 1rem; background:transparent; border-radius:.5rem; max-width:100%;
-  background: #fffbfb; border-radius: 8px; box-shadow: 0 2px rgba(0,0,0,.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:2.25rem;
+  margin-top:2rem; /* <-- AÑADIDO */
+  margin-bottom:2rem;
+  padding:.7rem 1rem;
+  background:#fffbfb;
+  border-radius:8px;
+  box-shadow:0 2px rgba(0,0,0,.05);
 }
 .navegacion a,
 .navegacion button,
@@ -1640,4 +1643,95 @@ nav.navegacion .dropdown-menu a{
   padding:.45rem 0 !important;
   font-weight:700 !important;
   text-align:center !important;
+}
+
+/* ==== Desktop: fondo centrado y estable (no afecta móvil/tablet) ==== */
+@media (min-width: 1025px){
+  .cabecera-fondo{
+    /* centra la imagen y evita desplazamientos */
+    background-position: center top;  /* X=50%  Y=50% */
+    background-size: 99% auto;              /* llena sin deformar */
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+
+    /* altura visual cómoda; ajusta si quieres */
+    min-height: 640px !important;
+    padding-bottom: 5rem !important;                /* espacio bajo el header */
+  }
+
+  /* el menú mantiene su sitio (sin empujes raros) */
+  nav.navegacion{
+    margin-top: 1rem !important;
+    transform: none !important;
+  }
+}
+
+/* 🔧 Forzar fondo (misma config que ya tienes), solo cambiamos la imagen */
+.cabecera-fondo {
+  position: relative;
+  padding: 10px;
+  background-image: image-set(
+    url('/fondo-768.webp') type('image/webp') 1x,
+    url('/fondo-1280.webp') type('image/webp') 2x,
+    url('/fondo-1920.webp') type('image/webp') 3x
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+/* === Fondo con estatua a la derecha (desktop) === */
+.cabecera-fondo{
+  /* usa tus .webp ya convertidos */
+  background-image: image-set(
+    url('/fondo-768.webp') type('image/webp') 1x,
+    url('/fondo-1280.webp') type('image/webp') 2x,
+    url('/fondo-1920.webp') type('image/webp') 3x
+  ) !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Desktop / portátiles: mover a la derecha y “ensanchar” un poco */
+@media (min-width: 1025px){
+  .cabecera-fondo{
+    /* desplaza el punto focal hacia la derecha */
+    background-position: 150% center !important; /* prueba 80–90% */
+    /* zoom suave del fondo para dar más “amplitud” sin deformar */
+    background-size: 90% auto !important;      /* prueba 110–125% */
+    min-height: 120px !important;               /* alto visible cómodo */
+  }
+}
+
+/* Tablets: menos zoom, foco algo a la derecha */
+@media (min-width: 769px) and (max-width: 1024px){
+  .cabecera-fondo{
+    background-position: 70% center !important;
+    background-size: 108% auto !important;
+    min-height: 430px !important;
+  }
+}
+
+/* Móviles: centrada y “cover” para que no se corte la estatua mal */
+@media (max-width: 768px){
+  .cabecera-fondo{
+    background-position: center top !important;
+    background-size: cover !important;
+    min-height: 360px !important;
+  }
+}
+
+.navegacion {
+  position: relative;
+  top: -2rem;  /* Ajusta -2rem / -3rem según lo que necesites */
+}
+
+
+@media (max-width:768px) {  /* SOLO móvil y tablets pequeñas */
+
+  .quienes-somos .texto-quienes {
+    background: rgba(255, 255, 255, 0.22); /* Fondo blanco con transparencia */
+    padding: 0.8rem;
+    border-radius: 8px;
+    color: #000; /* Asegura legibilidad */
+  }
+
 }
