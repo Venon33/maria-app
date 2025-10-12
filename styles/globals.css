@@ -584,3 +584,8 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
     min-height: 380px !important; /* conserva altura móvil */
   }
 }
+/* === Evitar que el texto se suba y pise el fondo === */
+.cabecera-fondo .quienes-somos {
+  margin-top: 0 !important;    /* quita el desplazamiento peligroso */
+  padding-top: 2rem !important;/* crea separación sin solaparse */
+}
