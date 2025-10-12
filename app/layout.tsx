@@ -64,8 +64,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link
           rel="preload"
           as="image"
-          href="/fondo-1280.webp"
-          imageSrcSet="/fondo-768.webp 768w, /fondo-1280.webp 1280w, /fondo-1920.webp 1920w"
+          href="/fondo-1280.webp?v=6"
+          imageSrcSet="/fondo-768.web?v=6 768w, /fondo-1280.webp?v=6 1280w, /fondo-1920.webp?v=6 1920w"
           imageSizes="100vw"
         />
         {/* Retrato (hero image). El <Image> de la página ya tiene priority. */}
