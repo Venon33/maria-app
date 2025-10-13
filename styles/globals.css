@@ -608,3 +608,104 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
   .quienes-somos{ padding-top: 2.25rem !important; }
   .cabecera-fondo{ padding-bottom: 7rem !important; }
 }
+/* ——— Anti-solapes blindado (solo “pinta” fondo blanco bajo el texto) ——— */
+.cabecera-fondo { position: relative; }
+.cabecera-fondo::after{
+  content:"";
+  position:absolute; inset:0;
+  /* franja blanca a la izquierda que se difumina hacia la imagen */
+  background: linear-gradient(90deg, #fff 0 48%, rgba(255,255,255,.92) 55%, transparent 62%);
+  pointer-events:none;
+  z-index:0;
+}
+/* asegura que el contenido quede por encima del velo blanco */
+.cabecera-fondo .header{ position:relative; z-index:1; }
+
+/* Fijamos el encuadre de escritorio sí o sí */
+@media (min-width:1025px){
+  .cabecera-fondo{
+    background-size:85% !important;
+    background-position:130% center !important;
+  }
+}
+
+/* 1) Arreglo de unidad + unificación */
+.colegiacion-pequena{
+  font-size: .85rem;
+  color:#333;
+  margin-top: .23rem;     /* <- antes .23Srem */
+  text-align:center;
+  margin-right:80px;
+}
+
+/* 2) Una sola pila tipográfica (deja solo esta) */
+body{
+  margin:0;
+  -webkit-text-size-adjust:100%;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+  font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* 3) .titulo-despacho: base única + ajustes por breakpoint */
+.titulo-despacho{
+  color:#000;
+  font-weight:700;
+  font-family: var(--font-playfair, 'Playfair Display'), Georgia, serif;
+  text-align:center;
+  line-height:1.1;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  margin: 0 0 1rem 0;
+  height:auto;
+  font-size: clamp(2rem, 2.2rem + 2vw, 4.2rem);
+}
+@media (min-width: 1024px){
+  .header{ flex-wrap:nowrap; }
+  .titulo-despacho{ text-align:left; margin-left:15px; }
+}
+@media (max-width: 900px){
+  .header{ flex-direction:column; align-items:center; gap:14px; text-align:center; }
+  .titulo-despacho{ font-size: clamp(1.8rem, 1.4rem + 3vw, 3rem); text-align:center; }
+}
+
+/* 4) .cabecera-fondo: consolidado (una sola versión + media queries fusionadas) */
+.cabecera-fondo{
+  position:relative;
+  background-image: url('/fondo-1920.webp?v=11') !important; /* cache-bust */
+  background-repeat:no-repeat !important;
+  background-size:85% !important;            /* desktop igual que local */
+  background-position:130% center !important;
+  min-height:500px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding-bottom:5rem;
+}
+@media (max-width:1024px){
+  .cabecera-fondo{
+    background-size:cover !important;
+    background-position:center top !important;
+    min-height:420px !important;
+    padding-bottom:90px !important;
+  }
+}
+@media (max-width:768px){
+  .cabecera-fondo{
+    min-height:380px !important;
+    padding-bottom:110px !important;
+  }
+}
+
+/* 5) Opcional anti-solape (mantiene look y mejora legibilidad en prod) */
+.cabecera-fondo{ position:relative; }
+.cabecera-fondo::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(90deg,#fff 0 48%, rgba(255,255,255,.92) 55%, transparent 62%);
+  pointer-events:none;
+  z-index:0;
+}
+.cabecera-fondo .header{ position:relative; z-index:1; }
