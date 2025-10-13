@@ -709,3 +709,16 @@ body{
   z-index:0;
 }
 .cabecera-fondo .header{ position:relative; z-index:1; }
+
+
+/* Hotfix: neutralizar offsets que pisan la foto */
+@media (max-width: 768px){
+  .cabecera-fondo .header .titulo-despacho,
+  .cabecera-fondo .header .quienes-somos{
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin-top: 0 !important;
+  }
+}
