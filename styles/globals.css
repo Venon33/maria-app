@@ -711,14 +711,32 @@ body{
 .cabecera-fondo .header{ position:relative; z-index:1; }
 
 
-/* Hotfix: neutralizar offsets que pisan la foto */
-@media (max-width: 768px){
+/* HARD RESET de posiciones forzadas en móvil */
+@media (max-width: 900px){
+
+  /* Eliminar cualquier desplazamiento raro del título y texto */
   .cabecera-fondo .header .titulo-despacho,
-  .cabecera-fondo .header .quienes-somos{
-    position: static !important;
+  .cabecera-fondo .header .quienes-somos {
+    position: relative !important;
     top: auto !important;
     left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
     transform: none !important;
-    margin-top: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  /* Asegurar que la imagen tenga su espacio y no permita que el texto se monte encima */
+  .cabecera-fondo .header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 1rem !important;
+  }
+
+  /* Empujar el texto hacia ABAJO si aún se acerca demasiado */
+  .cabecera-fondo .quienes-somos {
+    padding-top: 1.5rem !important;
   }
 }
