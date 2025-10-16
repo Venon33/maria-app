@@ -34,7 +34,6 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 /* ================== Cabecera ================== */
 .cabecera-fondo {
   position: relative;
-  /* (fondo forzado más abajo) */
   min-height: 500px;
   display: flex;
   flex-direction: column;
@@ -42,17 +41,10 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   padding-bottom: 5rem;
 }
 @media (max-width: 1024px) {
-  .cabecera-fondo {
-    min-height: 380px;
-    padding-bottom: 1.5rem;
-  }
+  .cabecera-fondo { min-height: 380px; padding-bottom: 1.5rem; }
 }
 @media (max-width: 768px) {
-  .cabecera-fondo {
-    min-height: 300px;
-    padding-bottom: 1rem;
-    /* (no tocar fondo aquí) */
-  }
+  .cabecera-fondo { min-height: 300px; padding-bottom: 1rem; }
 }
 
 .header{
@@ -60,55 +52,72 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
 }
 .logo-foto{ width:420px; height:auto; box-shadow:0 0 5px rgba(0,0,0,.2); }
 .foto-con-colegiacion{ display:flex; flex-direction:column; align-items:center; }
-.colegiacion-pequena{ font-size:0.85rem; color:#333; margin-top:.23Srem; text-align:center; margin-right: 80px;}
+.colegiacion-pequena{ font-size:0.85rem; color:#333; text-align:center; margin-right: 80px;}
 
+/* ===== Título despacho — único ===== */
 .titulo-despacho{
-  color:#000; font-weight:bold;
-  display:flex; align-items:center; justify-content:center;
-  height:550px; max-width:90%; word-break:break-word;
-  position:relative; top:-90px; left:90px; margin-left:20px;
-  font-size: clamp(1.9rem, 3vw + 1rem, 5rem);
-  transform: translateX(-20px);
+  color:#000;
+  font-weight:700;
+  font-family: var(--font-playfair, 'Playfair Display'), Georgia, serif;
+  line-height:1.1;
+  max-width:90%;
+  height:auto;
+  margin:0 0 1rem 0;
+  font-size: clamp(2rem, 3vw + 1rem, 4.2rem);
+  text-align:left;
 }
+@media (min-width:901px){
+  .titulo-despacho{ margin-left:0; } /* ajusta si quieres mover a la izquierda: p.ej. -40px */
+}
+@media (max-width:900px){
+  .titulo-despacho{ text-align:center; margin:0 0 .75rem 0; }
+}
+
 .nombre-firma{ font-weight:900; }
 
-/* ¿Quiénes somos? */
+/* ===== ¿Quiénes somos? — bloque unificado ===== */
 .quienes-somos{
-  max-width:550px;
+  max-width:700px;
+  margin:0;
+  padding:0 .5rem;
   text-align:left;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  border-radius:0;
   font-size:1rem;
-  line-height:1.5;
-  margin-top:-140px;
-  background:none!important;
-  border:none!important;
-  box-shadow:none!important;
-  border-radius:0!important;
-  padding:.5rem!important;
+  line-height:1.7;
 }
-
 .quienes-somos .titulo-quienes{
+  font-family: var(--font-playfair,'Playfair Display'), Georgia, serif;
   font-size:1.8rem;
-  color:#000!important;
-  margin-bottom:.5rem;
-  font-family:'Playfair Display',serif;
   font-weight:600;
+  color:#000;
+  margin:.25rem 0 .5rem 0;
 }
-
-.quienes-somos .texto-quienes{ 
-  font-size:1.15rem;      /* 🔹 Más grande */
-  color:#222 !important;  /* 🔹 Color gris suave y legible */
-  line-height:1.7;        /* 🔹 Más aireado */
-  font-weight:400 !important;        /* 🔹 Sin negrita */
+.quienes-somos .texto-quienes{
+  font-size:1.15rem;
+  line-height:1.7;
+  color:#222;
+  font-weight:400;
 }
-
-@media (max-width:768px){
-  .quienes-somos{
-    background:rgba(255,255,255,0.85); /* 🔹 Fondo semitransparente para que nunca se mezcle con la imagen */
-    padding:1rem;
-    border-radius:8px;
+@media (min-width:1025px){
+  .cabecera-fondo .header .quienes-somos{
+    position:static;
+    max-width:700px;
+    text-align:left;
   }
 }
-
+@media (max-width:900px){
+  .quienes-somos{
+    max-width:90%;
+    text-align:center;
+    padding:1rem;
+    background:rgba(255,255,255,.85);
+    border-radius:8px;
+    margin-bottom:1rem;
+  }
+}
 
 /* ================== Navegación ================== */
 .navegacion{
@@ -296,7 +305,6 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
   .info-contacto{ text-align:center; padding:1.25rem; }
 }
 @media (max-width:640px){
-  .titulo-despacho{ position:static; height:auto; margin:0 0 1rem 0; }
   .logo-foto{ width:100%; max-width:420px; }
   .dropdown-menu{ position:static; transform:none; left:auto; top:auto; width:100%;
     background:transparent; box-shadow:none; padding:.25rem 0; margin-top:.25rem; }
@@ -320,18 +328,6 @@ img, video, canvas, svg{ max-width:100%; height:auto; }
     align-items: center;
     text-align: center;
     gap: 14px;
-  }
-  .titulo-despacho{
-    position: static;
-    left: auto; top: auto;
-    height: auto;
-    margin: 0 0 .75rem 0;
-  }
-  .quienes-somos{
-    margin-top: 0;
-    max-width: 100%;
-    padding: 0 .5rem;
-    text-align: center;
   }
 }
 
@@ -387,65 +383,15 @@ body { font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Se
   font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
 }
 
-/* ==== Overrides cabecera (conservados) ==== */
-.quienes-somos .texto-quienes{ color:#000000 !important; font-weight:700; }
+/* ==== Overrides cabecera (otros) ==== */
 .header .logo-foto{ position:relative; left:-24px; top:-10px; }
-.cabecera-fondo .header .titulo-despacho{
-  position:relative; top:-28px; left:-18px; text-align:left; height:auto; margin:0;
-}
-.cabecera-fondo .header .quienes-somos{
-  position:relative; top:-16px; left:-14px; margin-top:0; max-width:700px;
-}
-@media (max-width: 900px){
-  .header .logo-foto{ left:0; top:0; }
-  .cabecera-fondo .header .titulo-despacho{ top:0; left:0; text-align:center; }
-  .cabecera-fondo .header .quienes-somos{ top:0; left:0; text-align:center; }
-}
-
-/* Estabilidad título/cabecera (conservado) */
-@media (min-width: 1024px) {
-  .header { flex-wrap: nowrap; }
-  .titulo-despacho { margin-left: 15px; text-align: left; }
-  .quienes-somos { align-self: flex-start; padding-top: .5rem; }
-}
-.cabecera-fondo { min-height: 20px; }
-.titulo-despacho {
-  position: static; height: auto; margin: 0 0 1rem 0; text-align: center;
-}
-
-/* Parche mínimo (conservado) */
-.colegiacion-pequena{ margin-top:.23rem; }
-.titulo-despacho{
-  position: static; height: auto; margin: 0 0 1rem 0; line-height: 1.1; font-weight: 700;
-  word-break: keep-all; overflow-wrap: normal; text-wrap: balance;
-  font-size: clamp(2rem, 2.2rem + 2vw, 4.2rem);
-  font-family: var(--font-playfair, 'Playfair Display'), Georgia, serif;
-}
-@media (max-width: 900px){
-  .header{ flex-direction: column; align-items: center; text-align: center; gap: 14px; }
-  .titulo-despacho{ text-align: center; font-size: clamp(1.8rem, 1.4rem + 3vw, 3rem); }
-  .quienes-somos{ text-align: center; max-width: 100%; padding: 0 .5rem; margin-top: 0; }
-  .logo-foto{ left: 0; top: 0; }
-}
-
-/* Menú vertical en móvil (conservado) */
-@media (max-width: 900px){
-  .navegacion{
-    flex-direction: column; gap: .35rem; padding: .6rem .75rem;
-    max-width: 780px; margin: 1rem auto;
-  }
-  .navegacion a, .navegacion button, .navegacion .dropdown-toggle{
-    font-size: clamp(1.05rem, 1rem + 1.5vw, 1.4rem); padding: .55rem .8rem; line-height: 1.2;
-  }
-}
 
 /* ===== Ajuste cabecera móvil + centrado ===== */
 @media (max-width: 640px){
   .cabecera-fondo .header { flex-direction: column; align-items: center; text-align: center; gap: 0.75rem; padding: 1rem; }
   .cabecera-fondo .logo-foto { width: 230px; max-width: 90%; height: auto; }
   .cabecera-fondo .colegiacion-pequena { margin: 0.25rem 0; text-align: center; }
-  .cabecera-fondo .titulo-despacho { position: static; margin: 0.5rem 0; font-size: clamp(1.6rem, 1.4rem + 2vw, 2.3rem); line-height: 1.15; text-align: center; }
-  .cabecera-fondo .quienes-somos { position: static; max-width: 90%; margin: 0.75rem auto 0; padding: 0 0.5rem; text-align: center; }
+  .cabecera-fondo .titulo-despacho { margin: 0.5rem 0; font-size: clamp(1.6rem, 1.4rem + 2vw, 2.3rem); line-height: 1.15; }
 }
 @media (max-width: 768px){
   .cabecera-fondo .header{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.75rem; padding: 1rem; }
@@ -454,11 +400,6 @@ body { font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Se
   }
   .cabecera-fondo .header .logo-foto{ position: static; left: auto; top: auto; margin: 0 auto; }
   .cabecera-fondo .header .colegiacion-pequena{ text-align:center; margin: .25rem 0 .5rem 0; }
-  .cabecera-fondo .header .titulo-despacho{ position: static; top: auto; left: auto; margin: .5rem 0; margin-left: 0; text-align:center; }
-  .cabecera-fondo .header .quienes-somos{ position: static; top: auto; left: auto; max-width: 90%; margin: .5rem auto 0 auto; padding: 0 .5rem; text-align:center; }
-  .cabecera-fondo .header .titulo-despacho{ margin-top: 0; transform: translateY(-70px); }
-  .cabecera-fondo .header .quienes-somos{ transform: translateY(-10px); }
-  .cabecera-fondo .header .quienes-somos{ position: relative; top: -40px; margin-top: 0; }
 }
 
 /* Menú en 2 columnas (conservado) */
@@ -470,7 +411,7 @@ body { font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Se
   }
   .navegacion a, .navegacion button, .navegacion .dropdown-toggle{ font-size: 1.1rem; padding: .4rem .6rem; }
 }
-.quienes-somos{ margin-bottom: 1rem !important; }
+
 .navegacion{ margin-top: 1rem; }
 
 /* Anclar el menú un poco más arriba (pegado al fondo) */
@@ -488,255 +429,77 @@ nav.navegacion .dropdown-menu{
 nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.45rem 0; font-weight:700; text-align:center; }
 
 /* ===== Desktop: fondo centrado y estable (manteniendo tu altura) ===== */
-/* (el fondo real se fija al final) */
 @media (min-width: 1025px){
   .cabecera-fondo{
-    min-height: 640px;
-    padding-bottom: 5rem;
+    min-height: 540px;
+    padding-bottom: 7rem;
   }
 }
 
-/* ===== Legibilidad extra del párrafo en móvil ===== */
-@media (max-width:768px){
-  .quienes-somos .texto-quienes {
-    background: rgba(255, 255, 255, 0.22);
-    padding: 0.8rem;
-    border-radius: 8px;
-    color: #000;
-  }
+.cabecera-fondo{
+  background-image: url('/fondo-1920.webp') !important; /* cambia el query para forzar recarga */
+  background-repeat: no-repeat !important;
+  background-size: 85% !important;       /* tu valor de escritorio */
+  background-position: 130% center !important;
 }
 
-/* ===== AJUSTE SOLO PARA MÓVILES ===== */
-@media (max-width: 768px) {
-  .titulo-despacho {
-    position: relative !important;
-    top: 50px !important;       /* BAJA el título */
-    margin-bottom: 20px !important;
-    text-align: center !important;
-    background: rgba(255,255,255,0.6); /* OPCIONAL */
-    padding: 8px 12px;
-    border-radius: 6px;
+
+/* === Ocultar imagen de fondo en móviles === */
+@media (max-width: 640px){
+  .cabecera-fondo{
+    background-image: none !important;  /* Quita la imagen */
+    background-color: #ffffff !important; /* Fondo blanco limpio */
+  }
+
+  /* Si tuvieras un velo (::after), lo anulamos también */
+  .cabecera-fondo::after{
+    background: none !important;
   }
 }
-
-@media (min-width: 769px){
-  .quienes-somos{ background: none !important; }
+/* === Aumentar tamaño del menú en móviles === */
+@media (max-width: 640px){
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    font-size: 1.15rem !important;  /* Ajusta si lo quieres aún más grande */
+    font-weight: 700;               /* Más marcado para que se lea mejor */
+  }
+}
+@media (max-width: 900px){
+  .quienes-somos{
+    background: #f2f2f2; /* Gris claro */
+    padding: 1.2rem;
+    border-radius: 10px;
+  }
 }
 @media (max-width: 768px){
-  .quienes-somos{
-    background: rgba(255,255,255,.85) !important; /* ya no saldrá tachado */
+  .navegacion {
+    position: relative;
+    top: -4rem;  /* súbelo más en móviles */
+  }
+}
+@media (max-width: 768px){
+  .logo-fijo {
+    width: 70px;   /* antes 100px */
+    bottom: 8px;
+    right: 8px;
+  }
+}
+/* 1) Bloquea scroll horizontal global */
+html, body { overflow-x: hidden; }
+.header, .navegacion, .cabecera-fondo { max-width: 100vw; }
+
+/* 2) Enlaces del menú pueden partir en móvil */
+@media (max-width: 480px){
+  .navegacion a,
+  .navegacion button,
+  .navegacion .dropdown-toggle{
+    white-space: normal;     /* antes: nowrap */
   }
 }
 
+/* 3) Asegura que los hijos no fuerzan ancho extra */
+.cabecera-fondo .header > * { min-width: 0; }
 
-
-
-
-
-/* === ÚLTIMO BLOQUE: fondo cabecera (forzar en prod) === */
-
-
-/* === FORZAR FONDO IGUAL QUE LOCAL (cache-bust) === */
-.cabecera-fondo{
-  background-image: url('/fondo-1920.webp?v=10') !important;
-  background-size: 85% !important;
-  background-position: 130% center !important;
-  background-repeat: no-repeat !important;
-}
-@media (max-width:1024px){
-  .cabecera-fondo{
-    background-size: cover !important;
-    background-position: center top !important;
-  }
-}
-@media (max-width:768px){
-  .cabecera-fondo{
-    background-size: cover !important;
-    background-position: center top !important;
-    min-height: 380px !important;
-  }
-}
-/* === FORZAR FONDO IGUAL QUE LOCALHOST, EN TODAS LAS ANCHURAS === */
-.cabecera-fondo{
-  background-image: url('/fondo-1920.webp?v=11') !important; /* cache-bust */
-  background-repeat: no-repeat !important;
-  background-size: 85% !important;            /* igual que local */
-  background-position: 130% center !important;/* desplazado a la derecha */
-}
-
-/* Neutraliza cualquier media-query anterior que pusiera 'cover/top' */
-@media (max-width:1400px){
-  .cabecera-fondo{
-    background-size: 85% !important;
-    background-position: 130% center !important;
-  }
-}
-@media (max-width:1024px){
-  .cabecera-fondo{
-    background-size: 85% !important;
-    background-position: 130% center !important;
-  }
-}
-@media (max-width:768px){
-  .cabecera-fondo{
-    background-size: 85% !important;
-    background-position: 130% center !important;
-    min-height: 380px !important; /* conserva altura móvil */
-  }
-}
-/* === Evitar que el texto se suba y pise el fondo === */
-.cabecera-fondo .quienes-somos {
-  margin-top: 0 !important;    /* quita el desplazamiento peligroso */
-  padding-top: 0rem !important;/* crea separación sin solaparse */
-}
-/* === Anti-solapes en cabecera (desktop) === */
-@media (min-width: 1025px){
-  /* Quita posiciones y traslaciones heredadas */
-  .cabecera-fondo .header .titulo-despacho,
-  .cabecera-fondo .header .quienes-somos{
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
-    margin-top: 0 !important;
-  }
-
-  /* Separa el texto del borde/estatua */
-  .cabecera-fondo .header{ padding-left: 1.5rem !important; }
-
-  /* Un poco más de aire vertical para que no “pise” el fondo */
-  .quienes-somos{ padding-top: 2.25rem !important; }
-  .cabecera-fondo{ padding-bottom: 7rem !important; }
-}
-/* ——— Anti-solapes blindado (solo “pinta” fondo blanco bajo el texto) ——— */
-.cabecera-fondo { position: relative; }
-.cabecera-fondo::after{
-  content:"";
-  position:absolute; inset:0;
-  /* franja blanca a la izquierda que se difumina hacia la imagen */
-  background: linear-gradient(90deg, #fff 0 48%, rgba(255,255,255,.92) 55%, transparent 62%);
-  pointer-events:none;
-  z-index:0;
-}
-/* asegura que el contenido quede por encima del velo blanco */
-.cabecera-fondo .header{ position:relative; z-index:1; }
-
-/* Fijamos el encuadre de escritorio sí o sí */
-@media (min-width:1025px){
-  .cabecera-fondo{
-    background-size:85% !important;
-    background-position:130% center !important;
-  }
-}
-
-/* 1) Arreglo de unidad + unificación */
-.colegiacion-pequena{
-  font-size: .85rem;
-  color:#333;
-  margin-top: .23rem;     /* <- antes .23Srem */
-  text-align:center;
-  margin-right:80px;
-}
-
-/* 2) Una sola pila tipográfica (deja solo esta) */
-body{
-  margin:0;
-  -webkit-text-size-adjust:100%;
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-  line-height:1.5;
-  font-family: var(--font-raleway), 'Raleway', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-}
-
-/* 3) .titulo-despacho: base única + ajustes por breakpoint */
-.titulo-despacho{
-  color:#000;
-  font-weight:700;
-  font-family: var(--font-playfair, 'Playfair Display'), Georgia, serif;
-  text-align:center;
-  line-height:1.1;
-  word-break: keep-all;
-  overflow-wrap: normal;
-  text-wrap: balance;
-  margin: 0 0 1rem 0;
-  height:auto;
-  font-size: clamp(2rem, 2.2rem + 2vw, 4.2rem);
-}
-@media (min-width: 1024px){
-  .header{ flex-wrap:nowrap; }
-  .titulo-despacho{ text-align:left; margin-left:15px; }
-}
-@media (max-width: 900px){
-  .header{ flex-direction:column; align-items:center; gap:14px; text-align:center; }
-  .titulo-despacho{ font-size: clamp(1.8rem, 1.4rem + 3vw, 3rem); text-align:center; }
-}
-
-/* 4) .cabecera-fondo: consolidado (una sola versión + media queries fusionadas) */
-.cabecera-fondo{
-  position:relative;
-  background-image: url('/fondo-1920.webp?v=11') !important; /* cache-bust */
-  background-repeat:no-repeat !important;
-  background-size:85% !important;            /* desktop igual que local */
-  background-position:130% center !important;
-  min-height:500px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding-bottom:5rem;
-}
-@media (max-width:1024px){
-  .cabecera-fondo{
-    background-size:cover !important;
-    background-position:center top !important;
-    min-height:420px !important;
-    padding-bottom:90px !important;
-  }
-}
-@media (max-width:768px){
-  .cabecera-fondo{
-    min-height:380px !important;
-    padding-bottom:110px !important;
-  }
-}
-
-/* 5) Opcional anti-solape (mantiene look y mejora legibilidad en prod) */
-.cabecera-fondo{ position:relative; }
-.cabecera-fondo::after{
-  content:"";
-  position:absolute; inset:0;
-  background: linear-gradient(90deg,#fff 0 48%, rgba(255,255,255,.92) 55%, transparent 62%);
-  pointer-events:none;
-  z-index:0;
-}
-.cabecera-fondo .header{ position:relative; z-index:1; }
-
-
-/* HARD RESET de posiciones forzadas en móvil */
-@media (max-width: 900px){
-
-  /* Eliminar cualquier desplazamiento raro del título y texto */
-  .cabecera-fondo .header .titulo-despacho,
-  .cabecera-fondo .header .quienes-somos {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-    margin: 0 auto !important;
-  }
-
-  /* Asegurar que la imagen tenga su espacio y no permita que el texto se monte encima */
-  .cabecera-fondo .header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 1rem !important;
-  }
-
-  /* Empujar el texto hacia ABAJO si aún se acerca demasiado */
-  .cabecera-fondo .quienes-somos {
-    padding-top: 1.5rem !important;
-  }
-}
+/* 4) Dropdown siempre dentro del viewport */
+nav.navegacion .dropdown-menu{ max-width: 96vw; }

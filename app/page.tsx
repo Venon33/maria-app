@@ -112,37 +112,36 @@ export default function Home() {
     <div className="cabecera-fondo">
       <header className="header">
         <div className="foto-con-colegiacion">
-          <Image
-            src="/20250622_085709-720.webp"
-            alt="Retrato de María Lara Molina"
-            width={300}
-            height={400}
-            sizes="(max-width:640px) 80vw, (max-width:1024px) 40vw, 300px"
-            priority
-            className="logo-foto"
-          />
-          <p className="colegiacion-pequena">Colegiada Nº 3316 (ICACR)</p>
-        </div>
+  <Image
+    src="/20250622_085709-720.webp"
+    alt="Retrato de María Lara Molina"
+    width={300}
+    height={400}
+    sizes="(max-width:640px) 80vw, (max-width:1024px) 40vw, 300px"
+    priority
+    className="logo-foto"
+  />
+  <p className="colegiacion-pequena">Colegiada Nº 3316 (ICACR)</p>
+</div>
 
-        <div>
-          <div className="titulo-despacho">
-            Despacho de Abogados<br />María Lara Molina
-          </div>
+<div>
+  <div className="titulo-despacho">
+    Despacho de Abogados<br />María Lara Molina
+  </div>
 
-          <section className="quienes-somos" id="quienes-somos">
-            <h2 className="titulo-quienes">¿Quiénes somos?</h2>
-          <p className="texto-quienes">
-  En despacho de abogados María Lara Molina sabemos que cada situación<br />
-  legal es única y requiere una atención distinta.
-  Por eso, nos enfocamos en<br />
-  ofrecer soluciones jurídicas adaptables a las necesidades y circunstancias
-  particulares de cada cliente.<br />
-  Desde el asesoramiento en cuestiones cotidiana hasta la<br />
-  representación en litigios complejos,<br />
-  guiarle con la mejor orientación y defensa posible.
-</p>
-          </section>
-        </div>
+  <section className="quienes-somos" id="quienes-somos">
+    <h2 className="titulo-quienes">¿Quiénes somos?</h2>
+    <p className="texto-quienes">
+      En despacho de abogados María Lara Molina sabemos que cada situación<br />
+      legal es única y requiere una atención distinta. Por eso, nos enfocamos<br />
+      en ofrecer soluciones jurídicas adaptables a las necesidades y circunstancias<br />
+      particulares de cada cliente. Desde el asesoramiento
+      en cuestiones cotidiana hasta la representación en litigios complejos, guiarle con la <br />
+      mejor orientación y defensa posible.
+    </p>
+  </section>
+</div>
+
       </header>
     </div>
 
