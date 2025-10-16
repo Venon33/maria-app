@@ -503,3 +503,23 @@ html, body { overflow-x: hidden; }
 
 /* 4) Dropdown siempre dentro del viewport */
 nav.navegacion .dropdown-menu{ max-width: 96vw; }
+
+/* Fijar tamaño exacto en producción */
+.titulo-despacho {
+  font-size: 3.8rem !important;  /* Ajusta al que tienes en localhost */
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 700 !important;
+}
+
+.titulo-quienes {
+  font-size: 2rem !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 600 !important;
+}
+
+.texto-quienes {
+  font-size: 1.05rem !important;
+  line-height: 1.7 !important;
+  font-family: 'Raleway', sans-serif !important;
+}
+
