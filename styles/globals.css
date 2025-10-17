@@ -523,3 +523,9 @@ nav.navegacion .dropdown-menu{ max-width: 96vw; }
   font-family: 'Raleway', sans-serif !important;
 }
 
+@media (max-width: 640px) {
+  .titulo-despacho {
+    font-size: 2.5rem !important; /* Ajusta si lo quieres un poco más grande o pequeño */
+    line-height: 1.2;
+  }
+}
