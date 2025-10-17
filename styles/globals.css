@@ -461,7 +461,7 @@ nav.navegacion .dropdown-menu a{ display:block; text-decoration:none; padding:.4
   .navegacion a,
   .navegacion button,
   .navegacion .dropdown-toggle{
-    font-size: 1.15rem !important;  /* Ajusta si lo quieres aún más grande */
+    font-size: 1.45rem !important;  /* Ajusta si lo quieres aún más grande */
     font-weight: 700;               /* Más marcado para que se lea mejor */
   }
 }
