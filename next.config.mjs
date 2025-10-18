@@ -1,10 +1,9 @@
-// next.config.cjs
+// next.config.mjs
 const isDev = process.env.NODE_ENV !== 'production';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-
   async headers() {
     const csp = [
       "default-src 'self'",
@@ -18,7 +17,7 @@ const nextConfig = {
       "base-uri 'self'",
       "form-action 'self'",
       "frame-ancestors 'self'",
-      "upgrade-insecure-requests"
+      "upgrade-insecure-requests",
     ].join('; ');
 
     const securityHeaders = [
@@ -27,11 +26,10 @@ const nextConfig = {
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
       { key: 'Permissions-Policy', value: 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()' },
-      { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }
+      { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
     ];
-
     return [{ source: '/:path*', headers: securityHeaders }];
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
