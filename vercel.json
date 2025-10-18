@@ -1,0 +1,16 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.abogadamarialaramolina.com" }],
+      "destination": "https://abogadamarialaramolina.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "maria-app.vercel.app" }],
+      "destination": "https://abogadamarialaramolina.com/$1",
+      "permanent": true
+    }
+  ]
+}
