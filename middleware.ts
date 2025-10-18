@@ -1,35 +1,31 @@
 // middleware.ts
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server';
 
-const APEX = 'abogadamarialaramolina.com'
+const APEX = 'abogadamarialaramolina.com';
 
 export function middleware(req: NextRequest) {
-  const url = req.nextUrl
-  const host = req.headers.get('host') || ''
-  const isHttps = url.protocol === 'https:'
+  const host = req.headers.get('host') || '';
+  const url = req.nextUrl;
 
-  // Redirige cualquier host que no sea el canónico
-  if (host !== APEX) {
-    url.hostname = APEX
-    url.protocol = 'https:'
-    url.port = ''
-    return NextResponse.redirect(url, 308)
+  // www → apex
+  if (host.startsWith('www.')) {
+    url.host = APEX;
+    return NextResponse.redirect(url, 308);
   }
 
-  // Fuerza HTTPS si hiciera falta
-  if (!isHttps) {
-    url.protocol = 'https:'
-    url.port = ''
-    return NextResponse.redirect(url, 308)
+  // *.vercel.app → apex
+  if (host.endsWith('.vercel.app')) {
+    url.host = APEX;
+    return NextResponse.redirect(url, 308);
   }
 
-  return NextResponse.next()
+  return NextResponse.next();
 }
 
+// no toques estáticos ni _next ni ficheros
 export const config = {
-  matcher: ['/:path*'],
-}
+  matcher: ['/((?!_next/|.*\\..*).*)'],
+};
 
 
 
