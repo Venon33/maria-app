@@ -31,6 +31,33 @@ const nextConfig = {
     ];
 
     return [{ source: '/:path*', headers: securityHeaders }];
+  },
+
+  // 🔽 AÑADIMOS REDIRECCIONES AQUÍ
+  async redirects() {
+    return [
+      // Forzar dominio sin www
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.abogadamarialaramolina.com' }],
+        destination: 'https://abogadamarialaramolina.com/:path*',
+        permanent: true
+      },
+      // Forzar HTTPS por si alguien entra en HTTP
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'abogadamarialaramolina.com' }],
+        destination: 'https://abogadamarialaramolina.com/:path*',
+        permanent: true
+      },
+      // Redirigir desde maria-app.vercel.app
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'maria-app.vercel.app' }],
+        destination: 'https://abogadamarialaramolina.com/:path*',
+        permanent: true
+      }
+    ];
   }
 };
 
