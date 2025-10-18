@@ -6,11 +6,14 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/_next/', '/assets/'],
+        disallow: ['/api/', '/_next/'], // quita /assets si no existe
       },
     ],
+    host: 'https://www.abogadamarialaramolina.com',
     sitemap: [
       'https://www.abogadamarialaramolina.com/sitemap.xml',
+      // si mantienes /sitemap-novedades.xml, descomenta:
+      // 'https://www.abogadamarialaramolina.com/sitemap-novedades.xml',
     ],
   }
 }
