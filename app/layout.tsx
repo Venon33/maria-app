@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { Raleway, Playfair_Display } from 'next/font/google'
 import Beacon from '../components/Beacon'
 
-// === Fuentes con next/font (exponen las CSS vars usadas en tu CSS) ===
 const raleway = Raleway({
   subsets: ['latin'],
   weight: ['400', '600', '700'],
@@ -20,7 +19,6 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
 })
 
-// === SEO básico / OpenGraph ===
 export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
@@ -49,26 +47,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <head>
-        {/* Metas esenciales */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#044472" />
         <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/site.webmanifest" />
 
-        {/* ========= PRELOADS CORRECTOS =========
-           Usa atributos en minúscula: imagesrcset / imagesizes.
-           Evita warnings de “preloaded but not used” al tenerlos bien formados.
-        */}
-        {/* Fondo (hero background) */}
+        {/* ✅ PRELOADS CORREGIDOS (camelCase en JSX) */}
         <link
           rel="preload"
           as="image"
           href="/fondo-1280.webp?v=6"
-          imageSrcSet="/fondo-768.web?v=6 768w, /fondo-1280.webp?v=6 1280w, /fondo-1920.webp?v=6 1920w"
+          imageSrcSet="/fondo-768.webp?v=6 768w, /fondo-1280.webp?v=6 1280w, /fondo-1920.webp?v=6 1920w"
           imageSizes="100vw"
         />
-        {/* Retrato (hero image). El <Image> de la página ya tiene priority. */}
         <link
           rel="preload"
           as="image"
@@ -77,10 +69,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           imageSizes="(max-width:640px) 80vw, (max-width:1024px) 40vw, 300px"
         />
 
-        {/* JSON-LD (datos estructurados de negocio) */}
         <script
           type="application/ld+json"
-          // Nota: usa JSON.stringify para no romper el HTML
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
@@ -106,11 +96,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
 
-      {/* Aplica las variables de fuente al body (coinciden con tu CSS) */}
       <body className={`${raleway.variable} ${playfair.variable}`}>
         {children}
 
-        {/* Footer simple y accesible */}
         <footer
           className="site-footer"
           style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
@@ -129,7 +117,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </nav>
         </footer>
 
-        {/* Logo fijo: su posición/medidas las controla tu CSS (.logo-fijo) */}
         <img
           src="/IMG-20241215-WA0009.webp"
           alt="Logo del despacho"
@@ -137,7 +124,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           decoding="async"
         />
 
-        {/* Beacon: conteo de visitas, no bloquea render */}
         <Beacon path="/api/visitas" />
       </body>
     </html>
