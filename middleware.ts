@@ -2,18 +2,25 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone()
+const APEX = 'abogadamarialaramolina.com'
 
-  // a) Forzar WWW
-  if (url.hostname === 'abogadamarialaramolina.com') {
-    url.hostname = 'www.abogadamarialaramolina.com'
+export function middleware(req: NextRequest) {
+  const url = req.nextUrl
+  const host = req.headers.get('host') || ''
+  const isHttps = url.protocol === 'https:'
+
+  // Redirige cualquier host que no sea el canónico
+  if (host !== APEX) {
+    url.hostname = APEX
+    url.protocol = 'https:'
+    url.port = ''
     return NextResponse.redirect(url, 308)
   }
 
-  // b) Quitar barra final (excepto home)
-  if (url.pathname !== '/' && url.pathname.endsWith('/')) {
-    url.pathname = url.pathname.replace(/\/+$/, '')
+  // Fuerza HTTPS si hiciera falta
+  if (!isHttps) {
+    url.protocol = 'https:'
+    url.port = ''
     return NextResponse.redirect(url, 308)
   }
 
@@ -21,8 +28,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Aplica a todo, no toca _next ni assets estáticos
-  matcher: ['/((?!_next|.*\\.(?:png|jpg|jpeg|webp|svg|ico|css|js|txt|xml)).*)'],
+  matcher: ['/:path*'],
 }
 
 
