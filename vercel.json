@@ -1,0 +1,7 @@
+{
+  "redirects": [
+    { "source": "http://abogadamarialaramolina.com/(.*)", "destination": "https://abogadamarialaramolina.com/$1", "permanent": true },
+    { "source": "https://www.abogadamarialaramolina.com/(.*)", "destination": "https://abogadamarialaramolina.com/$1", "permanent": true },
+    { "source": "/index", "destination": "/", "permanent": true }
+  ]
+}
