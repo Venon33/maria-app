@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
   metadataBase: new URL('https://www.abogadamarialaramolina.com'),
+  alternates: {
+    canonical: 'https://www.abogadamarialaramolina.com/',
+  },
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -53,7 +56,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/site.webmanifest" />
 
-        {/* ✅ PRELOADS CORREGIDOS (camelCase en JSX) */}
+        {/* Canonical */}
+        <link rel="canonical" href="https://www.abogadamarialaramolina.com/" />
+
+        {/* Preloads */}
         <link
           rel="preload"
           as="image"
@@ -69,6 +75,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           imageSizes="(max-width:640px) 80vw, (max-width:1024px) 40vw, 300px"
         />
 
+        {/* JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
