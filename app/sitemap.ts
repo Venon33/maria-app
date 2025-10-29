@@ -4,14 +4,15 @@ import path from 'path'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.abogadamarialaramolina.com'
+  const now = new Date()
 
   const staticPages: MetadataRoute.Sitemap = [
-    { url: `${baseUrl}/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 1 },
-    { url: `${baseUrl}/servicios`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${baseUrl}/novedades-juridicas`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${baseUrl}/aviso-legal`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${baseUrl}/privacidad`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${baseUrl}/cookies`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
+    { url: `${baseUrl}/`,                 lastModified: now, changeFrequency: 'monthly', priority: 1 },
+    { url: `${baseUrl}/servicios`,        lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/novedades-juridicas`, lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
+    { url: `${baseUrl}/aviso-legal`,      lastModified: now, changeFrequency: 'yearly',  priority: 0.5 },
+    { url: `${baseUrl}/privacidad`,       lastModified: now, changeFrequency: 'yearly',  priority: 0.5 },
+    { url: `${baseUrl}/cookies`,          lastModified: now, changeFrequency: 'yearly',  priority: 0.5 },
   ]
 
   const servicios = [
@@ -25,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const servicePages: MetadataRoute.Sitemap = servicios.map((slug) => ({
     url: `${baseUrl}/servicios/${slug}`,
-    lastModified: new Date(),
+    lastModified: now,
     changeFrequency: 'yearly',
     priority: 0.8,
   }))
@@ -42,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     }))
   } catch {
-    // no hay archivo de novedades
+    // sin novedades.json en build
   }
 
   return [...staticPages, ...servicePages, ...novedades]

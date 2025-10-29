@@ -34,5 +34,29 @@
     "resumen": "Es obligatorio intentar la mediación antes de acudir al juzgado en ciertos casos. Desde abril, en muchos asuntos civiles (familia, vecinos, consumo) debes acudir primero a mediación o arbitraje.",
     "fecha": "2025-04-03",
     "slug": "reforma-judicial"
+  },
+  {
+    "titulo": "Ley de enjuiciamiento criminal",
+    "resumen": "El Gobierno da luz verde este martes día 27/10/2025 al nuevo proyecto de ley de enjuiciamiento criminal (LECrim), que asigna la responsabilidad de las investigaciones penales al Ministerio Fiscal. Se prevé que la norma entre en vigor en enero de 2028.",
+    "fecha": "2025-10-27",
+    "slug": "ley-de-enjuiciamiento-criminal"
+  },
+  {
+    "titulo": "Permiso por nacimiento",
+    "resumen": "¡Novedad importante para 2025! El Real Decreto-ley 9/2025 amplía este año la duración del permiso por nacimiento y cuidado de menor, estableciendo un total de 17 semanas, además de 2 semanas adiccionales que podrán disfrutarse en cualquier momento hasta que el menor cumpla los ocho años de edad.",
+    "fecha": "2025-09-09",
+    "slug": "Permiso-por-nacimiento"
+  },
+  {
+    "titulo": "Pensión incapacidad permanente",
+    "resumen": "Desde la aprobación de la Ley 2/2025, de 29 de abril, cuando se reconoce una pensión de incapacidad permanente, el trabajador dispone de 10 días naturales para comunicar por escrito a la empresa si desea mantener la relación laboral. Si no hace esta manifestación, la Ley considera que la relación se extingue sin indemnización.",
+    "fecha": "2025-04-29",
+    "slug": "Pension-incapacidad-permanente"
+  },
+   {
+    "titulo": "Patinetes eléctricos",
+    "resumen": "A partir de enero de 2026. Las bicicletas y los patinetes eléctricos que cumplan ciertas características deberán contar con un seguro de responsabilidad civil que cubra los posibles daños personales o materiales que puedan causar a terceros durante su uso.",
+    "fecha": "2025-10-23",
+    "slug": "Patinetes-electricos"
   }
 ]

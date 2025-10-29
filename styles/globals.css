@@ -529,51 +529,75 @@ nav.navegacion .dropdown-menu{ max-width: 96vw; }
     line-height: 1.2;
   }
 }
-/* Enlace destacado sin subrayado */
+/* === Enlace de “Novedades Jurídicas” sin subrayado === */
 .menu a.menu-novedades,
-.navegacion .menu-novedades{
-  position:relative;
-  font-weight:800;
-  text-decoration:none;
-  padding-inline:.2rem;
+.navegacion .menu-novedades {
+  position: relative;
+  font-weight: 800;
+  text-decoration: none;
+  padding-inline: .25rem;
+  display: inline-flex;
+  align-items: center;
 }
 
-/* Reloj pequeño antes del texto */
-.navegacion .menu-novedades::before{
-  content:"";
-  width:0.95em; height:0.95em;
-  margin-right:.45rem;
-  display:inline-block; vertical-align:-0.12em;
-  background:no-repeat center/contain
-    url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23044472' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>\
-<circle cx='12' cy='12' r='9'/>\
-<path d='M12 7v5l3 2'/>\
-</svg>");
-  opacity:.9;
+/* === Icono de reloj elegante (SVG limpio, color corporativo) === */
+.navegacion .menu-novedades::before {
+  content: "";
+  width: 1em;
+  height: 1em;
+  margin-right: .4rem;
+  display: inline-block;
+  vertical-align: middle;
+  background: no-repeat center/contain
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23044472'><circle cx='12' cy='12' r='10'/><path fill='white' d='M12 6h1v6l3 2-1 1-4-2V6z'/></svg>");
+  opacity: .95;
 }
 
-/* Barrido de color negro→azul */
-.navegacion .menu-novedades .txt{
-  background:linear-gradient(90deg,#111 0%, #044472 50%, #111 100%);
-  background-size:300% 100%;
-  -webkit-background-clip:text; background-clip:text;
-  color:transparent;
-  animation:sweep 3.5s ease-in-out infinite;
-  letter-spacing:.2px;
+/* === Animación de color progresivo (negro→azul→negro) === */
+.navegacion .menu-novedades .txt {
+  background: linear-gradient(90deg, #000 0%, #044472 50%, #000 100%);
+  background-size: 400% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sweep 2.5s linear infinite;
+  letter-spacing: 0.3px;
 }
 
-@keyframes sweep{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+/* Movimiento del gradiente */
+@keyframes sweep {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-@media (prefers-reduced-motion: reduce){
-  .navegacion .menu-novedades .txt{ animation:none; color:#044472; }
+/* Si el usuario prefiere sin animaciones */
+@media (prefers-reduced-motion: reduce) {
+  .navegacion .menu-novedades .txt {
+    animation: none;
+    color: #044472;
+  }
 }
 
-@media (max-width:768px){
-  .navegacion a{ padding:.6rem .2rem; }
-  .navegacion .menu-novedades{ font-size:clamp(1.05rem,4vw,1.2rem); }
+/* Ajuste para móviles y tablets */
+@media (max-width: 768px) {
+  .navegacion a {
+    padding: .6rem .25rem;
+  }
+  .navegacion .menu-novedades {
+    font-size: clamp(1.1rem, 4vw, 1.25rem);
+  }
+}
+/* Ajuste para móviles y tablets */
+@media (max-width: 768px) {
+  .navegacion a {
+    padding: .6rem .25rem;
+  }
+  .navegacion .menu-novedades {
+    font-size: clamp(1.1rem, 4vw, 1.25rem);
+  }
+  .navegacion .menu-novedades::before {
+    width: 1.4em;
+    height: 1.4em;
+  }
 }
