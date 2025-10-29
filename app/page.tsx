@@ -150,9 +150,11 @@ export default function Home() {
       <Link href="/servicios" className="link-servicios">
         <i className="fas fa-gavel" /> Servicios
       </Link>
-      <Link href="/novedades-juridicas" className="link-novedades">
-        <i className="fas fa-newspaper" /> Novedades Jurídicas
-      </Link>
+        {/* ⇩⇩ ESTE */}
+  <Link href="/novedades-juridicas" className="menu-novedades">
+    <span className="txt">Novedades Jurídicas</span>
+  </Link>
+  {/* ⇧⇧ */}
       <a
         href="https://g.page/r/CZI-nLb_FE2PEAE/review"
         target="_blank"
