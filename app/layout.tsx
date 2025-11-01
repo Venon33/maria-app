@@ -19,12 +19,12 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
 })
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Despacho de Maria Lara Molina',
   description: 'Despacho legal profesional',
   metadataBase: new URL('https://www.abogadamarialaramolina.com'),
   alternates: {
-    canonical: 'https://www.abogadamarialaramolina.com/',
+    canonical: '/', // evitar duplicados; las rutas hijas resuelven solas
   },
   icons: {
     icon: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: 'Despacho de Maria Lara Molina',
     type: 'website',
   },
-}
+} satisfies Metadata
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const year = new Date().getFullYear()
@@ -55,9 +55,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="theme-color" content="#044472" />
         <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/site.webmanifest" />
-
-        {/* Canonical */}
-        <link rel="canonical" href="https://www.abogadamarialaramolina.com/" />
 
         {/* Preloads */}
         <link
@@ -136,4 +133,3 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   )
 }
-
